@@ -213,7 +213,7 @@ namespace Lab
     uint32_t CModel::TextureFromFile(const aiString *ct_TexturePath) const
     {
         std::string fileName = ct_TexturePath->C_Str();
-        fileName = m_ModelDirectory + "/textures/" + fileName;
+        fileName = m_ModelDirectory + "/" + fileName;
 
         uint32_t textureId = 0;
         glGenTextures(1, &textureId);

@@ -34,6 +34,22 @@ namespace Lab
             const glm::mat4 viewMatrix = m_pCamera->CalculateViewMatrix();
             const glm::mat4 projectionMatrix = m_pCamera->CalculatePerspectiveProjectionMatrix(m_Window);
 
+            if (m.GetName() == "office_window.fbx")
+            {
+                std::map<float, glm::vec3>::reverse_iterator it = sortedWindowPositions.rbegin();
+                for (it; it != sortedWindowPositions.rend(); ++it)
+                {
+                    modelMatrix = glm::translate(modelMatrix, it->second);
+
+                    shader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+                    shader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
+                    shader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
+
+                    m.Draw(shader);
+                }
+                continue;
+            }
+
             shader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
             shader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
             shader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
@@ -58,6 +74,12 @@ namespace Lab
 
         m_pCamera->SetLastPosX(static_cast<float>(m_Window.GetWidth()) / 2.0f);
         m_pCamera->SetLastPosY(static_cast<float>(m_Window.GetHeight()) / 2.0f);
+
+        for (const glm::vec3 &pos : windowPositions)
+        {
+            float distance = glm::length(m_pCamera->GetCameraPos() - pos);
+            sortedWindowPositions[distance] = pos;
+        }
     }
 
 } // namespace Lab

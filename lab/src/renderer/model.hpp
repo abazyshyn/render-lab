@@ -32,14 +32,22 @@ namespace Lab
          */
         void Draw(const CShader &ct_Shader) const;
 
+        /**
+         * @brief Returns model name
+         *
+         * @return Model name
+         */
+        const std::string& GetName() const {return m_ModelName;}
+
     private:
         std::vector<CMesh> m_Meshes;
         std::vector<Texture_s> m_LoadedTextures;
         std::string m_ModelDirectory;
-
-#if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         std::string m_ModelName;
-#endif
+
+// #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
+//         std::string m_ModelName;
+// #endif
 
         void LoadModel(const std::string &ct_ModelPath);
 
