@@ -1,0 +1,20 @@
+{
+  "configurations": {
+    "C++: Launch": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "request": "launch",
+        "program": "${workspaceFolder}/bin/Linux-x86_64/HordeShooter/HordeShooter",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/usr/bin/gdb"
+      }
+    }
+  }
+}
+
+

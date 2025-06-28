@@ -1,0 +1,2 @@
+Textures:
+1. Combine textures metallic + roughness(make it partially transparent) and it will be 1 metallic
