@@ -48,7 +48,7 @@ namespace Lab
             const std::string path = shaderSourcePath.string();
 
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-            m_ShaderName = path.substr(path.find_last_of('/') + 1, path.length() - 1);
+            m_ShaderName = path.substr(path.find_last_of('/') + 1, path.find_last_of('.'));
 
             LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
                     "Processing the shader...\n",

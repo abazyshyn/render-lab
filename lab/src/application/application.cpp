@@ -2,7 +2,7 @@
 
 #include "application.hpp"
 #include "window/window.hpp"
-#include "scene/scene.hpp"
+#include "scenes/scene1/scene.hpp"
 
 namespace Lab
 {

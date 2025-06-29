@@ -1,16 +1,14 @@
 #if !defined(SCENE_HPP)
 #define SCENE_HPP
 
-#include "renderer/model.hpp"
+#include "camera/camera.hpp"
 #include "shader/shader.hpp"
-
-// #include "i_scene_entity.hpp"
 
 namespace Lab
 {
     // Forward declaration
     class CWindow;
-    class CCamera;
+    class CSceneEntity;
 
     /**
      * @brief Implementation of the scene
@@ -45,27 +43,11 @@ namespace Lab
         void OnUpdate(float t_DeltaTime);
 
     private:
-        // Temporary test
-        CShader shader = CShader({LAB_BASIC_VERTEX_SHADER_PATH, LAB_BASIC_FRAGMENT_SHADER_PATH});
-        // Temporary test
-        std::vector<CModel> tempModels{CModel("../../../../lab/res/models/world/world.fbx"),
-                                       CModel("../../../../lab/res/models/office_window/office_window.fbx")};
-        // CModel model = CModel("../../../../lab/res/models/floor/bloody-floor.obj");
-
-        std::vector<glm::vec3> windowPositions{
-            glm::vec3(-1.5f, 0.0f, -0.4f),
-            glm::vec3(1.4f, 0.0f, 0.51f),
-            glm::vec3(0.0f, 0.0f, 0.7f),
-            glm::vec3(-0.3f, 0.0f, -2.3f),
-            glm::vec3(0.5f, 0.0f, -0.6f)};
-
-        std::map<float, glm::vec3> sortedWindowPositions;
-
-        // Temporary test
-        std::unique_ptr<CCamera> m_pCamera;
-        // std::vector<std::unique_ptr<I_CSceneEntity>> m_pSceneEntities;
-
         CWindow &m_Window;
+        CCamera m_Camera;
+        CShader m_Shader;
+        std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
+        std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;
 
         CScene();
     };
