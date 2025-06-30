@@ -90,6 +90,7 @@ namespace Lab
             return;
         }
 
+        // Hide cursor
         if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_CONTROL) ||
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
             (glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
@@ -103,6 +104,7 @@ namespace Lab
             return;
         }
 
+        // Show cursor
         if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_CONTROL) ||
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
             (glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
@@ -110,9 +112,33 @@ namespace Lab
             glfwGetKey(t_pWindow, GLFW_KEY_X))
         {
             LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                    "CONTROL + SHIFT + C keys pressed.");
+                    "CONTROL + SHIFT + X keys pressed.");
 
             glfwSetInputMode(t_pWindow, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
+            return;
+        }
+
+        // Turn on wireframe mode
+        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
+             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
+            glfwGetKey(t_pWindow, GLFW_KEY_Q))
+        {
+            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+                    "SHIFT + Q keys pressed.");
+
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            return;
+        }
+
+        // Turn off wireframe mode
+        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_CONTROL) ||
+             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
+            glfwGetKey(t_pWindow, GLFW_KEY_Q))
+        {
+            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+                    "CONTROL + Q keys pressed.");
+
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
             return;
         }
     }

@@ -19,9 +19,6 @@ namespace Lab
 
     void CScene::OnUpdate(float t_DeltaTime)
     {
-        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
         m_Shader.Bind();
 
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_OpaqueSceneEntities)
@@ -47,7 +44,7 @@ namespace Lab
             m_Camera.CameraMouseMovementInput(m_Window.GetWindowPointer());
 
             glm::mat4 modelMatrix(1.0f);
-            modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f));
+            modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 0.2f, 0.0f));
             const glm::mat4 viewMatrix = m_Camera.CalculateViewMatrix();
             const glm::mat4 projectionMatrix = m_Camera.CalculatePerspectiveProjectionMatrix(m_Window);
 
@@ -64,12 +61,14 @@ namespace Lab
     CScene::CScene()
         : m_Window(CWindow::GetInstance()),
           m_Shader({LAB_BASIC_VERTEX_SHADER_PATH, LAB_BASIC_FRAGMENT_SHADER_PATH}),
+          m_FBO(static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight())),
           m_OpaqueSceneEntities({std::make_shared<CGround>(CModel("../../../../lab/res/models/ground/ground.fbx"))}),
           m_TransparentSceneEntities({std::make_shared<CSceneEntity>(CModel("../../../../lab/res/models/office_window/office_window.fbx"))})
     {
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_DEPTH_CLAMP);
         glEnable(GL_BLEND);
+        glEnable(GL_CULL_FACE);
 
         glDepthFunc(GL_LESS);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

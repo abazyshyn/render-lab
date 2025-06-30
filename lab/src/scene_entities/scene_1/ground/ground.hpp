@@ -1,5 +1,5 @@
-#if !defined(GROUND_H)
-#define GROUND_H
+#if !defined(GROUND_HPP)
+#define GROUND_HPP
 
 #include "scene_entity/scene_entity.hpp"
 
@@ -17,4 +17,4 @@ namespace Lab
 
 } // namespace Lab
 
-#endif // GROUND_H
+#endif // GROUND_HPP

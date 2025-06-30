@@ -1,0 +1,66 @@
+#include "pch.hpp"
+
+#include "framebuffer.hpp"
+
+#include <glad/glad.h>
+
+namespace Lab
+{
+
+    CFramebuffer::CFramebuffer(const uint32_t ct_AttachmentWidth, const uint32_t ct_AttachmentHeight)
+    {
+        SetupFramebuffer(ct_AttachmentWidth, ct_AttachmentHeight);
+    }
+
+    CFramebuffer::~CFramebuffer()
+    {
+    }
+
+    void CFramebuffer::Bind() const
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, m_FBO);
+    }
+
+    void CFramebuffer::UnBind() const
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
+    void CFramebuffer::SetupFramebuffer(const uint32_t ct_AttachmentWidth, const uint32_t ct_AttachmentHeight)
+    {
+        glGenFramebuffers(1, &m_FBO);
+        Bind();
+
+        // Create a color attachment
+        uint32_t colorAttachment = 0;
+        glGenTextures(1, &colorAttachment);
+        glBindTexture(GL_TEXTURE_2D, colorAttachment);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ct_AttachmentWidth, ct_AttachmentHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        // Attach color attachment to the framebuffer
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorAttachment, 0);
+
+        // Create a combined depth and stencil attachments
+        uint32_t RBO = 0;
+        glGenRenderbuffers(1, &RBO);
+        glBindRenderbuffer(GL_RENDERBUFFER, RBO);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, ct_AttachmentWidth, ct_AttachmentHeight);
+        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+
+        // Attach combined depth and stencil attachments
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO);
+
+        if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+        {
+            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR, "Framebuffer is not complete.");
+            LAB_ASSERT(0);
+        }
+
+        UnBind();
+    }
+
+} // namespace Lab

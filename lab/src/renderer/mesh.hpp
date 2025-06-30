@@ -58,7 +58,7 @@ namespace Lab
          *
          * @return Mesh name
          */
-        const std::string &GetName() const { return m_Name; }
+        [[nodiscard]] const std::string &GetName() const { return m_Name; }
 
     private:
         std::vector<Vertex_s> m_Vertices;

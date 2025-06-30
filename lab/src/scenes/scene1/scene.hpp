@@ -3,6 +3,7 @@
 
 #include "camera/camera.hpp"
 #include "shader/shader.hpp"
+#include "backend/framebuffer.hpp"
 
 namespace Lab
 {
@@ -46,6 +47,7 @@ namespace Lab
         CWindow &m_Window;
         CCamera m_Camera;
         CShader m_Shader;
+        CFramebuffer m_FBO;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
         std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;
 

@@ -1,5 +1,5 @@
-#if !defined(SCENE_ENTITY_H)
-#define SCENE_ENTITY_H
+#if !defined(SCENE_ENTITY_HPP)
+#define SCENE_ENTITY_HPP
 
 namespace Lab
 {
@@ -24,4 +24,4 @@ namespace Lab
 
 } // namespace Lab
 
-#endif // SCENE_ENTITY_H
+#endif // SCENE_ENTITY_HPP
