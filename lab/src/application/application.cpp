@@ -2,7 +2,6 @@
 
 #include "application.hpp"
 #include "window/window.hpp"
-#include "scenes/scene1/scene.hpp"
 
 namespace Lab
 {
@@ -20,13 +19,13 @@ namespace Lab
             float deltaTime = CalculateDeltaTime();
 
             m_Window.OnUpdate();
-            m_Scene.OnUpdate(deltaTime);
+            m_Renderer.Render(deltaTime);
         }
     }
 
     CApplication::CApplication()
         : m_Window(CWindow::GetInstance()),
-          m_Scene(CScene::GetInstance()),
+          m_Renderer(),
           m_LastFrameTime(0.0f)
     {
     }

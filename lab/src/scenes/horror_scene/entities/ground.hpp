@@ -1,7 +1,7 @@
 #if !defined(GROUND_HPP)
 #define GROUND_HPP
 
-#include "scene_entity/scene_entity.hpp"
+#include "scenes/scene_entity.hpp"
 
 namespace Lab
 {
@@ -12,7 +12,7 @@ namespace Lab
     class CGround final : public CSceneEntity
     {
     public:
-        CGround(const CModel &ct_Model);
+        explicit CGround(const CModel &ct_Model);
     };
 
 } // namespace Lab

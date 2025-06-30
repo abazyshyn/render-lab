@@ -73,8 +73,7 @@ namespace Lab
         glfwData.m_IsRunning = false;
     }
 
-    void KeyCallback(GLFWwindow *t_pWindow, int t_Key, int t_Scancode, int t_Action,
-                     int t_Mods)
+    void KeyCallback(GLFWwindow *t_pWindow, int t_Key, int t_Scancode, int t_Action, int t_Mods)
     {
         GlfwData_s &glfwData = *static_cast<GlfwData_s *>(glfwGetWindowUserPointer(t_pWindow));
 

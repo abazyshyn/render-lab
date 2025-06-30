@@ -1,11 +1,13 @@
 #if !defined(APPLICATION_HPP)
 #define APPLICATION_HPP
 
+#include "renderer/renderer.hpp" // TODO: temp
+
 namespace Lab
 {
     // Forward declaration
     class CWindow;
-    class CScene;
+    class CHorrorScene;
 
     /**
      * @brief Implementation of the application(render-lab)
@@ -39,7 +41,7 @@ namespace Lab
 
     private:
         CWindow &m_Window;
-        CScene &m_Scene;
+        CRenderer m_Renderer; // TODO : make singleton
         float m_LastFrameTime;
 
         unsigned char _pad[4] = {}; // Explicit padding

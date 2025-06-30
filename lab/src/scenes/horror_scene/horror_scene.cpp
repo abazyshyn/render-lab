@@ -1,23 +1,27 @@
 #include "pch.hpp"
 
-#include "scene.hpp"
+#include "horror_scene.hpp"
 
 #include "window/window.hpp"
 #include "renderer/model.hpp"
-#include "scene_entities/scene_1/ground/ground.hpp"
+#include "scenes/horror_scene/entities/ground.hpp"
 
 #include <glad/glad.h>
 
 namespace Lab
 {
 
-    CScene &CScene::GetInstance()
+    CHorrorScene::CHorrorScene()
+        : m_Window(CWindow::GetInstance()),
+          m_Shader({LAB_BASIC_VERTEX_SHADER_PATH, LAB_BASIC_FRAGMENT_SHADER_PATH}),
+          m_OpaqueSceneEntities({std::make_shared<CGround>(CModel("../../../../lab/res/models/ground/ground.fbx"))}),
+          m_TransparentSceneEntities({std::make_shared<CSceneEntity>(CModel("../../../../lab/res/models/office_window/office_window.fbx"))})
     {
-        static CScene s_Instance;
-        return s_Instance;
+        m_Camera.SetLastPosX(static_cast<float>(m_Window.GetWidth()) / 2.0f);
+        m_Camera.SetLastPosY(static_cast<float>(m_Window.GetHeight()) / 2.0f);
     }
 
-    void CScene::OnUpdate(float t_DeltaTime)
+    void CHorrorScene::OnUpdate(float t_DeltaTime)
     {
         m_Shader.Bind();
 
@@ -56,25 +60,6 @@ namespace Lab
         }
 
         m_Shader.UnBind();
-    }
-
-    CScene::CScene()
-        : m_Window(CWindow::GetInstance()),
-          m_Shader({LAB_BASIC_VERTEX_SHADER_PATH, LAB_BASIC_FRAGMENT_SHADER_PATH}),
-          m_FBO(static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight())),
-          m_OpaqueSceneEntities({std::make_shared<CGround>(CModel("../../../../lab/res/models/ground/ground.fbx"))}),
-          m_TransparentSceneEntities({std::make_shared<CSceneEntity>(CModel("../../../../lab/res/models/office_window/office_window.fbx"))})
-    {
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_DEPTH_CLAMP);
-        glEnable(GL_BLEND);
-        glEnable(GL_CULL_FACE);
-
-        glDepthFunc(GL_LESS);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-        m_Camera.SetLastPosX(static_cast<float>(m_Window.GetWidth()) / 2.0f);
-        m_Camera.SetLastPosY(static_cast<float>(m_Window.GetHeight()) / 2.0f);
     }
 
 } // namespace Lab

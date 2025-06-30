@@ -17,7 +17,7 @@ namespace Lab
          */
         CModel m_Model; // TODO: make a private
 
-        CSceneEntity(const CModel &ct_Model);
+        explicit CSceneEntity(const CModel &ct_Model);
 
         virtual ~CSceneEntity() = default;
     };
