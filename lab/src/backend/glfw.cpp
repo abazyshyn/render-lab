@@ -15,10 +15,8 @@ namespace Lab
 
         // Window related hints
         glfwWindowHint(GLFW_CENTER_CURSOR, GLFW_FALSE); // TODO: maybe it should be GLFW_TRUE
-
         // Framebuffer related hints
         glfwWindowHint(GLFW_SRGB_CAPABLE, GLFW_TRUE);
-
         // Context related hints
         glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
         glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_NATIVE_CONTEXT_API);
@@ -29,9 +27,8 @@ namespace Lab
 
 #endif
 
-        t_GlfwData.m_pWindow = glfwCreateWindow(
-            t_GlfwData.m_WindowWidth, t_GlfwData.m_WindowHeight,
-            t_GlfwData.m_WindowTitle.c_str(), nullptr, nullptr);
+        t_GlfwData.m_pWindow = glfwCreateWindow(t_GlfwData.m_WindowWidth, t_GlfwData.m_WindowHeight, t_GlfwData.m_WindowTitle.c_str(),
+                                                nullptr, nullptr);
 
         // Check window pointer
         LAB_ASSERT(t_GlfwData.m_pWindow);

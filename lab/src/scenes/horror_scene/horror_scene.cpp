@@ -59,8 +59,6 @@ namespace Lab
 
             sceneEntity->m_Model.Draw(m_Shader);
         }
-
-        // m_Shader.UnBind();
     }
 
 } // namespace Lab

@@ -1,6 +1,8 @@
 #include "pch.hpp"
 
 #include "mesh.hpp"
+
+#include "backend/opengl.hpp"
 #include <glad/glad.h>
 
 namespace Lab
@@ -12,9 +14,18 @@ namespace Lab
           m_Indices(ct_Indices),
           m_Textures(ct_Textures),
           m_Name(ct_Name),
-          m_VAO()
+          m_VAO(0),
+          m_VBO(0),
+          m_IBO(0)
     {
         SetupMesh();
+    }
+
+    CMesh::~CMesh()
+    {
+        // LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING, "CALLED ", this->GetName());
+        // LAB_ASSERT(0);
+        //  OpenGL::DeleteObjects(1, &m_VAO, 1, &m_VBO, 1, &m_IBO);
     }
 
     void CMesh::Draw(const CShader &ct_Shader) const
@@ -53,34 +64,28 @@ namespace Lab
 
         glBindVertexArray(m_VAO);
         glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_Indices.size()), GL_UNSIGNED_INT, nullptr);
-
         glBindVertexArray(0);
         glActiveTexture(GL_TEXTURE0);
     }
 
     void CMesh::SetupMesh()
     {
-        uint32_t VBO = 0;
-        uint32_t IBO = 0;
-
         glGenVertexArrays(1, &m_VAO);
-        glGenBuffers(1, &VBO);
-        glGenBuffers(1, &IBO);
+        glGenBuffers(1, &m_VBO);
+        glGenBuffers(1, &m_IBO);
 
         glBindVertexArray(m_VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+        glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
         // m_Vertices.size() * sizeof(Vertex_s) - represent a struct as an array of data
         glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_Vertices.size() * sizeof(Vertex_s)), m_Vertices.data(), GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_Indices.size() * sizeof(uint32_t)), m_Indices.data(), GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_s), nullptr);
-
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_s), reinterpret_cast<void *>(offsetof(Vertex_s, m_NormalVector)));
-
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex_s), reinterpret_cast<void *>(offsetof(Vertex_s, m_TextureCoordinatesVector)));
 

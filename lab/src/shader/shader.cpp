@@ -14,17 +14,12 @@ namespace Lab
 
     CShader::~CShader()
     {
-        UnBind();
+        glDeleteProgram(m_ProgramId);
     }
 
     void CShader::Bind() const
     {
         glUseProgram(m_ProgramId);
-    }
-
-    void CShader::UnBind() const
-    {
-        glDeleteProgram(m_ProgramId);
     }
 
     void CShader::SetUniformMatrix4fv(const std::string &ct_UniformName, const glm::mat4 &ct_Matrix)

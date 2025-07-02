@@ -45,6 +45,7 @@ namespace Lab
     public:
         explicit CMesh(const std::vector<Vertex_s> &ct_Vertices, const std::vector<uint32_t> &ct_Indices,
                        const std::vector<Texture_s> &ct_Textures, const std::string &ct_Name);
+        ~CMesh();
 
         /**
          * @brief Draws a mesh
@@ -67,6 +68,8 @@ namespace Lab
         std::string m_Name;
 
         uint32_t m_VAO;
+        uint32_t m_VBO;
+        uint32_t m_IBO;
 
         unsigned char _pad[4] = {}; // Explicit padding
 

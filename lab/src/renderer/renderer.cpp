@@ -17,7 +17,7 @@ namespace Lab
           m_Scenes({std::make_shared<CHorrorScene>()})
     {
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-        EnableDebugOpenGL();
+        OpenGL::EnableDebugOpenGL();
 #endif
 
         // TODO: make enum with all possible indices for scenes
@@ -40,17 +40,21 @@ namespace Lab
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             glEnable(GL_DEPTH_TEST);
+            glEnable(GL_DEPTH_CLAMP);
+            glEnable(GL_BLEND);
+            glEnable(GL_CULL_FACE);
             pScene->OnUpdate(t_DeltaTime);
 
             m_FBO.UnBind();
+            glDisable(GL_DEPTH_TEST);
+            glDisable(GL_DEPTH_CLAMP);
+            glDisable(GL_BLEND);
+            glDisable(GL_CULL_FACE);
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
             screenShader.Bind();
-            glDisable(GL_DEPTH_TEST);
-            glBindTexture(GL_TEXTURE_2D, m_FBO.GetColorBuffer());
-            rectangle.Draw();
-            // screenShader.UnBind();
+            rectangle.DrawRectangle(m_FBO.GetColorBuffer());
         }
     }
 

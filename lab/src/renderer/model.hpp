@@ -37,7 +37,7 @@ namespace Lab
          *
          * @return Model name
          */
-        const std::string& GetName() const {return m_ModelName;}
+        [[nodiscard]] const std::string &GetName() const { return m_ModelName; }
 
     private:
         std::vector<CMesh> m_Meshes;
@@ -45,9 +45,9 @@ namespace Lab
         std::string m_ModelDirectory;
         std::string m_ModelName;
 
-// #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-//         std::string m_ModelName;
-// #endif
+        // #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
+        //         std::string m_ModelName;
+        // #endif
 
         void LoadModel(const std::string &ct_ModelPath);
 

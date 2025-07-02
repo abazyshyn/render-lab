@@ -16,6 +16,7 @@ namespace Lab
 
     CFramebuffer::~CFramebuffer()
     {
+        glDeleteFramebuffers(1, &m_FBO);
     }
 
     void CFramebuffer::Bind() const
@@ -31,16 +32,15 @@ namespace Lab
     void CFramebuffer::SetupFramebuffer(const uint32_t ct_AttachmentWidth, const uint32_t ct_AttachmentHeight)
     {
         glGenFramebuffers(1, &m_FBO);
-        Bind();
+        this->Bind();
 
         // Create a color attachment
         glGenTextures(1, &m_ColorBuffer);
         glBindTexture(GL_TEXTURE_2D, m_ColorBuffer);
-
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ct_AttachmentWidth, ct_AttachmentHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
-
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         // Attach color attachment to the framebuffer
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorBuffer, 0);
@@ -61,7 +61,7 @@ namespace Lab
             LAB_ASSERT(0);
         }
 
-        UnBind();
+        this->UnBind();
     }
 
 } // namespace Lab

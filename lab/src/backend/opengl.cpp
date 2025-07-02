@@ -1,13 +1,19 @@
 #include "pch.hpp"
 
-#include <glad/glad.h>
-
 #include "opengl.hpp"
 
-namespace Lab
+namespace OpenGL
 {
 
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
+    void DeleteObjects(const uint32_t ct_CountVAO, const uint32_t *ct_VAO,
+                       const uint32_t ct_CountVBO, const uint32_t *ct_VBO,
+                       const uint32_t ct_CountIBO, const uint32_t *ct_IBO)
+    {
+        glDeleteVertexArrays(ct_CountVAO, ct_VAO);
+        glDeleteBuffers(ct_CountVBO, ct_VBO);
+        glDeleteBuffers(ct_CountIBO, ct_IBO);
+    }
 
     void EnableDebugOpenGL()
     {
@@ -17,7 +23,7 @@ namespace Lab
         // Check if debug context was created
         if (!(contextFlags & GL_CONTEXT_FLAG_DEBUG_BIT))
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
+            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_ERROR,
                     "GL_CONTEXT_FLAG_DEBUG_BIT was not created.");
             LAB_ASSERT(0);
         }
@@ -28,9 +34,7 @@ namespace Lab
         glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
     }
 
-    void DebugMessageCallbackOpenGL(GLenum t_Source, GLenum t_Type,
-                                    GLuint t_Id, GLenum t_Severity,
-                                    GLsizei t_Length,
+    void DebugMessageCallbackOpenGL(GLenum t_Source, GLenum t_Type, GLuint t_Id, GLenum t_Severity, GLsizei t_Length,
                                     const GLchar *ct_Message,
                                     const void *ct_UserParam)
     {
@@ -150,14 +154,14 @@ namespace Lab
             }
         }
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
+        LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_ERROR,
                 "OpenGL Debug Message:",
                 "\nSource: ", source, "\nType: ", type,
                 "\nID: ", t_Id, "\nSeverity: ", severity,
                 "\nMessage: ", ct_Message);
-        LAB_ASSERT((severity == "HIGH" || severity == "MEDIUM"));
+        LAB_ASSERT((severity == "HIGH" || severity == "MEDIUM" || severity == "LOW"));
     }
 
 #endif
 
-} // namespace Lab
+} // namespace OpenGL

@@ -31,11 +31,6 @@ namespace Lab
         void Bind() const;
 
         /**
-         * @brief Deletes a shader program object
-         */
-        void UnBind() const;
-
-        /**
          * @brief Getter for a shader program ID
          *
          * @return Shader program ID

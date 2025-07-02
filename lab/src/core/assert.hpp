@@ -29,7 +29,7 @@
 #define LAB_ASSERT(expr)                                      \
     if (!expr)                                                \
     {                                                         \
-        Lab::Log(LAB_LOG_MESSAGE_SEVERITY_ERROR,              \
+        Lab::Log(Lab::LAB_LOG_MESSAGE_SEVERITY_ERROR,         \
                  "[LAB_ASSERT]: Assertion failed\n",          \
                  "\rExpression:", #expr, "\nFile:", __FILE__, \
                  "\nLine:", __LINE__);                        \
