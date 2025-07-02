@@ -70,23 +70,19 @@ namespace Lab
         glBindVertexArray(m_VAO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         // m_Vertices.size() * sizeof(Vertex_s) - represent a struct as an array of data
-        glBufferData(GL_ARRAY_BUFFER,
-                     static_cast<GLsizeiptr>(m_Vertices.size() * sizeof(Vertex_s)), m_Vertices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_Vertices.size() * sizeof(Vertex_s)), m_Vertices.data(), GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     static_cast<GLsizeiptr>(m_Indices.size() * sizeof(uint32_t)), m_Indices.data(), GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, static_cast<GLsizeiptr>(m_Indices.size() * sizeof(uint32_t)), m_Indices.data(), GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_s), nullptr);
 
         glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_s),
-                              reinterpret_cast<void *>(offsetof(Vertex_s, m_NormalVector)));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex_s), reinterpret_cast<void *>(offsetof(Vertex_s, m_NormalVector)));
 
         glEnableVertexAttribArray(2);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex_s),
-                              reinterpret_cast<void *>(offsetof(Vertex_s, m_TextureCoordinatesVector)));
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex_s), reinterpret_cast<void *>(offsetof(Vertex_s, m_TextureCoordinatesVector)));
 
         glBindVertexArray(0);
     }

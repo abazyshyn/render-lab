@@ -13,6 +13,7 @@ Intermediates/
 **.vcxproj.filters
 **.vcxproj.user
 **.csproj
+**/out/
 
 # googletest
 /lib

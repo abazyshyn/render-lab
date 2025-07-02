@@ -23,6 +23,12 @@ namespace Lab
         glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
         glfwWindowHint(GLFW_CONTEXT_CREATION_API, GLFW_NATIVE_CONTEXT_API);
 
+#if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
+
+        glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+
+#endif
+
         t_GlfwData.m_pWindow = glfwCreateWindow(
             t_GlfwData.m_WindowWidth, t_GlfwData.m_WindowHeight,
             t_GlfwData.m_WindowTitle.c_str(), nullptr, nullptr);

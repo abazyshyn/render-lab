@@ -59,9 +59,11 @@ namespace Lab
         {
             // Operator overloading
             // Compare function for std::sort
-            bool operator()(const CMesh &ct_A, const CMesh &_) const
+            bool operator()(const CMesh &ct_A, const CMesh &ct_B) const
             {
-                return ct_A.GetName().find("glass") == std::string::npos;
+                // Returning only "ct_A.GetName().find("glass") == std::string::npos" works with some implementations
+                // but with MSVC it is "Invalid comparator"
+                return ct_A.GetName().find("glass") == std::string::npos && ct_B.GetName().find("glass") != std::string::npos;
             }
         } CompareFn_s;
 

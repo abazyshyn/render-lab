@@ -22,16 +22,33 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/
     #${CMAKE_CURRENT_SOURCE_DIR}/vendor/googletest/googletest/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image)
+
+set_target_properties(glad PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/glad/build"
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/glad/build"
+    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/glad/build"
+)
+
+set_target_properties(glfw PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/glfw/build"
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/glfw/build"
+    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/glfw/build"
+)
+
+set_target_properties(assimp PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/assimp/build"
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/assimp/build"
+    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/assimp/build"
+)
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE src/pch.hpp)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC 
     glfw
     assimp
-    glm
     glad
     #gtest
     OpenGL::GL)

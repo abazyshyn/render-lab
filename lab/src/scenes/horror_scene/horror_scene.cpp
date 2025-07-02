@@ -13,7 +13,8 @@ namespace Lab
 
     CHorrorScene::CHorrorScene()
         : m_Window(CWindow::GetInstance()),
-          m_Shader({LAB_BASIC_VERTEX_SHADER_PATH, LAB_BASIC_FRAGMENT_SHADER_PATH}),
+          m_Camera(),
+          m_Shader(CShader({LAB_BASIC_VERTEX_SHADER_PATH, LAB_BASIC_FRAGMENT_SHADER_PATH})),
           m_OpaqueSceneEntities({std::make_shared<CGround>(CModel("../../../../lab/res/models/ground/ground.fbx"))}),
           m_TransparentSceneEntities({std::make_shared<CSceneEntity>(CModel("../../../../lab/res/models/office_window/office_window.fbx"))})
     {
@@ -59,7 +60,7 @@ namespace Lab
             sceneEntity->m_Model.Draw(m_Shader);
         }
 
-        m_Shader.UnBind();
+        // m_Shader.UnBind();
     }
 
 } // namespace Lab

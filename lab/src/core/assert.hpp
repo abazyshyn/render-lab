@@ -4,15 +4,16 @@
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
 #include "log.hpp"
-#include <csignal>
 
 #if defined(LAB_LINUX)
+
+#include <csignal>
 
 #define DEBUG_BREAK raise(SIGTRAP)
 
 #elif defined(LAB_WINDOWS)
 
-#define DEBUG_BREAK __debugbreak
+#define DEBUG_BREAK __debugbreak()
 
 #else
 

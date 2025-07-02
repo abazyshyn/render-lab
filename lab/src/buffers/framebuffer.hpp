@@ -10,7 +10,7 @@ namespace Lab
     class CFramebuffer
     {
     public:
-        CFramebuffer(uint32_t ct_AttachmentWidth, uint32_t ct_AttachmentHeight);
+        explicit CFramebuffer(uint32_t ct_AttachmentWidth, uint32_t ct_AttachmentHeight);
         ~CFramebuffer();
 
         /**
@@ -23,8 +23,14 @@ namespace Lab
          */
         void UnBind() const;
 
+        /**
+         * @brief Returns color buffer
+         */
+        uint32_t GetColorBuffer() const { return m_ColorBuffer; }
+
     private:
         uint32_t m_FBO;
+        uint32_t m_ColorBuffer;
 
         void SetupFramebuffer(uint32_t ct_AttachmentWidth, uint32_t ct_AttachmentHeight);
     };

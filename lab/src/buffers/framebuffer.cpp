@@ -8,6 +8,8 @@ namespace Lab
 {
 
     CFramebuffer::CFramebuffer(const uint32_t ct_AttachmentWidth, const uint32_t ct_AttachmentHeight)
+        : m_FBO(0),
+          m_ColorBuffer(0)
     {
         SetupFramebuffer(ct_AttachmentWidth, ct_AttachmentHeight);
     }
@@ -32,9 +34,8 @@ namespace Lab
         Bind();
 
         // Create a color attachment
-        uint32_t colorAttachment = 0;
-        glGenTextures(1, &colorAttachment);
-        glBindTexture(GL_TEXTURE_2D, colorAttachment);
+        glGenTextures(1, &m_ColorBuffer);
+        glBindTexture(GL_TEXTURE_2D, m_ColorBuffer);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, ct_AttachmentWidth, ct_AttachmentHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
 
@@ -42,7 +43,7 @@ namespace Lab
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
         // Attach color attachment to the framebuffer
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorAttachment, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorBuffer, 0);
 
         // Create a combined depth and stencil attachments
         uint32_t RBO = 0;
