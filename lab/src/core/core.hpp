@@ -1,7 +1,14 @@
 #if !defined(CORE_HPP)
 #define CORE_HPP
 
-#define LAB_BASIC_VERTEX_SHADER_PATH "../../../../lab/res/shaders/gl_basic.vert"
-#define LAB_BASIC_FRAGMENT_SHADER_PATH "../../../../lab/res/shaders/gl_basic.frag"
+/**
+ * @brief Base path to shaders
+ */
+const std::string LAB_BASE_SHADERS_PATH = "../../../../lab/res/shaders/";
+
+/**
+ * @brief Base path to models
+ */
+const std::string LAB_BASE_MODELS_PATH = "../../../../lab/res/models/";
 
 #endif // CORE_HPP

@@ -7,5 +7,5 @@ uniform sampler2D screenTexture;
 
 void main()
 {
-	resultedColor = texture(screenTexture,textureCoordinate);
+	resultedColor = texture(screenTexture, textureCoordinate);
 }

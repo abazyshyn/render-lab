@@ -1,6 +1,8 @@
 #include "pch.hpp"
 
-#include "mesh.hpp"
+#include "shader/shader.hpp"
+
+#include "mesh.hpp" // target
 
 #include "backend/opengl.hpp"
 #include <glad/glad.h>

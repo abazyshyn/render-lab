@@ -2,17 +2,14 @@
 #define RENDERER_HPP
 
 #include "buffers/framebuffer.hpp"
-#include "scenes/i_scene.hpp"
 #include "primitive.hpp"
 #include "shader/shader.hpp"
-
-#include <glad/glad.h>
 
 namespace Lab
 {
     // Forward declaration
     class CWindow;
-    class CSceneEntity;
+    class CIScene;
 
     /**
      * @brief Implementation of the main renderer

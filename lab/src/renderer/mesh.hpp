@@ -1,10 +1,10 @@
 #if !defined(MESH_HPP)
 #define MESH_HPP
 
-#include "shader/shader.hpp"
-
 namespace Lab
 {
+
+    class CShader;
 
     /**
      * @brief Supported texture types

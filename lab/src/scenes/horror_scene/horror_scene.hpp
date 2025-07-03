@@ -2,7 +2,6 @@
 #define SCENE_HPP
 
 #include "scenes/i_scene.hpp"
-
 #include "camera/camera.hpp"
 #include "shader/shader.hpp"
 
@@ -10,6 +9,7 @@ namespace Lab
 {
     // Forward declaration
     class CWindow;
+    class CSkybox;
     class CSceneEntity;
 
     /**
@@ -29,7 +29,9 @@ namespace Lab
 
     private:
         CWindow &m_Window;
+        CSkybox &m_Skybox;
         CCamera m_Camera;
+        unsigned char _pad[4] = {}; // Explicit padding
         CShader m_Shader;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
         std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;

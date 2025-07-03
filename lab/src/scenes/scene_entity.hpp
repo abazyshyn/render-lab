@@ -4,22 +4,30 @@
 namespace Lab
 {
 
+    class CModel;
+    class CShader;
+
     /**
-     * @brief Implementation of a base class Scene Entity
+     * @brief Implementation of a base class "scene entity"
      *
-     * Provides common interface for all Entities in a scene
+     * Provides common interface for all entities in a scene
      */
     class CSceneEntity
     {
     public:
-        /**
-         * Entity model
-         */
-        CModel m_Model; // TODO: make a private
-
         explicit CSceneEntity(const CModel &ct_Model);
 
         virtual ~CSceneEntity() = default;
+
+        /**
+         * @brief Draws a scene entity
+         *
+         * @param[in] ct_Shader Shader
+         */
+        virtual void Draw(const CShader &ct_Shader) const;
+
+    private:
+        std::unique_ptr<CModel> m_Model;
     };
 
 } // namespace Lab

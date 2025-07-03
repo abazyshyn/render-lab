@@ -1,10 +1,12 @@
 #include "pch.hpp"
 
-#include "renderer.hpp"
+#include "renderer.hpp" // target
 
+#include "scenes/i_scene.hpp"
 #include "window/window.hpp"
 #include "scenes/horror_scene/horror_scene.hpp"
 #include "backend/opengl.hpp"
+#include <glad/glad.h>
 
 namespace Lab
 {
@@ -22,11 +24,6 @@ namespace Lab
 
         // TODO: make enum with all possible indices for scenes
         // HORROR SCENE SETTINGS:
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_DEPTH_CLAMP);
-        glEnable(GL_BLEND);
-        glEnable(GL_CULL_FACE);
-
         glDepthFunc(GL_LESS);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }

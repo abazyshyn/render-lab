@@ -1,8 +1,10 @@
 #include "pch.hpp"
 
-#include "model.hpp"
-#include <glad/glad.h>
+#include "shader/shader.hpp"
+
+#include "model.hpp" // target
 #include <stb_image.h>
+#include <glad/glad.h>
 
 namespace Lab
 {
@@ -233,7 +235,7 @@ namespace Lab
             // throw std::runtime_error("Failed to load texture pImageData.");
         }
 
-        GLint textureFormat{};
+        GLint textureFormat;
         switch (channels)
         {
             case 1:
