@@ -2,30 +2,19 @@
 
 #include "renderer.hpp" // target
 
-#include "scenes/i_scene.hpp"
 #include "window/window.hpp"
-#include "scenes/horror_scene/horror_scene.hpp"
+#include "scenes/i_scene.hpp"
+#include "primitive.hpp"
 #include "backend/opengl.hpp"
+#include "scenes/horror_scene/horror_scene.hpp"
 #include <glad/glad.h>
 
 namespace Lab
 {
-
-    CRenderer::CRenderer()
-        : m_Window(CWindow::GetInstance()),
-          m_FBO(CFramebuffer(static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight()))),
-          rectangle(),
-          screenShader(CShader({"../../../../lab/res/shaders/gl_screen.vert", "../../../../lab/res/shaders/gl_screen.frag"})),
-          m_Scenes({std::make_shared<CHorrorScene>()})
+    CRenderer &CRenderer::GetInstance()
     {
-#if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-        OpenGL::EnableDebugOpenGL();
-#endif
-
-        // TODO: make enum with all possible indices for scenes
-        // HORROR SCENE SETTINGS:
-        glDepthFunc(GL_LESS);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        static CRenderer instance;
+        return instance;
     }
 
     void CRenderer::Render(float t_DeltaTime)
@@ -50,9 +39,28 @@ namespace Lab
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            screenShader.Bind();
-            rectangle.DrawRectangle(m_FBO.GetColorBuffer());
+            m_ScreenShader.Bind();
+            m_Primitive.DrawRectangle(m_FBO.GetColorBuffer());
         }
+    }
+
+    CRenderer::CRenderer()
+        : m_Window(CWindow::GetInstance()),
+          m_FBO(CFramebuffer(static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight()))),
+          m_Primitive(CPrimitive::GetInstance()),
+          m_ScreenShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_screen.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_screen.frag"})),
+          m_Scenes({std::make_shared<CHorrorScene>()})
+    {
+#if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
+        OpenGL::EnableDebugOpenGL();
+#endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
+
+        // TODO: make enum with all possible indices for scenes
+        // HORROR SCENE SETTINGS:
+        glDepthFunc(GL_LESS);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        // Common
+        glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS); // For an old hardware
     }
 
 } // namespace Lab

@@ -1,6 +1,6 @@
 #include "pch.hpp"
 
-#include "opengl.hpp"
+#include "opengl.hpp" // target
 
 namespace OpenGL
 {

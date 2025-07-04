@@ -60,8 +60,8 @@ namespace Lab
             PrintMessage(ct_MessageSeverity, message);
         }
 
-        std::cout << "\033[0m"
-                  << std::endl; // New line after displaying all messages
+        // New line after displaying all messages
+        std::cout << "\033[0m" << std::endl;
     }
 
     template <typename T>
@@ -82,12 +82,18 @@ namespace Lab
 
 } // namespace Lab
 
+/**
+ * @brief Macro for logging
+ */
 #define LAB_LOG(messageSeverity, ...) Lab::Log(messageSeverity, __VA_ARGS__)
 
-#else
+#else // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
+/**
+ * @brief Macro that evaluates to nothing
+ */
 #define LAB_LOG(messageSeverity, ...)
 
-#endif // LAB_DEBUG || LAB_DEVELOPMENT
+#endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
 #endif // LOG_HPP

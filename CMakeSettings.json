@@ -7,6 +7,9 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
+      "clangTidyChecks": "llvm-include-order, -modernize-use-override",
+      "enableMicrosoftCodeAnalysis": true,
+      "enableClangTidyCodeAnalysis": true,
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": ""

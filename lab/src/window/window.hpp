@@ -62,7 +62,7 @@ namespace Lab
     private:
         unsigned char _pad[7] = {}; // Explicit padding
 
-        GlfwData_s m_GlfwData;
+        GLFW::GlfwData_s m_GlfwData;
 
         CWindow();
 

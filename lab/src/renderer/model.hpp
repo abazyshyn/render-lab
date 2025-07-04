@@ -45,6 +45,7 @@ namespace Lab
         std::string m_ModelDirectory;
         std::string m_ModelName;
 
+        // TODO: decide what to do about this
         // #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         //         std::string m_ModelName;
         // #endif

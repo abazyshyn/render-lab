@@ -3,7 +3,7 @@
 
 namespace Lab
 {
-
+    // Forward declaration
     class CShader;
 
     /**
@@ -12,7 +12,7 @@ namespace Lab
     enum TextureType_e
     {
         LAB_TEXTURE_TYPE_DIFFUSE = 0,
-        LAB_TEXTURE_TYPE_SPECULAR
+        LAB_TEXTURE_TYPE_SPECULAR,
     };
 
     /**
@@ -66,11 +66,9 @@ namespace Lab
         std::vector<uint32_t> m_Indices;
         std::vector<Texture_s> m_Textures;
         std::string m_Name;
-
         uint32_t m_VAO;
         uint32_t m_VBO;
         uint32_t m_IBO;
-
         unsigned char _pad[4] = {}; // Explicit padding
 
         void SetupMesh();

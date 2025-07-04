@@ -1,9 +1,10 @@
 #include "pch.hpp"
 
-#include "glfw.hpp"
+#include "glfw.hpp" // target
+
 #include <glad/glad.h>
 
-namespace Lab
+namespace GLFW
 {
 
     void InitGlfw(GlfwData_s &t_GlfwData)
@@ -44,12 +45,12 @@ namespace Lab
 
         glViewport(0, 0, t_GlfwData.m_WindowWidth, t_GlfwData.m_WindowHeight);
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING, "Window created.");
+        LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING, "Window created.");
     }
 
     void ShutdownGlfw(const GlfwData_s &ct_GlfwData)
     {
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING, "Window destroyed.");
+        LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING, "Window destroyed.");
 
         glfwDestroyWindow(ct_GlfwData.m_pWindow);
         glfwTerminate();
@@ -85,7 +86,7 @@ namespace Lab
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
             glfwGetKey(t_pWindow, GLFW_KEY_ESCAPE))
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING,
                     "SHIFT + ESCAPE keys pressed.");
 
             glfwData.m_IsRunning = false;
@@ -99,7 +100,7 @@ namespace Lab
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
             glfwGetKey(t_pWindow, GLFW_KEY_C))
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING,
                     "CONTROL + SHIFT + C keys pressed.");
 
             glfwSetInputMode(t_pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
@@ -113,7 +114,7 @@ namespace Lab
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
             glfwGetKey(t_pWindow, GLFW_KEY_X))
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING,
                     "CONTROL + SHIFT + X keys pressed.");
 
             glfwSetInputMode(t_pWindow, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
@@ -125,7 +126,7 @@ namespace Lab
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
             glfwGetKey(t_pWindow, GLFW_KEY_Q))
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING,
                     "SHIFT + Q keys pressed.");
 
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -137,7 +138,7 @@ namespace Lab
              glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
             glfwGetKey(t_pWindow, GLFW_KEY_Q))
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_WARNING,
                     "CONTROL + Q keys pressed.");
 
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -163,4 +164,4 @@ namespace Lab
         glViewport(0, 0, glfwData.m_WindowWidth, glfwData.m_WindowHeight);
     }
 
-} // namespace Lab
+} // namespace GLFW

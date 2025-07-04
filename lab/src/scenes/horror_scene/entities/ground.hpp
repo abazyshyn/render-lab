@@ -7,11 +7,12 @@ namespace Lab
 {
 
     /**
-     * Implementation of the Ground Entity
+     * @brief Implementation of the Ground Entity
      */
     class CGround final : public CSceneEntity
     {
     public:
+        // TODO: provide model construction directly in this class
         explicit CGround(const CModel &ct_Model);
     };
 

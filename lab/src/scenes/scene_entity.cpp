@@ -2,20 +2,19 @@
 
 #include "scene_entity.hpp" // target
 
-#include "renderer/model.hpp"
 #include "shader/shader.hpp"
 
 namespace Lab
 {
 
     CSceneEntity::CSceneEntity(const CModel &ct_Model)
-        : m_Model(std::make_unique<CModel>(ct_Model))
+        : m_Model(ct_Model)
     {
     }
 
     void CSceneEntity::Draw(const CShader &ct_Shader) const
     {
-        m_Model->Draw(ct_Shader);
+        m_Model.Draw(ct_Shader);
     }
 
 } // namespace Lab

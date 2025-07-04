@@ -1,7 +1,9 @@
 #include "pch.hpp"
 
-#include "application.hpp"
+#include "application.hpp" // target
+
 #include "window/window.hpp"
+#include "renderer/renderer.hpp"
 
 namespace Lab
 {
@@ -25,7 +27,7 @@ namespace Lab
 
     CApplication::CApplication()
         : m_Window(CWindow::GetInstance()),
-          m_Renderer(),
+          m_Renderer(CRenderer::GetInstance()),
           m_LastFrameTime(0.0f)
     {
     }

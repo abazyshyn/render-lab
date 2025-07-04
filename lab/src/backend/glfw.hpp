@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace Lab
+namespace GLFW
 {
 
     /**
@@ -11,12 +11,12 @@ namespace Lab
      */
     struct GlfwData_s
     {
-        GLFWwindow *m_pWindow = nullptr;
-        std::string m_WindowTitle = "RenderLab";
-        int32_t m_WindowWidth = 1280;
-        int32_t m_WindowHeight = 720;
-        bool m_VSync = true;
-        bool m_IsRunning = true;
+        GLFWwindow *m_pWindow = nullptr;         // Window pointer
+        std::string m_WindowTitle = "RenderLab"; // Window title
+        int32_t m_WindowWidth = 1280;            // Window width
+        int32_t m_WindowHeight = 720;            // Window height
+        bool m_VSync = true;                     // VSync status
+        bool m_IsRunning = true;                 // window status
 
     private:
         unsigned char _pad[6] = {}; // Explicit padding
@@ -68,8 +68,7 @@ namespace Lab
      * releases may add more actions.
      * @param[in] t_Mods Bit field describing which modifier keys were held down.
      */
-    void KeyCallback(GLFWwindow *t_pWindow, int t_Key, int t_Scancode, int t_Action,
-                     int t_Mods);
+    void KeyCallback(GLFWwindow *t_pWindow, int t_Key, int t_Scancode, int t_Action, int t_Mods);
 
     /**
      * @brief The function for framebuffer size callbacks.
@@ -80,6 +79,6 @@ namespace Lab
      */
     void FramebufferSizeCallback(GLFWwindow *t_pWindow, int t_Width, int t_Height);
 
-} // namespace Lab
+} // namespace GLFW
 
 #endif // GLFW_HPP

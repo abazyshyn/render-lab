@@ -38,10 +38,18 @@ namespace Lab
         [[nodiscard]] uint32_t GetProgramId() const { return m_ProgramId; }
 
         /**
-         * @brief Sets 4x4 matrix to the uniform
+         * @brief Sets vector of floats of size 3 to the uniform
          *
          * @param[in] ct_UniformName Uniform name
-         * @param[in] ct_Matrix Matrix 4x4
+         * @param[in] ct_Vector Vector3f
+         */
+        void SetUniform3fv(const std::string &ct_UniformName, const glm::vec3 &ct_Vector);
+
+        /**
+         * @brief Sets 4x4 matrix of floats to the uniform
+         *
+         * @param[in] ct_UniformName Uniform name
+         * @param[in] ct_Matrix Matrix4f
          */
         void SetUniformMatrix4fv(const std::string &ct_UniformName, const glm::mat4 &ct_Matrix);
 

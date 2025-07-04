@@ -17,8 +17,8 @@ namespace Lab
     }
 
     CSkybox::CSkybox()
-        : CSceneEntity(CModel(LAB_BASE_MODELS_PATH + "skybox_horror_scene/skybox.fbx")),
-          m_Shader(CShader({LAB_BASE_SHADERS_PATH + "gl_skybox.vert", LAB_BASE_SHADERS_PATH + "gl_skybox.frag"})),
+        : CSceneEntity(CModel(Utils::LAB_BASE_MODELS_PATH + "skybox_horror_scene/skybox.fbx")),
+          m_Shader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_skybox.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_skybox.frag"})),
           m_TextureId(0)
     {
     }

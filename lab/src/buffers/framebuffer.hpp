@@ -25,8 +25,10 @@ namespace Lab
 
         /**
          * @brief Returns color buffer
+         *
+         * @return Color buffer
          */
-        uint32_t GetColorBuffer() const { return m_ColorBuffer; }
+        [[nodiscard]] uint32_t GetColorBuffer() const { return m_ColorBuffer; }
 
     private:
         uint32_t m_FBO;

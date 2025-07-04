@@ -7,17 +7,11 @@
 
 namespace Lab
 {
-    CPrimitive::CPrimitive()
-        : m_RectangleVertices({-1.0f, 1.0f, 0.0f, 1.0f, // Positions 2, Textures 2
-                               -1.0f, -1.0f, 0.0f, 0.0f,
-                               1.0f, -1.0f, 1.0f, 0.0f,
-                               1.0f, 1.0f, 1.0f, 1.0f}),
-          m_RectangleIndices({0, 1, 2, 0, 3, 2}),
-          m_RectangleVAO(0),
-          m_RectangleVBO(0),
-          m_RectangleIBO(0)
+
+    CPrimitive &CPrimitive::GetInstance()
     {
-        SetupRectangle();
+        static CPrimitive instance;
+        return instance;
     }
 
     CPrimitive::~CPrimitive()
@@ -31,6 +25,19 @@ namespace Lab
         glBindTexture(GL_TEXTURE_2D, ct_ColorBuffer);
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
+    }
+
+    CPrimitive::CPrimitive()
+        : m_RectangleVertices({-1.0f, 1.0f, 0.0f, 1.0f, // Positions 2, Textures 2
+                               -1.0f, -1.0f, 0.0f, 0.0f,
+                               1.0f, -1.0f, 1.0f, 0.0f,
+                               1.0f, 1.0f, 1.0f, 1.0f}),
+          m_RectangleIndices({0, 1, 2, 0, 3, 2}),
+          m_RectangleVAO(0),
+          m_RectangleVBO(0),
+          m_RectangleIBO(0)
+    {
+        SetupRectangle();
     }
 
     void CPrimitive::SetupRectangle()

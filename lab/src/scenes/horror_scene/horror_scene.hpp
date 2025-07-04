@@ -18,6 +18,7 @@ namespace Lab
     class CHorrorScene final : public CIScene
     {
     public:
+        // TODO: Should it be a singleton?
         CHorrorScene();
 
         /**
@@ -33,7 +34,9 @@ namespace Lab
         CCamera m_Camera;
         unsigned char _pad[4] = {}; // Explicit padding
         CShader m_Shader;
+        CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
+        std::vector<std::shared_ptr<CSceneEntity>> m_ReflectiveObjects;
         std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;
     };
 

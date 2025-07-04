@@ -1,9 +1,11 @@
 #if !defined(SCENE_ENTITY_HPP)
 #define SCENE_ENTITY_HPP
 
+#include "renderer/model.hpp"
+
 namespace Lab
 {
-
+    // Forward declaration
     class CModel;
     class CShader;
 
@@ -27,7 +29,7 @@ namespace Lab
         virtual void Draw(const CShader &ct_Shader) const;
 
     private:
-        std::unique_ptr<CModel> m_Model;
+        CModel m_Model;
     };
 
 } // namespace Lab

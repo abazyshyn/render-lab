@@ -25,6 +25,7 @@ namespace Lab
 
     CMesh::~CMesh()
     {
+        // TODO:
         // LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING, "CALLED ", this->GetName());
         // LAB_ASSERT(0);
         //  OpenGL::DeleteObjects(1, &m_VAO, 1, &m_VBO, 1, &m_IBO);

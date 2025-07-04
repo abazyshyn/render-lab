@@ -8,6 +8,7 @@ namespace Lab
     // Forward declaration
     class CWindow;
 
+    // TODO: Still in development
     class CCamera
     {
     public:
@@ -39,7 +40,6 @@ namespace Lab
         glm::vec3 m_CameraUpVector;
         glm::vec3 m_CameraWorldUpVector;
         glm::vec3 m_CameraRightVector;
-
         float m_FOV;
         float m_CursorPositionX;
         float m_CursorPositionY;
@@ -49,9 +49,7 @@ namespace Lab
         float m_Pitch;
         float m_Yaw;
         float m_Roll;
-
         bool m_IsCursorPositionSet;
-
         unsigned char _pad[3] = {0}; // Explicit padding
 
         void UpdateCameraVectors();

@@ -2,7 +2,6 @@
 #define RENDERER_HPP
 
 #include "buffers/framebuffer.hpp"
-#include "primitive.hpp"
 #include "shader/shader.hpp"
 
 namespace Lab
@@ -10,27 +9,46 @@ namespace Lab
     // Forward declaration
     class CWindow;
     class CIScene;
+    class CPrimitive;
 
     /**
      * @brief Implementation of the main renderer
+     *
+     * Implemented using Mayers' Singleton pattern
+     * Neither CopyConstructible/MoveConstructible nor
+     * CopyAssignable/MoveAssignable
      */
-    class CRenderer // TODO : make singleton
+    class CRenderer
     {
     public:
-        CRenderer();
+        /**
+         * @brief Returns the only one existing instance of the CRenderer class
+         *
+         * @return Instance
+         */
+        static CRenderer &GetInstance();
 
+        CRenderer(const CRenderer &ct_Source) = delete;
+        CRenderer(CRenderer &&t_Source) = delete;
+
+        CRenderer &operator=(const CRenderer &ct_RHV) = delete;
+        CRenderer &operator=(CRenderer &&t_RHV) = delete;
+
+        /**
+         * @brief Main renderer, renders and manages all scenes
+         *
+         * @param[in] t_DeltaTime Delta time
+         */
         void Render(float t_DeltaTime);
 
     private:
         CWindow &m_Window;
         CFramebuffer m_FBO;
-
-        unsigned char _pad[4] = {}; // Explicit padding
-
-        CPrimitive rectangle; // TODO: temp
-        CShader screenShader; // TODO: temp
-
+        CPrimitive &m_Primitive; // Screen
+        CShader m_ScreenShader;  // TODO: temp
         std::vector<std::shared_ptr<CIScene>> m_Scenes;
+
+        CRenderer();
     };
 
 } // namespace Lab
