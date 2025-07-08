@@ -53,6 +53,21 @@ namespace Lab
          */
         void SetUniformMatrix4fv(const std::string &ct_UniformName, const glm::mat4 &ct_Matrix);
 
+        //// TODO: write documentation
+        // void SetupUBO(uint32_t ct_UniformBlockSize);
+
+        //// TODO: write documentation
+        // void BindRangeUBO(uint32_t ct_Index, uint32_t ct_Offset, uint32_t ct_Size) const;
+
+        //// TODO: write documentation
+        // void BindUBO() const;
+
+        //// TODO: write documentation
+        // void UnBindUBO() const;
+
+        //// TODO: write documentation
+        // void SetDataUBO(uint32_t ct_Offset, uint32_t ct_Size, const void *ct_pData);
+
     private:
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         std::string m_ShaderName;
@@ -61,8 +76,9 @@ namespace Lab
         std::unordered_map<std::string, int32_t> m_UniformCache;
 
         uint32_t m_ProgramId;
+        uint32_t m_UBO;
 
-        unsigned char _pad[4] = {}; // Explicit padding
+        // unsigned char _pad[4] = {}; // Explicit padding
 
         void CreateShaderProgramFromSource(const std::vector<std::filesystem::path> &ct_ShaderSourcePaths);
 

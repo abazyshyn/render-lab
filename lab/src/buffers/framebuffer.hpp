@@ -34,7 +34,7 @@ namespace Lab
         uint32_t m_FBO;
         uint32_t m_ColorBuffer;
 
-        void SetupFramebuffer(uint32_t ct_AttachmentWidth, uint32_t ct_AttachmentHeight);
+        void SetupFBO(uint32_t ct_AttachmentWidth, uint32_t ct_AttachmentHeight);
     };
 
 } // namespace Lab

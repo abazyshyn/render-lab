@@ -11,7 +11,7 @@ namespace Lab
         : m_FBO(0),
           m_ColorBuffer(0)
     {
-        SetupFramebuffer(ct_AttachmentWidth, ct_AttachmentHeight);
+        SetupFBO(ct_AttachmentWidth, ct_AttachmentHeight);
     }
 
     CFramebuffer::~CFramebuffer()
@@ -29,7 +29,7 @@ namespace Lab
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
-    void CFramebuffer::SetupFramebuffer(const uint32_t ct_AttachmentWidth, const uint32_t ct_AttachmentHeight)
+    void CFramebuffer::SetupFBO(const uint32_t ct_AttachmentWidth, const uint32_t ct_AttachmentHeight)
     {
         glGenFramebuffers(1, &m_FBO);
         this->Bind();

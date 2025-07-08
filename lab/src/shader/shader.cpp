@@ -46,6 +46,34 @@ namespace Lab
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(ct_Matrix));
     }
 
+    // void CShader::SetupUBO(const uint32_t ct_UniformBlockSize)
+    //{
+    //     glGenBuffers(1, &m_UBO);
+    //     glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
+    //     glBufferData(GL_UNIFORM_BUFFER, static_cast<GLsizeiptr>(ct_UniformBlockSize), nullptr, GL_STATIC_DRAW);
+    //     glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    // }
+
+    // void CShader::BindRangeUBO(const uint32_t ct_Index, const uint32_t ct_Offset, const uint32_t ct_Size) const
+    //{
+    //     glBindBufferRange(GL_UNIFORM_BUFFER, ct_Index, m_UBO, static_cast<GLintptr>(ct_Offset), static_cast<GLsizeiptr>(ct_Size));
+    // }
+
+    // void CShader::BindUBO() const
+    //{
+    //     glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
+    // }
+
+    // void CShader::UnBindUBO() const
+    //{
+    //     glBindBuffer(GL_UNIFORM_BUFFER, 0);
+    // }
+
+    // void CShader::SetDataUBO(uint32_t ct_Offset, uint32_t ct_Size, const void *ct_pData)
+    //{
+    //     glBufferSubData(GL_UNIFORM_BUFFER, static_cast<GLintptr>(ct_Offset), static_cast<GLsizeiptr>(ct_Size), ct_pData);
+    // }
+
     void CShader::CreateShaderProgramFromSource(const std::vector<std::filesystem::path> &ct_ShaderSourcePaths)
     {
         m_ProgramId = glCreateProgram();

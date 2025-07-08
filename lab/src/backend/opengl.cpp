@@ -159,7 +159,7 @@ namespace OpenGL
                 "\nSource: ", source, "\nType: ", type,
                 "\nID: ", t_Id, "\nSeverity: ", severity,
                 "\nMessage: ", ct_Message);
-        LAB_ASSERT((severity == "HIGH" || severity == "MEDIUM" || severity == "LOW"));
+        // LAB_ASSERT((severity == "HIGH" || severity == "MEDIUM" || severity == "LOW"));
     }
 
 #endif

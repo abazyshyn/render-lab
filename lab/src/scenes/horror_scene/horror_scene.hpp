@@ -4,6 +4,7 @@
 #include "scenes/i_scene.hpp"
 #include "camera/camera.hpp"
 #include "shader/shader.hpp"
+#include "buffers/uniform_buffer.hpp"
 
 namespace Lab
 {
@@ -32,7 +33,7 @@ namespace Lab
         CWindow &m_Window;
         CSkybox &m_Skybox;
         CCamera m_Camera;
-        unsigned char _pad[4] = {}; // Explicit padding
+        CUniformBuffer m_UBO;
         CShader m_Shader;
         CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
