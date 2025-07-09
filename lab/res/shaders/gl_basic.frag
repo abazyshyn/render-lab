@@ -1,21 +1,15 @@
 #version 460 core
 
+uniform sampler2D u_DiffuseTexture1;
+
 in VSOut
 {
-    vec2 textureCoordinate;
+    vec2 vs_textureCoordinate;
 } fsIn;
 
 out vec4 resultedColor;
 
-uniform sampler2D u_DiffuseTexture1;
-
 void main()
 {
-    vec4 texColor = texture(u_DiffuseTexture1, fsIn.textureCoordinate);
-    if (texColor.a < 0.1)
-    {
-        discard;
-    }
-    
-    resultedColor = texture(u_DiffuseTexture1, fsIn.textureCoordinate);
+    resultedColor = texture(u_DiffuseTexture1, fsIn.vs_textureCoordinate);
 }

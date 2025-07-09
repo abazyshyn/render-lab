@@ -25,7 +25,7 @@ namespace OpenGL
     /**
      * @brief Enables OpenGL debugging
      */
-    void EnableDebugOpenGL();
+    void EnableDebug();
 
     /**
      * @brief Callback function that will be called when a debug message is generated

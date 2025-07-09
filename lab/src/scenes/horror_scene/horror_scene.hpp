@@ -35,6 +35,7 @@ namespace Lab
         CCamera m_Camera;
         CUniformBuffer m_UBO;
         CShader m_Shader;
+        CShader m_DebugNormalShader;
         CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
         std::vector<std::shared_ptr<CSceneEntity>> m_ReflectiveObjects;

@@ -11,12 +11,10 @@ layout(std140, binding = 0) uniform ub_Matrices
 };
 
 uniform mat4 u_ModelMatrix;
-//uniform mat4 u_ViewMatrix;
-//uniform mat4 u_ProjectionMatrix;
 
 out VSOut
 {
-    vec2 textureCoordinate;
+    vec2 vs_textureCoordinate;
 } vsOut;
 
 void main()
@@ -25,5 +23,5 @@ void main()
 
     gl_Position = PVM * vec4(a_Position, 1.0);
 
-    vsOut.textureCoordinate = a_TextureCoordinate;
+    vsOut.vs_textureCoordinate = a_TextureCoordinate;
 }

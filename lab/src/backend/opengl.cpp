@@ -15,7 +15,7 @@ namespace OpenGL
         glDeleteBuffers(ct_CountIBO, ct_IBO);
     }
 
-    void EnableDebugOpenGL()
+    void EnableDebug()
     {
         int32_t contextFlags = 0;
         glGetIntegerv(GL_CONTEXT_FLAGS, &contextFlags);

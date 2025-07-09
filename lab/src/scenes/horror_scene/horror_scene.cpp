@@ -7,6 +7,7 @@
 #include "renderer/model.hpp"
 #include "scenes/horror_scene/entities/ground.hpp"
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace Lab
 {
@@ -17,6 +18,9 @@ namespace Lab
           m_Camera(),
           m_UBO(),
           m_Shader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_basic.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_basic.frag"})),
+          m_DebugNormalShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.vert",
+                                       Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.geom",
+                                       Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.frag"})),
           m_ShaderReflect(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_reflect.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_reflect.frag"})),
           m_OpaqueSceneEntities({std::make_shared<CGround>(CModel(Utils::LAB_BASE_MODELS_PATH + "ground/ground.fbx"))}),
           m_ReflectiveObjects({std::make_shared<CSceneEntity>(CModel(Utils::LAB_BASE_MODELS_PATH + "skybox_horror_scene/skybox.fbx"))}),
@@ -92,19 +96,31 @@ namespace Lab
             m_ShaderReflect.SetUniform3fv("u_CameraPosition", m_Camera.GetCameraPos());
 
             sceneEntity->Draw(m_ShaderReflect);
-        }
 
-        // Process transparent scene entities
-        m_Shader.Bind();
+            m_DebugNormalShader.Bind();
+            m_DebugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            m_DebugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
+            m_DebugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", m_Camera.CalculatePerspectiveProjectionMatrix(m_Window));
+            sceneEntity->Draw(m_DebugNormalShader);
+        }
 
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_TransparentSceneEntities)
         {
+            // Process transparent scene entities
+            m_Shader.Bind();
+
             glm::mat4 modelMatrix(1.0f);
             modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 0.2f, 0.0f));
 
             m_Shader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
             sceneEntity->Draw(m_Shader);
+
+            m_DebugNormalShader.Bind();
+            m_DebugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            m_DebugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
+            m_DebugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", m_Camera.CalculatePerspectiveProjectionMatrix(m_Window));
+            sceneEntity->Draw(m_DebugNormalShader);
         }
     }
 

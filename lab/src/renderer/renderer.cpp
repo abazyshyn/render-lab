@@ -52,7 +52,7 @@ namespace Lab
           m_Scenes({std::make_shared<CHorrorScene>()})
     {
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-        OpenGL::EnableDebugOpenGL();
+        OpenGL::EnableDebug();
 #endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
         // TODO: make enum with all possible indices for scenes

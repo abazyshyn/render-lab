@@ -22,6 +22,18 @@ namespace Lab
         glUseProgram(m_ProgramId);
     }
 
+    void CShader::SetUniform1f(const std::string &ct_UniformName, const float ct_Value)
+    {
+        const int32_t uniformLocation = UniformFromCache(ct_UniformName);
+
+        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+                "Setting the uniform matrix4fv...",
+                "\nUniform name: ", ct_UniformName,
+                "\nLocation: ", uniformLocation);
+
+        glUniform1f(uniformLocation, ct_Value);
+    }
+
     void CShader::SetUniform3fv(const std::string &ct_UniformName, const glm::vec3 &ct_Vector)
     {
         const int32_t uniformLocation = UniformFromCache(ct_UniformName);
@@ -45,34 +57,6 @@ namespace Lab
 
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(ct_Matrix));
     }
-
-    // void CShader::SetupUBO(const uint32_t ct_UniformBlockSize)
-    //{
-    //     glGenBuffers(1, &m_UBO);
-    //     glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
-    //     glBufferData(GL_UNIFORM_BUFFER, static_cast<GLsizeiptr>(ct_UniformBlockSize), nullptr, GL_STATIC_DRAW);
-    //     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-    // }
-
-    // void CShader::BindRangeUBO(const uint32_t ct_Index, const uint32_t ct_Offset, const uint32_t ct_Size) const
-    //{
-    //     glBindBufferRange(GL_UNIFORM_BUFFER, ct_Index, m_UBO, static_cast<GLintptr>(ct_Offset), static_cast<GLsizeiptr>(ct_Size));
-    // }
-
-    // void CShader::BindUBO() const
-    //{
-    //     glBindBuffer(GL_UNIFORM_BUFFER, m_UBO);
-    // }
-
-    // void CShader::UnBindUBO() const
-    //{
-    //     glBindBuffer(GL_UNIFORM_BUFFER, 0);
-    // }
-
-    // void CShader::SetDataUBO(uint32_t ct_Offset, uint32_t ct_Size, const void *ct_pData)
-    //{
-    //     glBufferSubData(GL_UNIFORM_BUFFER, static_cast<GLintptr>(ct_Offset), static_cast<GLsizeiptr>(ct_Size), ct_pData);
-    // }
 
     void CShader::CreateShaderProgramFromSource(const std::vector<std::filesystem::path> &ct_ShaderSourcePaths)
     {
@@ -174,6 +158,11 @@ namespace Lab
                 shaderType = GL_VERTEX_SHADER;
                 break;
             }
+            case LAB_SHADER_TYPE_GEOMETRY:
+            {
+                shaderType = GL_GEOMETRY_SHADER;
+                break;
+            }
             case LAB_SHADER_TYPE_FRAGMENT:
             {
                 shaderType = GL_FRAGMENT_SHADER;
@@ -226,6 +215,10 @@ namespace Lab
         if (ct_ShaderPath.find(".vert") != std::string::npos)
         {
             return LAB_SHADER_TYPE_VERTEX;
+        }
+        else if (ct_ShaderPath.find(".geom") != std::string::npos)
+        {
+            return LAB_SHADER_TYPE_GEOMETRY;
         }
         else if (ct_ShaderPath.find(".frag") != std::string::npos)
         {

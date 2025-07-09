@@ -11,6 +11,7 @@ namespace Lab
     {
         LAB_SHADER_TYPE_UNKNOWN = 0,
         LAB_SHADER_TYPE_VERTEX,
+        LAB_SHADER_TYPE_GEOMETRY,
         LAB_SHADER_TYPE_FRAGMENT
     };
 
@@ -38,6 +39,14 @@ namespace Lab
         [[nodiscard]] uint32_t GetProgramId() const { return m_ProgramId; }
 
         /**
+         * @brief Sets float value to the uniform
+         *
+         * @param[in] ct_UniformName Uniform name
+         * @param[in] ct_Value Float value
+         */
+        void SetUniform1f(const std::string &ct_UniformName, float ct_Value);
+
+        /**
          * @brief Sets vector of floats of size 3 to the uniform
          *
          * @param[in] ct_UniformName Uniform name
@@ -53,28 +62,11 @@ namespace Lab
          */
         void SetUniformMatrix4fv(const std::string &ct_UniformName, const glm::mat4 &ct_Matrix);
 
-        //// TODO: write documentation
-        // void SetupUBO(uint32_t ct_UniformBlockSize);
-
-        //// TODO: write documentation
-        // void BindRangeUBO(uint32_t ct_Index, uint32_t ct_Offset, uint32_t ct_Size) const;
-
-        //// TODO: write documentation
-        // void BindUBO() const;
-
-        //// TODO: write documentation
-        // void UnBindUBO() const;
-
-        //// TODO: write documentation
-        // void SetDataUBO(uint32_t ct_Offset, uint32_t ct_Size, const void *ct_pData);
-
     private:
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         std::string m_ShaderName;
 #endif
-
         std::unordered_map<std::string, int32_t> m_UniformCache;
-
         uint32_t m_ProgramId;
         uint32_t m_UBO;
 
