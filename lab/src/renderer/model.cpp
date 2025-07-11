@@ -256,7 +256,7 @@ namespace Lab
             default:
             {
                 LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                        "Detected unsupported texture format.");
+                        "Unsupported texture format.");
                 LAB_ASSERT(0);
             }
         }

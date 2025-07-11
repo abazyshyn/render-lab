@@ -78,3 +78,8 @@ cmake-build-debug-event-trace/
 
 /examples/html/*
 /examples/latex/*
+
+# builds
+/lab/vendor/assimp/build
+/lab/vendor/glfw/build
+/lab/vendor/glad/build

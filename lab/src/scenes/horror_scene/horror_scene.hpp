@@ -34,7 +34,8 @@ namespace Lab
         CSkybox &m_Skybox;
         CCamera m_Camera;
         CUniformBuffer m_UBO;
-        CShader m_Shader;
+        CShader m_SceneShader;
+        CShader m_BasicShader; // TODO: temp
         CShader m_DebugNormalShader;
         CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;

@@ -22,7 +22,7 @@ namespace Lab
         // TODO: make enum with all possible indices for scenes
         for (const std::shared_ptr<CIScene> &pScene : m_Scenes)
         {
-            m_FBO.Bind();
+            //m_FBO.Bind();
             glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
             glEnable(GL_DEPTH_TEST);
@@ -31,16 +31,16 @@ namespace Lab
             glEnable(GL_CULL_FACE);
             pScene->OnUpdate(t_DeltaTime);
 
-            m_FBO.UnBind();
-            glDisable(GL_DEPTH_TEST);
-            glDisable(GL_DEPTH_CLAMP);
-            glDisable(GL_BLEND);
-            glDisable(GL_CULL_FACE);
-            glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+            // m_FBO.UnBind();
+            // glDisable(GL_DEPTH_TEST);
+            // glDisable(GL_DEPTH_CLAMP);
+            // glDisable(GL_BLEND);
+            // glDisable(GL_CULL_FACE);
+            // glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+            // glClear(GL_COLOR_BUFFER_BIT);
 
-            m_ScreenShader.Bind();
-            m_Primitive.DrawRectangle(m_FBO.GetColorBuffer());
+            // m_ScreenShader.Bind();
+            // m_Primitive.DrawRectangle(m_FBO.GetColorBuffer());
         }
     }
 
