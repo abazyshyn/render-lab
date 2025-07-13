@@ -1,7 +1,7 @@
 #if !defined(SKYBOX_HPP)
 #define SKYBOX_HPP
 
-#include "scenes/scene_entity.hpp"
+#include "scene/entities/scene_entity.hpp"
 #include "shader/shader.hpp"
 
 namespace Lab

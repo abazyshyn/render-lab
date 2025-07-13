@@ -3,10 +3,9 @@
 #include "renderer.hpp" // target
 
 #include "window/window.hpp"
-#include "scenes/i_scene.hpp"
+#include "scene/scene.hpp"
 #include "primitive.hpp"
 #include "backend/opengl.hpp"
-#include "scenes/horror_scene/horror_scene.hpp"
 #include <glad/glad.h>
 
 namespace Lab
@@ -19,37 +18,33 @@ namespace Lab
 
     void CRenderer::Render(float t_DeltaTime)
     {
-        // TODO: make enum with all possible indices for scenes
-        for (const std::shared_ptr<CIScene> &pScene : m_Scenes)
-        {
-            //m_FBO.Bind();
-            glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-            glEnable(GL_DEPTH_TEST);
-            glEnable(GL_DEPTH_CLAMP);
-            glEnable(GL_BLEND);
-            glEnable(GL_CULL_FACE);
-            pScene->OnUpdate(t_DeltaTime);
+        // m_FBO.Bind();
+        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_DEPTH_CLAMP);
+        glEnable(GL_BLEND);
+        glEnable(GL_CULL_FACE);
+        m_Scene.OnUpdate(t_DeltaTime);
 
-            // m_FBO.UnBind();
-            // glDisable(GL_DEPTH_TEST);
-            // glDisable(GL_DEPTH_CLAMP);
-            // glDisable(GL_BLEND);
-            // glDisable(GL_CULL_FACE);
-            // glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-            // glClear(GL_COLOR_BUFFER_BIT);
+        // m_FBO.UnBind();
+        // glDisable(GL_DEPTH_TEST);
+        // glDisable(GL_DEPTH_CLAMP);
+        // glDisable(GL_BLEND);
+        // glDisable(GL_CULL_FACE);
+        // glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+        // glClear(GL_COLOR_BUFFER_BIT);
 
-            // m_ScreenShader.Bind();
-            // m_Primitive.DrawRectangle(m_FBO.GetColorBuffer());
-        }
+        // m_ScreenShader.Bind();
+        // m_Primitive.DrawRectangle(m_FBO.GetColorBuffer());
     }
 
     CRenderer::CRenderer()
         : m_Window(CWindow::GetInstance()),
-          m_FBO(CFramebuffer(static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight()))),
+          m_Scene(CScene::GetInstance()),
           m_Primitive(CPrimitive::GetInstance()),
-          m_ScreenShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_screen.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_screen.frag"})),
-          m_Scenes({std::make_shared<CHorrorScene>()})
+          m_FBO(CFramebuffer(static_cast<uint32_t>(m_Window.GetWidth()), static_cast<uint32_t>(m_Window.GetHeight()))),
+          m_ScreenShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_screen.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_screen.frag"}))
     {
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         OpenGL::EnableDebug();

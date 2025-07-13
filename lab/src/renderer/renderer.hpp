@@ -8,7 +8,7 @@ namespace Lab
 {
     // Forward declaration
     class CWindow;
-    class CIScene;
+    class CScene;
     class CPrimitive;
 
     /**
@@ -43,10 +43,10 @@ namespace Lab
 
     private:
         CWindow &m_Window;
-        CFramebuffer m_FBO;
+        CScene &m_Scene;
         CPrimitive &m_Primitive; // Screen
-        CShader m_ScreenShader;  // TODO: temp
-        std::vector<std::shared_ptr<CIScene>> m_Scenes;
+        CFramebuffer m_FBO;
+        CShader m_ScreenShader; // TODO: temp
 
         CRenderer();
     };

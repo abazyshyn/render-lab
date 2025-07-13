@@ -1,7 +1,6 @@
 #if !defined(SCENE_HPP)
 #define SCENE_HPP
 
-#include "scenes/i_scene.hpp"
 #include "camera/camera.hpp"
 #include "shader/shader.hpp"
 #include "buffers/uniform_buffer.hpp"
@@ -16,18 +15,17 @@ namespace Lab
     /**
      * @brief Implementation of the "horror scene"
      */
-    class CHorrorScene final : public CIScene
+    class CScene
     {
     public:
-        // TODO: Should it be a singleton?
-        CHorrorScene();
+        static CScene &GetInstance();
 
         /**
          * @brief Updates a scene entities
          *
          * @param[in] t_DeltaTime Time taken to render last frame
          */
-        void OnUpdate(float t_DeltaTime) override;
+        void OnUpdate(float t_DeltaTime);
 
     private:
         CWindow &m_Window;
@@ -36,11 +34,13 @@ namespace Lab
         CUniformBuffer m_UBO;
         CShader m_SceneShader;
         CShader m_BasicShader; // TODO: temp
-        CShader m_DebugNormalShader;
-        CShader m_ShaderReflect;
+        // CShader m_DebugNormalShader;
+        //  CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
-        std::vector<std::shared_ptr<CSceneEntity>> m_ReflectiveObjects;
-        std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;
+        // std::vector<std::shared_ptr<CSceneEntity>> m_ReflectiveObjects;
+        // std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;
+
+        CScene();
     };
 
 } // namespace Lab

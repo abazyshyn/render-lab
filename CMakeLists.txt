@@ -10,10 +10,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(outputDir "${PROJECT_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${PROJECT_NAME}/${CMAKE_BUILD_TYPE}/")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${outputDir}/")
-
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake/")
-include(AddGitSubmodule)
 
+include(AddGitSubmodule)
 add_git_submodule(lab/vendor/assimp)
 add_git_submodule(lab/vendor/glfw)
 add_git_submodule(lab/vendor/glm)

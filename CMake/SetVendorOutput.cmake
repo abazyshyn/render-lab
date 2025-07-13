@@ -1,10 +1,13 @@
-function(set_vendor_output target libname)
-    foreach(OUTPUTCONFIG Debug Release RelWithDebInfo MinSizeRel)
-        string(TOUPPER ${OUTPUTCONFIG} CONFIG_UPPER)
+function(set_vendor_output target)
+
+    foreach(BUILD_TYPE Debug Release RelWithDebInfo MinSizeRel)
+
         set_target_properties(${target} PROPERTIES
-            ARCHIVE_OUTPUT_DIRECTORY_${CONFIG_UPPER} "${CMAKE_SOURCE_DIR}/vendor/${libname}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${libname}/${OUTPUTCONFIG}"
-            LIBRARY_OUTPUT_DIRECTORY_${CONFIG_UPPER} "${CMAKE_SOURCE_DIR}/vendor/${libname}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${libname}/${OUTPUTCONFIG}"
-            RUNTIME_OUTPUT_DIRECTORY_${CONFIG_UPPER} "${CMAKE_SOURCE_DIR}/vendor/${libname}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${libname}/${OUTPUTCONFIG}"
+            ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/${target}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${target}/${BUILD_TYPE}"
+            LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/${target}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${target}/${BUILD_TYPE}"
+            RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/lab/vendor/${target}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${target}/${BUILD_TYPE}"
         )
+
     endforeach()
+
 endfunction()
