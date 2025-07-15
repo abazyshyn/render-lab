@@ -5,6 +5,7 @@
 #include "window/window.hpp"
 #include "scene/entities/skybox/skybox.hpp"
 #include "scene/entities/sponza/sponza.hpp"
+#include "scene/entities/lights/lighting_sphere.hpp"
 #include "renderer/model.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -17,16 +18,56 @@ namespace Lab
         return instance;
     }
 
+    void CScene::OnUpdate(float t_DeltaTime)
+    {
+        // Update camera movement
+        m_Camera.CameraKeyboardInput(m_Window.GetWindowPointer(), t_DeltaTime);
+        m_Camera.CameraMouseMovementInput(m_Window.GetWindowPointer());
+
+        // Set view matrix to the uniform block
+        const glm::mat4 viewMatrix = m_Camera.CalculateViewMatrix();
+
+        m_UBO.Bind();
+        m_UBO.SetData(sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMatrix));
+        m_UBO.UnBind();
+
+        // Process opaque scene entities
+        m_SceneShader.Bind();
+
+        for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
+        {
+            glm::mat4 modelMatrix(1.0f);
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
+
+            m_SceneShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+
+            sceneEntity->Draw(m_SceneShader);
+        }
+
+        BasicLighting();
+
+        // Process skybox
+        m_Skybox.m_Shader.Bind();
+        m_Skybox.BindCubemap();
+
+        glDepthFunc(GL_LEQUAL);
+        glCullFace(GL_FRONT);
+        m_Skybox.Draw(m_Skybox.m_Shader);
+        glDepthFunc(GL_LESS);
+        glCullFace(GL_BACK);
+    }
+
     CScene::CScene()
         : m_Window(CWindow::GetInstance()),
           m_Skybox(CSkybox::GetInstance()),
-          m_SceneShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_horror_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_horror_scene.frag"})),
-          m_BasicShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_horror_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_horror_scene.frag"})),
+          m_SceneShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_scene.frag"})),
+          m_BasicShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_basic.frag"})),
           // m_DebugNormalShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.vert",
           //                              Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.geom",
           //                              Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.frag"})),
           //  m_ShaderReflect(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_reflect.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_reflect.frag"})),
-          m_OpaqueSceneEntities({std::make_shared<CSponza>()})
+          m_CommonOpaqueSceneEntities({std::make_shared<CSponza>()}),
+          m_BasicLightingOpaqueSceneEntities({std::make_shared<CLightingSphere>()})
     {
         m_Skybox.CreateCubemap({Utils::LAB_BASE_MODELS_PATH + "skybox/textures/right.png",
                                 Utils::LAB_BASE_MODELS_PATH + "skybox/textures/left.png",
@@ -49,41 +90,19 @@ namespace Lab
         m_UBO.UnBind();
     }
 
-    void CScene::OnUpdate(float t_DeltaTime)
+    void CScene::BasicLighting()
     {
-        // Update camera movement
-        m_Camera.CameraKeyboardInput(m_Window.GetWindowPointer(), t_DeltaTime);
-        m_Camera.CameraMouseMovementInput(m_Window.GetWindowPointer());
-
-        // Set view matrix to the uniform block
-        const glm::mat4 viewMatrix = m_Camera.CalculateViewMatrix();
-
-        m_UBO.Bind();
-        m_UBO.SetData(sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMatrix));
-        m_UBO.UnBind();
-
-        // Process opaque scene entities
-        m_SceneShader.Bind();
-
-        for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_OpaqueSceneEntities)
+        m_BasicShader.Bind();
+        for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_BasicLightingOpaqueSceneEntities)
         {
             glm::mat4 modelMatrix(1.0f);
-            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
+            modelMatrix = glm::translate(modelMatrix, glm::vec3(1.0f, 0.3f, 0.0f));
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.05f));
 
-            m_SceneShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            m_BasicShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
-            sceneEntity->Draw(m_SceneShader);
+            sceneEntity->Draw(m_BasicShader);
         }
-
-        // Process skybox
-        m_Skybox.m_Shader.Bind();
-        m_Skybox.BindCubemap();
-
-        glDepthFunc(GL_LEQUAL);
-        glCullFace(GL_FRONT);
-        m_Skybox.Draw(m_Skybox.m_Shader);
-        glDepthFunc(GL_LESS);
-        glCullFace(GL_BACK);
     }
 
 } // namespace Lab

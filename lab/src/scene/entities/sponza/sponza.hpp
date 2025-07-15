@@ -7,7 +7,7 @@ namespace Lab
 {
 
     /**
-     * Implementation of the Sponza entity
+     * @brief Implementation of the Sponza entity
      */
     class CSponza final : public CSceneEntity
     {

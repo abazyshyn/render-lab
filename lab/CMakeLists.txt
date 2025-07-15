@@ -41,6 +41,6 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     OpenGL::GL)
 
 include(CopyVendorOutput)
-copy_vendor_output("assimp;assimp-vc143-mt.dll")
-copy_vendor_output("glfw;glfw3.dll")
-copy_vendor_output("glad;glad.lib")
+copy_vendor_output("assimp;*.dll")
+copy_vendor_output("glfw;*.dll")
+copy_vendor_output("glad;*.lib")

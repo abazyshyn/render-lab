@@ -14,14 +14,13 @@ uniform mat4 u_ModelMatrix;
 
 out VSOut
 {
-    vec2 vs_textureCoordinate;
+    vec2 vs_TextureCoordinate;
 } vsOut;
 
 void main()
 {
     mat4 PVM = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix;
+    gl_Position = PVM * vec4(a_Position, 1.0f); 
 
-    gl_Position = PVM * vec4(a_Position, 1.0);
-
-    vsOut.vs_textureCoordinate = a_TextureCoordinate;
+    vsOut.vs_TextureCoordinate = a_TextureCoordinate;
 }

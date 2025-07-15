@@ -1,4 +1,4 @@
-#include "pch.cpp"
+#include "pch.hpp"
 
 #include "sponza.hpp" // target
 

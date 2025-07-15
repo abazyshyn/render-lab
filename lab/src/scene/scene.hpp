@@ -13,12 +13,29 @@ namespace Lab
     class CSceneEntity;
 
     /**
-     * @brief Implementation of the "horror scene"
+     * @brief Implementation of the "scene"
+     *
+     * Holds entities and renders them
+     *
+     * Implemented using Mayers' Singleton pattern
+     * Neither CopyConstructible/MoveConstructible nor
+     * CopyAssignable/MoveAssignable
      */
     class CScene
     {
     public:
+        /**
+         * @brief Returns the only one existing instance of the CScene class
+         *
+         * @return Instance
+         */
         static CScene &GetInstance();
+
+        CScene(const CScene &ct_Source) = delete;
+        CScene(CScene &&t_Source) = delete;
+
+        CScene &operator=(const CScene &ct_RHV) = delete;
+        CScene &operator=(CScene &&t_RHV) = delete;
 
         /**
          * @brief Updates a scene entities
@@ -36,11 +53,14 @@ namespace Lab
         CShader m_BasicShader; // TODO: temp
         // CShader m_DebugNormalShader;
         //  CShader m_ShaderReflect;
-        std::vector<std::shared_ptr<CSceneEntity>> m_OpaqueSceneEntities;
+        std::vector<std::shared_ptr<CSceneEntity>> m_CommonOpaqueSceneEntities;
         // std::vector<std::shared_ptr<CSceneEntity>> m_ReflectiveObjects;
         // std::vector<std::shared_ptr<CSceneEntity>> m_TransparentSceneEntities;
+        std::vector<std::shared_ptr<CSceneEntity>> m_BasicLightingOpaqueSceneEntities;
 
         CScene();
+
+        void BasicLighting();
     };
 
 } // namespace Lab
