@@ -8,24 +8,14 @@ namespace Lab
      * @brief Implementation of the class for drawing a primitives
      *
      * Implemented using Mayers' Singleton pattern
+     *
      * Neither CopyConstructible/MoveConstructible nor
      * CopyAssignable/MoveAssignable
      */
-    class CPrimitive
+    class CPrimitive final : public Utils::CSingleton<CPrimitive>
     {
     public:
-        /**
-         * @brief Returns the only one existing instance of the CPrimitive class
-         *
-         * @return Instance
-         */
-        static CPrimitive &GetInstance();
-
-        CPrimitive(const CPrimitive &ct_Source) = delete;
-        CPrimitive(CPrimitive &&t_Source) = delete;
-
-        CPrimitive &operator=(const CPrimitive &ct_RHV) = delete;
-        CPrimitive &operator=(CPrimitive &&t_RHV) = delete;
+        friend class Utils::CSingleton<CPrimitive>;
 
         ~CPrimitive();
 

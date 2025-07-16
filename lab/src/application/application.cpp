@@ -8,12 +8,6 @@
 namespace Lab
 {
 
-    CApplication &CApplication::GetInstance()
-    {
-        static CApplication s_Instance;
-        return s_Instance;
-    }
-
     void CApplication::Run()
     {
         while (m_Window.m_IsRunning)

@@ -12,11 +12,11 @@
 
 namespace Lab
 {
-    CScene &CScene::GetInstance()
-    {
-        static CScene instance;
-        return instance;
-    }
+    // CScene &CScene::GetInstance()
+    //{
+    //     static CScene instance;
+    //     return instance;
+    // }
 
     void CScene::OnUpdate(float t_DeltaTime)
     {

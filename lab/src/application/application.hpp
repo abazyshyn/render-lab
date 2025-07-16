@@ -3,6 +3,7 @@
 
 namespace Lab
 {
+
     // Forward declaration
     class CWindow;
     class CRenderer;
@@ -11,26 +12,16 @@ namespace Lab
      * @brief Implementation of the application(render-lab)
      *
      * Implemented using Mayers' Singleton pattern
+     *
      * Neither CopyConstructible/MoveConstructible nor
      * CopyAssignable/MoveAssignable
      *
      * Controls whole application
      */
-    class CApplication
+    class CApplication final : public Utils::CSingleton<CApplication>
     {
     public:
-        /**
-         * @brief Returns the only one existing instance of the CApplication class
-         *
-         * @return Instance
-         */
-        static CApplication &GetInstance();
-
-        CApplication(const CApplication &ct_Source) = delete;
-        CApplication(CApplication &&t_Source) = delete;
-
-        CApplication &operator=(const CApplication &ct_RHV) = delete;
-        CApplication &operator=(CApplication &&t_RHV) = delete;
+        friend Utils::CSingleton<CApplication>;
 
         /**
          * @brief Main loop

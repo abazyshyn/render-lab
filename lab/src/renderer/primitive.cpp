@@ -8,12 +8,6 @@
 namespace Lab
 {
 
-    CPrimitive &CPrimitive::GetInstance()
-    {
-        static CPrimitive instance;
-        return instance;
-    }
-
     CPrimitive::~CPrimitive()
     {
         OpenGL::DeleteObjects(1, &m_RectangleVAO, 1, &m_RectangleVBO, 1, &m_RectangleIBO);

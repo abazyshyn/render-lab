@@ -10,11 +10,6 @@
 
 namespace Lab
 {
-    CRenderer &CRenderer::GetInstance()
-    {
-        static CRenderer instance;
-        return instance;
-    }
 
     void CRenderer::Render(float t_DeltaTime)
     {

@@ -18,24 +18,14 @@ namespace Lab
      * Holds entities and renders them
      *
      * Implemented using Mayers' Singleton pattern
+     *
      * Neither CopyConstructible/MoveConstructible nor
      * CopyAssignable/MoveAssignable
      */
-    class CScene
+    class CScene final : public Utils::CSingleton<CScene>
     {
     public:
-        /**
-         * @brief Returns the only one existing instance of the CScene class
-         *
-         * @return Instance
-         */
-        static CScene &GetInstance();
-
-        CScene(const CScene &ct_Source) = delete;
-        CScene(CScene &&t_Source) = delete;
-
-        CScene &operator=(const CScene &ct_RHV) = delete;
-        CScene &operator=(CScene &&t_RHV) = delete;
+        friend class Utils::CSingleton<CScene>;
 
         /**
          * @brief Updates a scene entities

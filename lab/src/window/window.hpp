@@ -13,27 +13,17 @@ namespace Lab
      * Neither CopyConstructible/MoveConstructible nor
      * CopyAssignable/MoveAssignable
      */
-    class CWindow
+    class CWindow final : public Utils::CSingleton<CWindow>
     {
     public:
+        friend class Utils::CSingleton<CWindow>;
+
         /**
          * @brief Indicates status of the main loop
          */
         bool m_IsRunning;
 
-        /**
-         * @brief Returns the only one existing instance of the CWindow class
-         *
-         * @return Instance
-         */
-        static CWindow &GetInstance();
-
-        CWindow(const CWindow &ct_Source) = delete;
-        CWindow(CWindow &&t_Source) = delete;
         ~CWindow();
-
-        CWindow &operator=(const CWindow &ct_RHV) = delete;
-        CWindow &operator=(CWindow &&t_RHV) = delete;
 
         /**
          * @brief Updates window

@@ -17,29 +17,43 @@ namespace Utils
      */
     const std::string LAB_BASE_MODELS_PATH = "../../../../lab/res/models/";
 
-    // TODO: docs
+    /**
+     * @brief Implementation of the "base singleton class"
+     *
+     * Implemented using Mayers' Singleton pattern
+     *
+     * Neither CopyConstructible/MoveConstructible nor
+     * CopyAssignable/MoveAssignable
+     */
     template <typename T>
     class CSingleton
     {
     public:
-        // TODO: docs
+        /**
+         * @brief Returns the only one existing instance of type T
+         *
+         * @return Instance
+         */
         static T &GetInstance()
         {
-            LAB_ASSERT(std::is_base_of(CSingleton, T));
+            const bool expr = std::is_base_of<CSingleton, T>::value;
+
+            LAB_ASSERT(expr);
 
             static T instance;
             return instance;
         }
 
-        virtual ~CSingleton() = default;
-
-    protected:
-        CSingleton() = default;
         CSingleton(const CSingleton &ct_Source) = delete;
         CSingleton(CSingleton &&t_Source) = delete;
 
         CSingleton &operator=(const CSingleton &ct_RHV) = delete;
         CSingleton &operator=(CSingleton &&t_RHV) = delete;
+
+        virtual ~CSingleton() = default;
+
+    protected:
+        CSingleton() = default;
     };
 
 } // namespace Utils

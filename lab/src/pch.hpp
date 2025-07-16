@@ -25,7 +25,6 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 
-#include "core/core.hpp"
 #include "core/utils.hpp"
 
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
@@ -37,4 +36,4 @@
 
 #endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
-#endif // _LAB_PCH_HPP_
+#endif // PCH_HPP

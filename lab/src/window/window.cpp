@@ -5,12 +5,6 @@
 namespace Lab
 {
 
-    CWindow &CWindow::GetInstance()
-    {
-        static CWindow s_Instance;
-        return s_Instance;
-    }
-
     void CWindow::OnUpdate()
     {
         glfwPollEvents();

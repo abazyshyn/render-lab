@@ -6,6 +6,7 @@
 
 namespace Lab
 {
+
     // Forward declaration
     class CWindow;
     class CScene;
@@ -15,24 +16,14 @@ namespace Lab
      * @brief Implementation of the main renderer
      *
      * Implemented using Mayers' Singleton pattern
+     *
      * Neither CopyConstructible/MoveConstructible nor
      * CopyAssignable/MoveAssignable
      */
-    class CRenderer
+    class CRenderer final : public Utils::CSingleton<CRenderer>
     {
     public:
-        /**
-         * @brief Returns the only one existing instance of the CRenderer class
-         *
-         * @return Instance
-         */
-        static CRenderer &GetInstance();
-
-        CRenderer(const CRenderer &ct_Source) = delete;
-        CRenderer(CRenderer &&t_Source) = delete;
-
-        CRenderer &operator=(const CRenderer &ct_RHV) = delete;
-        CRenderer &operator=(CRenderer &&t_RHV) = delete;
+        friend class Utils::CSingleton<CRenderer>;
 
         /**
          * @brief Main renderer, renders and manages all scenes
