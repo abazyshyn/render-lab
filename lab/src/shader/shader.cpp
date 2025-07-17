@@ -46,6 +46,18 @@ namespace Lab
         glUniform3fv(uniformLocation, 1, glm::value_ptr(ct_Vector));
     }
 
+    void CShader::SetUniformMatrix3fv(const std::string &ct_UniformName, const glm::mat3 &ct_Matrix)
+    {
+        const int32_t uniformLocation = UniformFromCache(ct_UniformName);
+
+        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
+                "Setting the uniform matrix4fv...",
+                "\nUniform name: ", ct_UniformName,
+                "\nLocation: ", uniformLocation);
+
+        glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(ct_Matrix));
+    }
+
     void CShader::SetUniformMatrix4fv(const std::string &ct_UniformName, const glm::mat4 &ct_Matrix)
     {
         const int32_t uniformLocation = UniformFromCache(ct_UniformName);

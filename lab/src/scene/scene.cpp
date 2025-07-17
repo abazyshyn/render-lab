@@ -31,20 +31,7 @@ namespace Lab
         m_UBO.SetData(sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMatrix));
         m_UBO.UnBind();
 
-        // Process opaque scene entities
-        m_SceneShader.Bind();
-
-        for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
-        {
-            glm::mat4 modelMatrix(1.0f);
-            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
-
-            m_SceneShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
-
-            sceneEntity->Draw(m_SceneShader);
-        }
-
-        BasicLighting();
+        BasicLighting(viewMatrix);
 
         // Process skybox
         m_Skybox.m_Shader.Bind();
@@ -62,6 +49,7 @@ namespace Lab
           m_Skybox(CSkybox::GetInstance()),
           m_SceneShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_scene.frag"})),
           m_BasicShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_basic.frag"})),
+          m_BasicLightingShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_basic_lighting.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_basic_lighting.frag"})),
           // m_DebugNormalShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.vert",
           //                              Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.geom",
           //                              Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.frag"})),
@@ -88,13 +76,26 @@ namespace Lab
         m_UBO.Bind();
         m_UBO.SetData(0, sizeof(glm::mat4), glm::value_ptr(projectionMatrix));
         m_UBO.UnBind();
+
+        SetupBasicLightingScene();
     }
 
-    void CScene::BasicLighting()
+    void CScene::SetupBasicLightingScene()
+    {
+        m_BasicLightingShader.Bind();
+
+        // Populate u_DirectionalLight struct
+        // TODO: color can be changed in the future
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_DiffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
+        // m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 1.0f, 1.0f));
+    }
+
+    void CScene::BasicLighting(const glm::mat4 &ct_ViewMatrix)
     {
         m_BasicShader.Bind();
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_BasicLightingOpaqueSceneEntities)
         {
+
             glm::mat4 modelMatrix(1.0f);
             modelMatrix = glm::translate(modelMatrix, glm::vec3(1.0f, 0.3f, 0.0f));
             modelMatrix = glm::scale(modelMatrix, glm::vec3(0.05f));
@@ -102,6 +103,23 @@ namespace Lab
             m_BasicShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
             sceneEntity->Draw(m_BasicShader);
+        }
+
+        m_BasicLightingShader.Bind();
+
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(ct_ViewMatrix * glm::vec4(1.0f, 0.3f, 0.0f, 1.0f)));
+
+        for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
+        {
+            glm::mat4 modelMatrix(1.0f);
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
+
+            glm::mat3 normalMatrix = static_cast<glm::mat3>(glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix)));
+
+            m_BasicLightingShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
+            m_BasicLightingShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+
+            sceneEntity->Draw(m_BasicLightingShader);
         }
     }
 

@@ -41,6 +41,7 @@ namespace Lab
         CUniformBuffer m_UBO;
         CShader m_SceneShader;
         CShader m_BasicShader; // TODO: temp
+        CShader m_BasicLightingShader;
         // CShader m_DebugNormalShader;
         //  CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_CommonOpaqueSceneEntities;
@@ -50,7 +51,8 @@ namespace Lab
 
         CScene();
 
-        void BasicLighting();
+        void SetupBasicLightingScene();
+        void BasicLighting(const glm::mat4 &ct_ViewMatrix);
     };
 
 } // namespace Lab

@@ -57,7 +57,7 @@ namespace Lab
 
             if (m_Textures[i].m_TextureType == LAB_TEXTURE_TYPE_DIFFUSE)
             {
-                std::string uniformTextureName = "u_DiffuseTexture";
+                std::string uniformTextureName = "u_Material.m_DiffuseTexture";
                 uniformTextureName += std::to_string(i);
 
                 glUniform1i(glGetUniformLocation(ct_Shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));

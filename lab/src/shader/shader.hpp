@@ -55,6 +55,14 @@ namespace Lab
         void SetUniform3fv(const std::string &ct_UniformName, const glm::vec3 &ct_Vector);
 
         /**
+         * @brief Sets 3x3 matrix of floats to the uniform
+         *
+         * @param[in] ct_UniformName Uniform name
+         * @param[in] ct_Matrix Matrix3f
+         */
+        void SetUniformMatrix3fv(const std::string &ct_UniformName, const glm::mat3 &ct_Matrix);
+
+        /**
          * @brief Sets 4x4 matrix of floats to the uniform
          *
          * @param[in] ct_UniformName Uniform name
