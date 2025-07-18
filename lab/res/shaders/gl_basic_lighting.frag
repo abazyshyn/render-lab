@@ -22,7 +22,7 @@ struct Material_s
 struct DirectionalLight_s
 {
 	vec3 m_Position;
-	// vec3 m_AmbientColor;
+	vec3 m_AmbientColor;
 	vec3 m_DiffuseColor;
 	// vec3 m_SpecularColor;
 };
@@ -32,7 +32,7 @@ uniform DirectionalLight_s u_DirectionalLight;
 
 in VSOut
 {
-	vec3 vs_Normal;
+	vec3 vs_NormalVector;
 	vec3 vs_FragmentPosition;
     vec2 vs_TextureCoordinate;
 } fsIn;
@@ -40,25 +40,27 @@ in VSOut
 out vec4 resultedColor;
 
 // Returns color that is the result of the directional light
-vec3 CalculateDirectionalLight(vec3 t_Normal);
+vec3 CalculateDirectionalLight(vec3 t_NormalVector);
 
 void main()
 {
     vec3 color = vec3(0.0);
-	vec3 normal = normalize(fsIn.vs_Normal);
+	vec3 normalVector = normalize(fsIn.vs_NormalVector);
 
-	color += CalculateDirectionalLight(normal);
+	color += CalculateDirectionalLight(normalVector);
     
 	resultedColor = vec4(color, 1.0);
 }
 
-vec3 CalculateDirectionalLight(vec3 t_Normal)
+vec3 CalculateDirectionalLight(vec3 t_NormalVector)
 {
+	vec3 ambientColor = u_DirectionalLight.m_AmbientColor * texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
+	
 	vec3 lightDirection = normalize(u_DirectionalLight.m_Position - fsIn.vs_FragmentPosition);
 
-	float diffuseImpact = max(dot(lightDirection, t_Normal), 0.0);
+	float diffuseImpact = max(dot(lightDirection, t_NormalVector), 0.0);
 	vec3 diffuseColor = diffuseImpact * u_DirectionalLight.m_DiffuseColor * texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
 
 	// TODO: specular color
-    return diffuseColor;
+    return (ambientColor + diffuseColor);
 }

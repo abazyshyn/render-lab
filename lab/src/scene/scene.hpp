@@ -42,7 +42,7 @@ namespace Lab
         CShader m_SceneShader;
         CShader m_BasicShader; // TODO: temp
         CShader m_BasicLightingShader;
-        // CShader m_DebugNormalShader;
+        CShader m_DebugNormalShader;
         //  CShader m_ShaderReflect;
         std::vector<std::shared_ptr<CSceneEntity>> m_CommonOpaqueSceneEntities;
         // std::vector<std::shared_ptr<CSceneEntity>> m_ReflectiveObjects;

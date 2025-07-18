@@ -12,11 +12,6 @@
 
 namespace Lab
 {
-    // CScene &CScene::GetInstance()
-    //{
-    //     static CScene instance;
-    //     return instance;
-    // }
 
     void CScene::OnUpdate(float t_DeltaTime)
     {
@@ -50,9 +45,9 @@ namespace Lab
           m_SceneShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_scene.frag"})),
           m_BasicShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_scene.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_basic.frag"})),
           m_BasicLightingShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_basic_lighting.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_basic_lighting.frag"})),
-          // m_DebugNormalShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.vert",
-          //                              Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.geom",
-          //                              Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.frag"})),
+          m_DebugNormalShader(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.vert",
+                                       Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.geom",
+                                       Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.frag"})),
           //  m_ShaderReflect(CShader({Utils::LAB_BASE_SHADERS_PATH + "gl_reflect.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_reflect.frag"})),
           m_CommonOpaqueSceneEntities({std::make_shared<CSponza>()}),
           m_BasicLightingOpaqueSceneEntities({std::make_shared<CLightingSphere>()})
@@ -86,6 +81,7 @@ namespace Lab
 
         // Populate u_DirectionalLight struct
         // TODO: color can be changed in the future
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_AmbientColor", glm::vec3(0.4f, 0.4f, 0.4f));
         m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_DiffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
         // m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 1.0f, 1.0f));
     }
@@ -93,9 +89,9 @@ namespace Lab
     void CScene::BasicLighting(const glm::mat4 &ct_ViewMatrix)
     {
         m_BasicShader.Bind();
+
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_BasicLightingOpaqueSceneEntities)
         {
-
             glm::mat4 modelMatrix(1.0f);
             modelMatrix = glm::translate(modelMatrix, glm::vec3(1.0f, 0.3f, 0.0f));
             modelMatrix = glm::scale(modelMatrix, glm::vec3(0.05f));
@@ -103,6 +99,12 @@ namespace Lab
             m_BasicShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
             sceneEntity->Draw(m_BasicShader);
+
+            // m_DebugNormalShader.Bind();
+            // m_DebugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            // m_DebugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", ct_ViewMatrix);
+            // m_DebugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", m_Camera.CalculatePerspectiveProjectionMatrix(m_Window));
+            // sceneEntity->Draw(m_DebugNormalShader);
         }
 
         m_BasicLightingShader.Bind();
@@ -114,12 +116,18 @@ namespace Lab
             glm::mat4 modelMatrix(1.0f);
             modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
 
-            glm::mat3 normalMatrix = static_cast<glm::mat3>(glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix)));
+            glm::mat3 normalMatrix = glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix));
 
             m_BasicLightingShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
             m_BasicLightingShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
             sceneEntity->Draw(m_BasicLightingShader);
+
+            // m_DebugNormalShader.Bind();
+            // m_DebugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            // m_DebugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", ct_ViewMatrix);
+            // m_DebugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", m_Camera.CalculatePerspectiveProjectionMatrix(m_Window));
+            // sceneEntity->Draw(m_DebugNormalShader);
         }
     }
 
