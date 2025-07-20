@@ -109,7 +109,7 @@ namespace Lab
 
         m_BasicLightingShader.Bind();
 
-        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(ct_ViewMatrix * glm::vec4(1.0f, 0.3f, 0.0f, 1.0f)));
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(glm::vec4(1.0f, 0.3f, 0.0f, 1.0f) * ct_ViewMatrix));
 
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
         {

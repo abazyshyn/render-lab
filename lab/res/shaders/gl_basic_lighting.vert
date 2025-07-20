@@ -25,7 +25,7 @@ void main()
     mat4 PVM = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix;
 
     vsOut.vs_NormalVector = a_NormalVector * u_NormalMatrix;
-    vsOut.vs_FragmentPosition = vec3(u_ViewMatrix * u_ModelMatrix * vec4(a_Position, 1.0));
+    vsOut.vs_FragmentPosition = vec3(vec4(a_Position, 1.0) * u_ViewMatrix * u_ModelMatrix);
     vsOut.vs_TextureCoordinate = a_TextureCoordinate;
 
     gl_Position = PVM * vec4(a_Position, 1.0); 
