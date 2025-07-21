@@ -31,7 +31,7 @@ namespace Lab
         //  OpenGL::DeleteObjects(1, &m_VAO, 1, &m_VBO, 1, &m_IBO);
     }
 
-    void CMesh::Draw(const CShader &ct_Shader) const
+    void CMesh::Draw(CShader &ct_Shader) const
     {
         uint32_t diffuseNumber = 0;
         uint32_t specularNumber = 0;
@@ -55,13 +55,29 @@ namespace Lab
                 }
             }
 
-            if (m_Textures[i].m_TextureType == LAB_TEXTURE_TYPE_DIFFUSE)
+            switch (m_Textures[i].m_TextureType)
             {
-                std::string uniformTextureName = "u_Material.m_DiffuseTexture";
-                uniformTextureName += std::to_string(i);
+                case LAB_TEXTURE_TYPE_DIFFUSE:
+                {
+                    std::string uniformTextureName = "u_Material.m_DiffuseTexture";
+                    uniformTextureName += std::to_string(i);
 
-                glUniform1i(glGetUniformLocation(ct_Shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
-                glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
+                    glUniform1i(glGetUniformLocation(ct_Shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
+                    glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
+
+                    break;
+                }
+                case LAB_TEXTURE_TYPE_SPECULAR:
+                {
+                    std::string uniformTextureName = "u_Material.m_SpecularTexture";
+                    uniformTextureName += std::to_string(i);
+
+                    ct_Shader.SetUniform1f(uniformTextureName, m_Textures[i].m_Shininess);
+                    glUniform1i(glGetUniformLocation(ct_Shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
+                    glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
+
+                    break;
+                }
             }
         }
 

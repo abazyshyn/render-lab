@@ -26,7 +26,7 @@ namespace Lab
          *
          * @param[in] ct_Shader Shader
          */
-        virtual void Draw(const CShader &ct_Shader) const;
+        virtual void Draw(CShader &ct_Shader) const;
 
     private:
         CModel m_Model;

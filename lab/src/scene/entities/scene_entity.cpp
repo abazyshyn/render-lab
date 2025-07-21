@@ -12,7 +12,7 @@ namespace Lab
     {
     }
 
-    void CSceneEntity::Draw(const CShader &ct_Shader) const
+    void CSceneEntity::Draw(CShader &ct_Shader) const
     {
         m_Model.Draw(ct_Shader);
     }

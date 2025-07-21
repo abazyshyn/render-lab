@@ -30,7 +30,7 @@ namespace Lab
          *
          * @param[in] ct_Shader Shader program
          */
-        void Draw(const CShader &ct_Shader) const;
+        void Draw(CShader &ct_Shader) const;
 
         /**
          * @brief Returns model name

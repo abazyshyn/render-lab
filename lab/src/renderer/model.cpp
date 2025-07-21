@@ -14,7 +14,7 @@ namespace Lab
         LoadModel(ct_ModelPath);
     }
 
-    void CModel::Draw(const CShader &ct_Shader) const
+    void CModel::Draw(CShader &ct_Shader) const
     {
         LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
                 "Drawing model...",
@@ -203,6 +203,14 @@ namespace Lab
             }
 
             Texture_s texture;
+
+            if (ct_LocalTextureType == LAB_TEXTURE_TYPE_SPECULAR)
+            {
+                float shininess = 0.0f;
+                ct_pMaterial->Get(AI_MATKEY_SHININESS, shininess);
+                texture.m_Shininess = shininess;
+            }
+
             texture.m_TexturePath = texturePath.C_Str();
             texture.m_TextureType = ct_LocalTextureType;
             texture.m_TextureId = TextureFromFile(&texturePath);
@@ -231,8 +239,8 @@ namespace Lab
             LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
                     "Failed to load texture pImageData.",
                     "\nTexture: ", fileName);
-            // LAB_ASSERT(0);
-            // throw std::runtime_error("Failed to load texture pImageData.");
+            LAB_ASSERT(0);
+            throw std::runtime_error("Failed to load texture pImageData.");
         }
 
         GLint textureFormat;

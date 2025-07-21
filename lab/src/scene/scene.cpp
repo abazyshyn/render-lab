@@ -82,8 +82,8 @@ namespace Lab
         // Populate u_DirectionalLight struct
         // TODO: color can be changed in the future
         m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_AmbientColor", glm::vec3(0.4f, 0.4f, 0.4f));
-        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_DiffuseColor", glm::vec3(1.0f, 1.0f, 1.0f));
-        // m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 1.0f, 1.0f));
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_DiffuseColor", glm::vec3(0.4f, 0.4f, 0.4f));
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 0.0f, 0.0f));
     }
 
     void CScene::BasicLighting(const glm::mat4 &ct_ViewMatrix)
