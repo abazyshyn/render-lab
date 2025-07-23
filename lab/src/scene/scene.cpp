@@ -83,7 +83,7 @@ namespace Lab
         // TODO: color can be changed in the future
         m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_AmbientColor", glm::vec3(0.4f, 0.4f, 0.4f));
         m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_DiffuseColor", glm::vec3(0.4f, 0.4f, 0.4f));
-        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 0.0f, 0.0f));
+        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
     void CScene::BasicLighting(const glm::mat4 &ct_ViewMatrix)
@@ -109,14 +109,14 @@ namespace Lab
 
         m_BasicLightingShader.Bind();
 
-        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(glm::vec4(1.0f, 0.3f, 0.0f, 1.0f) * ct_ViewMatrix));
-
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
         {
             glm::mat4 modelMatrix(1.0f);
             modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
 
             glm::mat3 normalMatrix = glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix));
+
+            m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(ct_ViewMatrix * modelMatrix * glm::vec4(1.0f, 0.3f, 0.0f, 1.0f)));
 
             m_BasicLightingShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
             m_BasicLightingShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);

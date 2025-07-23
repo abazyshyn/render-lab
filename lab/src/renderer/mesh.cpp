@@ -72,7 +72,6 @@ namespace Lab
                     std::string uniformTextureName = "u_Material.m_SpecularTexture";
                     uniformTextureName += std::to_string(i);
 
-                    ct_Shader.SetUniform1f(uniformTextureName, m_Textures[i].m_Shininess);
                     glUniform1i(glGetUniformLocation(ct_Shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
                     glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
 

@@ -17,8 +17,6 @@ struct Material_s
 	sampler2D m_SpecularTexture5;
 	sampler2D m_SpecularTexture6;
 	sampler2D m_SpecularTexture7;
-
-	float m_Shininess;
 };
 
 struct DirectionalLight_s
@@ -27,6 +25,8 @@ struct DirectionalLight_s
 	vec3 m_AmbientColor;
 	vec3 m_DiffuseColor;
 	vec3 m_SpecularColor;
+
+	float m_Shininess;
 };
 
 uniform Material_s u_Material;
@@ -75,19 +75,28 @@ vec3 CalculateDirectionalLight(vec3 t_NormalVector, vec3 t_ViewDirectionVector)
 	
 	vec3 lightDirectionVector = normalize(u_DirectionalLight.m_Position - fsIn.vs_FragmentPosition);
 
-	float diffuseImpact = max(dot(lightDirectionVector, t_NormalVector), 0.0);
-	vec3 diffuseColor = diffuseImpact * u_DirectionalLight.m_DiffuseColor * texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
+	float diffuseImpact = dot(lightDirectionVector, t_NormalVector);
 
-	vec3 reflectedLightDirectionVector = reflect(-lightDirectionVector, t_NormalVector);
-	float specularImpact = pow(max(dot(t_ViewDirectionVector, reflectedLightDirectionVector), 0.0), u_Material.m_Shininess);
-	
-	if (specularImpact > 0.0 && u_Material.m_Shininess > 0.0)
+	if (diffuseImpact > 0)
 	{
-	    vec3 specularColor = specularImpact * u_DirectionalLight.m_SpecularColor * texture(u_Material.m_SpecularTexture1, fsIn.vs_TextureCoordinate).rgb;
+	    vec3 diffuseColor = diffuseImpact * u_DirectionalLight.m_DiffuseColor * texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
+	    
+	    vec3 reflectedLightDirectionVector = reflect(-lightDirectionVector, t_NormalVector);
 
-		return (ambientColor + diffuseColor + specularColor);
+		float specularFactor = dot(t_ViewDirectionVector, reflectedLightDirectionVector);
+
+		if (specularFactor > 0)
+		{
+		    float shininess = texture(u_Material.m_SpecularTexture1, fsIn.vs_TextureCoordinate).r * 255.0;
+	        float specularFactor = pow(specularFactor, shininess);
+	        
+	        vec3 specularColor = specularFactor * u_DirectionalLight.m_SpecularColor * vec3(texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).r, 1.0, 1.0);
+		    
+			return clamp((ambientColor + diffuseColor + specularColor), 0, 1);
+		}
+
+	    return clamp((ambientColor + diffuseColor), 0, 1);
 	}
 
-
-    return (ambientColor + diffuseColor);
+	return clamp((ambientColor), 0, 1);
 }

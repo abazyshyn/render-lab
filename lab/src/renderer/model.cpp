@@ -158,7 +158,7 @@ namespace Lab
                                                                   aiTextureType_DIFFUSE,
                                                                   LAB_TEXTURE_TYPE_DIFFUSE);
         std::vector<Texture_s> specularMaps = LoadMaterialTextures(pMaterial,
-                                                                   aiTextureType_SPECULAR,
+                                                                   aiTextureType_METALNESS,
                                                                    LAB_TEXTURE_TYPE_SPECULAR);
 
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
