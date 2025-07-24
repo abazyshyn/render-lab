@@ -204,13 +204,6 @@ namespace Lab
 
             Texture_s texture;
 
-            if (ct_LocalTextureType == LAB_TEXTURE_TYPE_SPECULAR)
-            {
-                float shininess = 0.0f;
-                ct_pMaterial->Get(AI_MATKEY_SHININESS, shininess);
-                texture.m_Shininess = shininess;
-            }
-
             texture.m_TexturePath = texturePath.C_Str();
             texture.m_TextureType = ct_LocalTextureType;
             texture.m_TextureId = TextureFromFile(&texturePath);

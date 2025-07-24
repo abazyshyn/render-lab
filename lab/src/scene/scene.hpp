@@ -52,7 +52,7 @@ namespace Lab
         CScene();
 
         void SetupBasicLightingScene();
-        void BasicLighting(const glm::mat4 &ct_ViewMatrix);
+        void BasicLighting(float t_DeltaTime, const glm::mat4 &ct_ViewMatrix);
     };
 
 } // namespace Lab

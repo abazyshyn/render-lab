@@ -26,7 +26,7 @@ namespace Lab
         m_UBO.SetData(sizeof(glm::mat4), sizeof(glm::mat4), glm::value_ptr(viewMatrix));
         m_UBO.UnBind();
 
-        BasicLighting(viewMatrix);
+        BasicLighting(t_DeltaTime, viewMatrix);
 
         // Process skybox
         m_Skybox.m_Shader.Bind();
@@ -81,19 +81,20 @@ namespace Lab
 
         // Populate u_DirectionalLight struct
         // TODO: color can be changed in the future
-        m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_AmbientColor", glm::vec3(0.4f, 0.4f, 0.4f));
         m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_DiffuseColor", glm::vec3(0.4f, 0.4f, 0.4f));
         m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_SpecularColor", glm::vec3(1.0f, 1.0f, 1.0f));
     }
 
-    void CScene::BasicLighting(const glm::mat4 &ct_ViewMatrix)
+    void CScene::BasicLighting(float t_DeltaTime, const glm::mat4 &ct_ViewMatrix)
     {
         m_BasicShader.Bind();
+
+        glm::vec3 lightPosition = glm::vec3(glm::sin(glfwGetTime()) * 2.0f, 0.3f, 0.0f);
 
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_BasicLightingOpaqueSceneEntities)
         {
             glm::mat4 modelMatrix(1.0f);
-            modelMatrix = glm::translate(modelMatrix, glm::vec3(1.0f, 0.3f, 0.0f));
+            modelMatrix = glm::translate(modelMatrix, lightPosition);
             modelMatrix = glm::scale(modelMatrix, glm::vec3(0.05f));
 
             m_BasicShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
@@ -116,7 +117,7 @@ namespace Lab
 
             glm::mat3 normalMatrix = glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix));
 
-            m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(ct_ViewMatrix * modelMatrix * glm::vec4(1.0f, 0.3f, 0.0f, 1.0f)));
+            m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(glm::vec4(lightPosition, 1.0f) * ct_ViewMatrix));
 
             m_BasicLightingShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
             m_BasicLightingShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);

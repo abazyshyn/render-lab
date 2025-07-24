@@ -22,11 +22,8 @@ struct Material_s
 struct DirectionalLight_s
 {
 	vec3 m_Position;
-	vec3 m_AmbientColor;
 	vec3 m_DiffuseColor;
 	vec3 m_SpecularColor;
-
-	float m_Shininess;
 };
 
 uniform Material_s u_Material;
@@ -71,7 +68,7 @@ void DiscardFragment()
 
 vec3 CalculateDirectionalLight(vec3 t_NormalVector, vec3 t_ViewDirectionVector)
 {
-	vec3 ambientColor = u_DirectionalLight.m_AmbientColor * texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
+	vec3 ambientColor = u_DirectionalLight.m_DiffuseColor * texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
 	
 	vec3 lightDirectionVector = normalize(u_DirectionalLight.m_Position - fsIn.vs_FragmentPosition);
 
@@ -87,12 +84,19 @@ vec3 CalculateDirectionalLight(vec3 t_NormalVector, vec3 t_ViewDirectionVector)
 
 		if (specularFactor > 0)
 		{
-		    float shininess = texture(u_Material.m_SpecularTexture1, fsIn.vs_TextureCoordinate).r * 255.0;
+		    float shininess = texture(u_Material.m_SpecularTexture1, fsIn.vs_TextureCoordinate).b * 255.0;
 	        float specularFactor = pow(specularFactor, shininess);
 	        
-	        vec3 specularColor = specularFactor * u_DirectionalLight.m_SpecularColor * vec3(texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).r, 1.0, 1.0);
-		    
-			return clamp((ambientColor + diffuseColor + specularColor), 0, 1);
+			vec3 metallRoughFragment = texture(u_Material.m_SpecularTexture1, fsIn.vs_TextureCoordinate).rgb;
+			
+			if (metallRoughFragment.b > 0.5)
+			{
+			    vec3 specularFragment = texture(u_Material.m_DiffuseTexture1, fsIn.vs_TextureCoordinate).rgb;
+			    
+	            vec3 specularColor = specularFactor * u_DirectionalLight.m_SpecularColor * specularFragment;
+		        
+			    return clamp((ambientColor + diffuseColor + specularColor), 0, 1);
+			}
 		}
 
 	    return clamp((ambientColor + diffuseColor), 0, 1);

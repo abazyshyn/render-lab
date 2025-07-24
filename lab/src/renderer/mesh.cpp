@@ -80,6 +80,10 @@ namespace Lab
             }
         }
 
+        // LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_COMMON,
+        //         "Diffuse textures count: ", diffuseNumber,
+        //         "\nSpecular textures count: ", specularNumber);
+
         glBindVertexArray(m_VAO);
         glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_Indices.size()), GL_UNSIGNED_INT, nullptr);
         glBindVertexArray(0);
