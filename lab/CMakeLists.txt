@@ -5,12 +5,16 @@ file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS
     $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp>)
 
-add_executable(${PROJECT_NAME})
+add_executable(${RENDER_LAB})
 
-target_sources(${PROJECT_NAME} PRIVATE  ${SOURCE_FILES})
+target_sources(${RENDER_LAB} PRIVATE  ${SOURCE_FILES})
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE 
-    GLFW_INCLUDE_NONE=1
+set_target_properties(${RENDER_LAB} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${RENDER_LAB_OUTPUT_DIR}/")
+
+target_compile_definitions(${PROJECT_NAME} 
+    PUBLIC $<$<BOOL:${WINDOWS}>:LAB_WINDOWS=1>
+    $<$<BOOL:${LINUX}>:LAB_LINUX=1>
+    PRIVATE GLFW_INCLUDE_NONE=1
     $<$<CONFIG:Debug>:LAB_DEBUG=1>
     $<$<CONFIG:RelWithDebInfo>:LAB_DEVELOPMENT=1>
     $<$<CONFIG:Release>:LAB_SHIP=1>
@@ -40,7 +44,9 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     #gtest
     OpenGL::GL)
 
-include(CopyVendorOutput)
-copy_vendor_output("assimp;*.dll")
-copy_vendor_output("glfw;*.dll")
-copy_vendor_output("glad;*.lib")
+if(WINDOWS)
+    include(CopyVendorOutput)
+    copy_vendor_output("assimp;*.dll")
+    copy_vendor_output("glfw;*.dll")
+    copy_vendor_output("glad;*.lib")
+endif()
