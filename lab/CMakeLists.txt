@@ -1,9 +1,7 @@
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/stb_image.cpp
-    $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:
-    ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp>)
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb_image/stb_image.cpp)
 
 add_executable(${RENDER_LAB})
 
@@ -11,7 +9,7 @@ target_sources(${RENDER_LAB} PRIVATE  ${SOURCE_FILES})
 
 set_target_properties(${RENDER_LAB} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${RENDER_LAB_OUTPUT_DIR}/")
 
-target_compile_definitions(${PROJECT_NAME} 
+target_compile_definitions(${RENDER_LAB} 
     PUBLIC $<$<BOOL:${WINDOWS}>:LAB_WINDOWS=1>
     $<$<BOOL:${LINUX}>:LAB_LINUX=1>
     PRIVATE GLFW_INCLUDE_NONE=1
@@ -21,7 +19,7 @@ target_compile_definitions(${PROJECT_NAME}
     $<$<PLATFORM_ID:Linux>:LAB_LINUX=1>
     $<$<PLATFORM_ID:Windows>:LAB_WINDOWS=1>)
 
-target_include_directories(${PROJECT_NAME} PUBLIC 
+target_include_directories(${RENDER_LAB} PUBLIC 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/include
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include
@@ -35,9 +33,9 @@ set_vendor_output("glad")
 set_vendor_output("glfw")
 set_vendor_output("assimp")
 
-target_precompile_headers(${PROJECT_NAME} PRIVATE src/pch.hpp)
+target_precompile_headers(${RENDER_LAB} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.hpp")
 
-target_link_libraries(${PROJECT_NAME} PUBLIC 
+target_link_libraries(${RENDER_LAB} PUBLIC 
     glfw
     assimp
     glad

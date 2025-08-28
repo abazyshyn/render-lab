@@ -4,7 +4,7 @@
       "adapter": "vscode-cpptools",
       "configuration": {
         "request": "launch",
-        "program": "${workspaceFolder}/bin/Linux-x86_64/HordeShooter/HordeShooter",
+        "program": "${workspaceFolder}/bin/Linux-x86_64/RenderLab/Debug/RenderLab",
         "args": [],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
