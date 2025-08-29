@@ -1,5 +1,4 @@
-#if !defined(ASSERT_HPP)
-#define ASSERT_HPP
+#pragma once
 
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
@@ -55,5 +54,3 @@
 #define LAB_ASSERT(expr)
 
 #endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-
-#endif // ASSERT_HPP

@@ -1,5 +1,4 @@
-#if !defined(LOG_HPP)
-#define LOG_HPP
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -16,10 +15,10 @@ namespace Lab
      */
     enum LogMessageSeverity_e
     {
-        LAB_LOG_MESSAGE_SEVERITY_COMMON = 30,
+        LAB_LOG_MESSAGE_SEVERITY_TRACE = 30,
         LAB_LOG_MESSAGE_SEVERITY_ERROR = 91,
-        LAB_LOG_MESSAGE_SEVERITY_WARNING = 93,
-        LAB_LOG_MESSAGE_SEVERITY_SOFT = 94
+        LAB_LOG_MESSAGE_SEVERITY_WARN = 93,
+        LAB_LOG_MESSAGE_SEVERITY_INFO = 94
     };
 
     /**
@@ -74,26 +73,29 @@ namespace Lab
 
     inline void PrintMessage(const LogMessageSeverity_e ct_MessageSeverity, const std::string &ct_Message)
     {
-        ct_MessageSeverity == LAB_LOG_MESSAGE_SEVERITY_COMMON
+        ct_MessageSeverity == LAB_LOG_MESSAGE_SEVERITY_TRACE
             ? std::cout << ct_Message << std::flush
-            : std::cout << "\033[" << ct_MessageSeverity << "m"
-                        << ct_Message << std::flush;
+            : std::cout << "\033[" << ct_MessageSeverity << "m" << ct_Message << std::flush;
     }
 
 } // namespace Lab
 
 /**
- * @brief Macro for logging
+ * @brief Macros for logging
  */
-#define LAB_LOG(messageSeverity, ...) Lab::Log(messageSeverity, __VA_ARGS__)
+#define LAB_TRACE_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_TRACE, __VA_ARGS__)
+#define LAB_INFO_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_INFO, __VA_ARGS__)
+#define LAB_WARN_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_WARN, __VA_ARGS__)
+#define LAB_ERROR_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_ERROR, __VA_ARGS__)
 
 #else // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
 /**
- * @brief Macro that evaluates to nothing
+ * @brief Macros that evaluates to nothing
  */
-#define LAB_LOG(messageSeverity, ...)
+#define LAB_TRACE_LOG(...)
+#define LAB_INFO_LOG(...)
+#define LAB_WARN_LOG(...)
+#define LAB_ERROR_LOG(...)
 
 #endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-
-#endif // LOG_HPP

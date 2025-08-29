@@ -13,7 +13,7 @@ namespace Lab
         while (m_Window.m_IsRunning)
         {
             float deltaTime = CalculateDeltaTime();
- 
+
             m_Window.OnUpdate();
             m_Renderer.Render(deltaTime);
         }

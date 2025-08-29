@@ -1,5 +1,4 @@
-#if !defined(GLFW_HPP)
-#define GLFW_HPP
+#pragma once
 
 #include <GLFW/glfw3.h>
 
@@ -80,5 +79,3 @@ namespace GLFW
     void FramebufferSizeCallback(GLFWwindow *t_pWindow, int t_Width, int t_Height);
 
 } // namespace GLFW
-
-#endif // GLFW_HPP

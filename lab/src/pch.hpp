@@ -1,5 +1,4 @@
-#if !defined(PCH_HPP)
-#define PCH_HPP
+#pragma once
 
 #include <memory>
 #include <chrono>
@@ -35,5 +34,3 @@
 // #include <gtest/gtest.h>
 
 #endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
-
-#endif // PCH_HPP

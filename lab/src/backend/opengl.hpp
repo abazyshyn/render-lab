@@ -1,5 +1,4 @@
-#if !defined(OPENGL_HPP)
-#define OPENGL_HPP
+#pragma once
 
 #include <glad/glad.h>
 
@@ -45,5 +44,3 @@ namespace OpenGL
 #endif // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
 } // namespace OpenGL
-
-#endif // OPENGL_HPP

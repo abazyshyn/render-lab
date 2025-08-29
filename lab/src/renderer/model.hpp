@@ -1,5 +1,4 @@
-#if !defined(MODEL_HPP)
-#define MODEL_HPP
+#pragma once
 
 #include "mesh.hpp"
 
@@ -64,5 +63,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // MODEL_HPP

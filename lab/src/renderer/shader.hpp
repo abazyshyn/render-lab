@@ -1,5 +1,4 @@
-#if !defined(SHADER_HPP)
-#define SHADER_HPP
+#pragma once
 
 namespace Lab
 {
@@ -94,5 +93,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // SHADER_HPP

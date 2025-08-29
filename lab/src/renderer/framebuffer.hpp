@@ -1,5 +1,4 @@
-#if !defined(FRAMEBUFFER_HPP)
-#define FRAMEBUFFER_HPP
+#pragma once
 
 namespace Lab
 {
@@ -38,5 +37,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // FRAMEBUFFER_HPP

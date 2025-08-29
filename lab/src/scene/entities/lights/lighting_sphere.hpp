@@ -1,5 +1,4 @@
-#if !defined(LIGHTING_SPHERE_HPP)
-#define LIGHTING_SPHERE_HPP
+#pragma once
 
 #include "scene/entities/scene_entity.hpp"
 
@@ -16,5 +15,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // LIGHTING_SPHERE_HPP

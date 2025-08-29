@@ -1,5 +1,4 @@
-#if !defined(PRIMITIVE_HPP)
-#define PRIMITIVE_HPP
+#pragma once
 
 namespace Lab
 {
@@ -42,5 +41,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // PRIMITIVE_HPP

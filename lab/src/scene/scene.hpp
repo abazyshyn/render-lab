@@ -1,5 +1,4 @@
-#if !defined(SCENE_HPP)
-#define SCENE_HPP
+#pragma once
 
 #include "camera/camera.hpp"
 #include "renderer/shader.hpp"
@@ -56,5 +55,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // SCENE_HPP

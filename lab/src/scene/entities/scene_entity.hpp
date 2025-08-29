@@ -1,5 +1,4 @@
-#if !defined(SCENE_ENTITY_HPP)
-#define SCENE_ENTITY_HPP
+#pragma once
 
 #include "renderer/model.hpp"
 
@@ -33,5 +32,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // SCENE_ENTITY_HPP

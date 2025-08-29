@@ -1,5 +1,4 @@
-#if !defined(SPONZA_HPP)
-#define SPONZA_HPP
+#pragma once
 
 #include "scene/entities/scene_entity.hpp"
 
@@ -16,5 +15,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // SPONZA_HPP

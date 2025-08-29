@@ -1,5 +1,4 @@
-#if !defined(MESH_HPP)
-#define MESH_HPP
+#pragma once
 
 namespace Lab
 {
@@ -79,5 +78,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // MESH_HPP

@@ -1,5 +1,4 @@
-#if !defined(CAMERA_HPP)
-#define CAMERA_HPP
+#pragma once
 
 #include <GLFW/glfw3.h>
 
@@ -56,5 +55,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // CAMERA_HPP

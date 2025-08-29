@@ -1,5 +1,4 @@
-#if !defined(UBO_HPP)
-#define UBO_HPP
+#pragma once
 
 namespace Lab
 {
@@ -29,5 +28,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // UBO_HPP

@@ -1,5 +1,4 @@
-#if !defined(SKYBOX_HPP)
-#define SKYBOX_HPP
+#pragma once
 
 #include "scene/entities/scene_entity.hpp"
 #include "renderer/shader.hpp"
@@ -59,5 +58,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // SKYBOX_HPP

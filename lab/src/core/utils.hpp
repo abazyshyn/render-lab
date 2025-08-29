@@ -1,5 +1,4 @@
-#if !defined(UTILS_HPP)
-#define UTILS_HPP
+#pragma once
 
 #include "assert.hpp"
 #include <type_traits>
@@ -57,5 +56,3 @@ namespace Utils
     };
 
 } // namespace Utils
-
-#endif // UTILS_HPP
