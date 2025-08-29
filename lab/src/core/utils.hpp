@@ -10,12 +10,12 @@ namespace Utils
     /**
      * @brief Base path to shaders
      */
-    const std::string LAB_BASE_SHADERS_PATH = "../../../../lab/res/shaders/";
+    const std::string LAB_BASE_SHADERS_PATH = LAB_RES_DIR "/shaders/";
 
     /**
      * @brief Base path to models
      */
-    const std::string LAB_BASE_MODELS_PATH = "../../../../lab/res/models/";
+    const std::string LAB_BASE_MODELS_PATH = LAB_RES_DIR "/models/";
 
     /**
      * @brief Implementation of the "base singleton class"

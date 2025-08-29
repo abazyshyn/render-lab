@@ -1,5 +1,5 @@
 #! /bin/bash
 
-cmake . -G Ninja
-bear -- ninja -DCMAKE_BUILD_TYPE=Release
+cmake . -G Ninja -DCMAKE_BUILD_TYPE=Release
+bear -- ninja --verbose 
 

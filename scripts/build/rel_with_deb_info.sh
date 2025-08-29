@@ -1,5 +1,4 @@
 #! /bin/bash
 
-cmake . -G Ninja
-bear -- ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
-
+cmake . -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo
+bear -- ninja --verbose

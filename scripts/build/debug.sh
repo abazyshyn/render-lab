@@ -1,4 +1,4 @@
 #! /bin/bash
 
-cmake . -G Ninja
-bear -- ninja -DCMAKE_BUILD_TYPE=Debug
+cmake . -G Ninja -DCMAKE_BUILD_TYPE=Debug
+bear -- ninja --verbose 
