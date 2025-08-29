@@ -1,6 +1,6 @@
 #include "pch.hpp"
 
-#include "shader/shader.hpp"
+#include "shader.hpp"
 
 #include "mesh.hpp" // target
 

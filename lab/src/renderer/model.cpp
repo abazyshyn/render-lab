@@ -1,6 +1,6 @@
 #include "pch.hpp"
 
-#include "shader/shader.hpp"
+#include "shader.hpp"
 
 #include "model.hpp" // target
 #include <stb_image.h>

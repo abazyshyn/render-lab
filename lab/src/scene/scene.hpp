@@ -2,8 +2,8 @@
 #define SCENE_HPP
 
 #include "camera/camera.hpp"
-#include "shader/shader.hpp"
-#include "buffers/uniform_buffer.hpp"
+#include "renderer/shader.hpp"
+#include "renderer/uniform_buffer.hpp"
 
 namespace Lab
 {

@@ -2,7 +2,7 @@
 #define SKYBOX_HPP
 
 #include "scene/entities/scene_entity.hpp"
-#include "shader/shader.hpp"
+#include "renderer/shader.hpp"
 
 namespace Lab
 {

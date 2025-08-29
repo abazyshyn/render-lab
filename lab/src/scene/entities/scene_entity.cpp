@@ -2,7 +2,7 @@
 
 #include "scene_entity.hpp" // target
 
-#include "shader/shader.hpp"
+#include "renderer/shader.hpp"
 
 namespace Lab
 {

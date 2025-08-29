@@ -1,5 +1,4 @@
-#if !defined(WINDOW_HPP)
-#define WINDOW_HPP
+#pragma once
 
 #include "backend/glfw.hpp"
 
@@ -61,5 +60,3 @@ namespace Lab
     };
 
 } // namespace Lab
-
-#endif // WINDOW_HPP

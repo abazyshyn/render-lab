@@ -1,8 +1,7 @@
-#if !defined(RENDERER_HPP)
-#define RENDERER_HPP
+#pragma once
 
-#include "buffers/framebuffer.hpp"
-#include "shader/shader.hpp"
+#include "framebuffer.hpp"
+#include "shader.hpp"
 
 namespace Lab
 {
@@ -44,4 +43,3 @@ namespace Lab
 
 } // namespace Lab
 
-#endif // RENDERER_HPP

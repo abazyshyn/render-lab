@@ -1,7 +1,7 @@
 #include "pch.hpp"
 
 #include "camera.hpp"
-#include "window/window.hpp"
+#include "core/window.hpp"
 
 namespace Lab
 {

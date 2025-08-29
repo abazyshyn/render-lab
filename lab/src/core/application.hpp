@@ -1,5 +1,4 @@
-#if !defined(APPLICATION_HPP)
-#define APPLICATION_HPP
+#pragma once
 
 namespace Lab
 {
@@ -41,4 +40,3 @@ namespace Lab
 
 } // namespace Lab
 
-#endif // APPLICATION_HPP

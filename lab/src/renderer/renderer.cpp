@@ -2,7 +2,7 @@
 
 #include "renderer.hpp" // target
 
-#include "window/window.hpp"
+#include "core/window.hpp"
 #include "scene/scene.hpp"
 #include "primitive.hpp"
 #include "backend/opengl.hpp"

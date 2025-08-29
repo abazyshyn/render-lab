@@ -2,7 +2,7 @@
 
 #include "scene.hpp" // target
 
-#include "window/window.hpp"
+#include "core/window.hpp"
 #include "scene/entities/skybox/skybox.hpp"
 #include "scene/entities/sponza/sponza.hpp"
 #include "scene/entities/lights/lighting_sphere.hpp"

@@ -2,7 +2,7 @@
 
 #include "application.hpp" // target
 
-#include "window/window.hpp"
+#include "window.hpp"
 #include "renderer/renderer.hpp"
 
 namespace Lab
@@ -13,7 +13,7 @@ namespace Lab
         while (m_Window.m_IsRunning)
         {
             float deltaTime = CalculateDeltaTime();
-
+ 
             m_Window.OnUpdate();
             m_Renderer.Render(deltaTime);
         }

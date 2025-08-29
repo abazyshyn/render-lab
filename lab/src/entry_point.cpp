@@ -7,7 +7,7 @@
 
 #include "pch.hpp"
 
-#include "application/application.hpp"
+#include "core/application.hpp"
 
 using namespace Lab;
 
