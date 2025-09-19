@@ -26,10 +26,9 @@ namespace Lab
     {
         const int32_t uniformLocation = UniformFromCache(ct_UniformName);
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                "Setting the uniform matrix4fv...",
-                "\nUniform name: ", ct_UniformName,
-                "\nLocation: ", uniformLocation);
+        LAB_INFO_LOG("Setting the uniform matrix4fv...",
+                     "\nUniform name: ", ct_UniformName,
+                     "\nLocation: ", uniformLocation);
 
         glUniform1f(uniformLocation, ct_Value);
     }
@@ -38,10 +37,9 @@ namespace Lab
     {
         const int32_t uniformLocation = UniformFromCache(ct_UniformName);
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                "Setting the uniform matrix4fv...",
-                "\nUniform name: ", ct_UniformName,
-                "\nLocation: ", uniformLocation);
+        LAB_INFO_LOG("Setting the uniform matrix4fv...",
+                     "\nUniform name: ", ct_UniformName,
+                     "\nLocation: ", uniformLocation);
 
         glUniform3fv(uniformLocation, 1, glm::value_ptr(ct_Vector));
     }
@@ -50,10 +48,9 @@ namespace Lab
     {
         const int32_t uniformLocation = UniformFromCache(ct_UniformName);
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                "Setting the uniform matrix4fv...",
-                "\nUniform name: ", ct_UniformName,
-                "\nLocation: ", uniformLocation);
+        LAB_INFO_LOG("Setting the uniform matrix4fv...",
+                     "\nUniform name: ", ct_UniformName,
+                     "\nLocation: ", uniformLocation);
 
         glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(ct_Matrix));
     }
@@ -62,10 +59,9 @@ namespace Lab
     {
         const int32_t uniformLocation = UniformFromCache(ct_UniformName);
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                "Setting the uniform matrix4fv...",
-                "\nUniform name: ", ct_UniformName,
-                "\nLocation: ", uniformLocation);
+        LAB_INFO_LOG("Setting the uniform matrix4fv...",
+                     "\nUniform name: ", ct_UniformName,
+                     "\nLocation: ", uniformLocation);
 
         glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(ct_Matrix));
     }
@@ -81,9 +77,8 @@ namespace Lab
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
             m_ShaderName = path.substr(path.find_last_of('/') + 1, path.find_last_of('.'));
 
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                    "Processing the shader...\n",
-                    m_ShaderName);
+            LAB_WARN_LOG("Processing the shader...\n",
+                         m_ShaderName);
 #endif
 
             std::string shaderSource = ReadFromSource(path);
@@ -107,9 +102,8 @@ namespace Lab
             char *pErrorMessage = static_cast<char *>(alloca(messageLength * sizeof(char)));
             glGetProgramInfoLog(m_ProgramId, messageLength, &messageLength, pErrorMessage);
 
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "Shader program linking error.",
-                    "\nMessage: ", pErrorMessage);
+            LAB_ERROR_LOG("Shader program linking error.",
+                          "\nMessage: ", pErrorMessage);
 
             LAB_ASSERT(0);
         }
@@ -127,9 +121,8 @@ namespace Lab
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         if (!file.is_open())
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "Failed to open the source.",
-                    "\nShader source: ", m_ShaderName);
+            LAB_ERROR_LOG("Failed to open the source.",
+                          "\nShader source: ", m_ShaderName);
             LAB_ASSERT(!file.is_open());
         }
 #endif
@@ -150,9 +143,8 @@ namespace Lab
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
         if (file.is_open())
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "Failed to close the source.",
-                    "\nShader source: ", m_ShaderName);
+            LAB_ERROR_LOG("Failed to close the source.",
+                          "\nShader source: ", m_ShaderName);
             LAB_ASSERT(file.is_open());
         }
 #endif
@@ -182,8 +174,7 @@ namespace Lab
             }
             default:
             {
-                LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                        "Detected unsupported shader type.");
+                LAB_ERROR_LOG("Detected unsupported shader type.");
                 LAB_ASSERT(0);
             }
         }
@@ -208,11 +199,10 @@ namespace Lab
             char *pErrorMessage = static_cast<char *>(alloca(messageLength * sizeof(char)));
             glGetShaderInfoLog(shaderId, messageLength, &messageLength, pErrorMessage);
 
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    (shaderType == GL_VERTEX_SHADER ? "Vertex shader" : "Fragment shader"),
-                    " failed to compile.",
-                    "\nShader source: ", m_ShaderName,
-                    "\nMessage: ", pErrorMessage);
+            LAB_ERROR_LOG((shaderType == GL_VERTEX_SHADER ? "Vertex shader" : "Fragment shader"),
+                          " failed to compile.",
+                          "\nShader source: ", m_ShaderName,
+                          "\nMessage: ", pErrorMessage);
 
             LAB_ASSERT(0);
         }
@@ -238,10 +228,9 @@ namespace Lab
         }
         else
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "Failed to create shader program.",
-                    "\nUnknown shader type was detected.\n",
-                    m_ShaderName);
+            LAB_ERROR_LOG("Failed to create shader program.",
+                          "\nUnknown shader type was detected.\n",
+                          m_ShaderName);
             LAB_ASSERT(0);
         }
 
@@ -272,9 +261,8 @@ namespace Lab
     {
         if (ct_UniformLocation == -1)
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "Shader uniform cannot find the location.",
-                    "\nUniform name: ", ct_UniformName);
+            LAB_ERROR_LOG("Shader uniform cannot find the location.",
+                          "\nUniform name: ", ct_UniformName);
             LAB_ASSERT(0);
             throw std::runtime_error("Shader uniform cannot find the location.");
         }

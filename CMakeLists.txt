@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.16...3.28 FATAL_ERROR)
 project(RenderLab VERSION 1.0 LANGUAGES C CXX)
 cmake_policy(SET CMP0072 NEW)
 

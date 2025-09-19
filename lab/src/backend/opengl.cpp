@@ -23,8 +23,7 @@ namespace OpenGL
         // Check if debug context was created
         if (!(contextFlags & GL_CONTEXT_FLAG_DEBUG_BIT))
         {
-            LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "GL_CONTEXT_FLAG_DEBUG_BIT was not created.");
+            LAB_ERROR_LOG("GL_CONTEXT_FLAG_DEBUG_BIT was not created.");
             LAB_ASSERT(0);
         }
 
@@ -154,12 +153,12 @@ namespace OpenGL
             }
         }
 
-        LAB_LOG(Lab::LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                "OpenGL Debug Message:",
-                "\nSource: ", source, "\nType: ", type,
-                "\nID: ", t_Id, "\nSeverity: ", severity,
-                "\nMessage: ", ct_Message);
-        // LAB_ASSERT((severity == "HIGH" || severity == "MEDIUM" || severity == "LOW"));
+        LAB_WARN_LOG("OpenGL Debug Message:",
+                     "\nSource: ", source, "\nType: ", type,
+                     "\nID: ", t_Id, "\nSeverity: ", severity,
+                     "\nMessage: ", ct_Message);
+        // LAB_ASSERT(!(severity == "HIGH" || severity == "MEDIUM" || severity == "LOW"));
+        LAB_ASSERT(!(severity == "HIGH"));
     }
 
 #endif

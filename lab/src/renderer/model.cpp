@@ -16,9 +16,8 @@ namespace Lab
 
     void CModel::Draw(CShader &ct_Shader) const
     {
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                "Drawing model...",
-                "\nModel name:", m_ModelName);
+        LAB_INFO_LOG("Drawing model...",
+                     "\nModel name:", m_ModelName);
 
         for (const CMesh &mesh : m_Meshes)
         {
@@ -34,9 +33,8 @@ namespace Lab
         m_ModelName = ct_ModelPath.substr(ct_ModelPath.find_last_of('/') + 1);
 #endif
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                "Loading model...",
-                "\nModel name:", m_ModelName);
+        LAB_INFO_LOG("Loading model...",
+                     "\nModel name:", m_ModelName);
 
         Assimp::Importer importer;
 
@@ -44,7 +42,7 @@ namespace Lab
 
         if (!pScene || pScene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !pScene->mRootNode)
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR, "Failed to load aiScene.");
+            LAB_ERROR_LOG("Failed to load aiScene.");
             LAB_ASSERT(0);
             throw std::runtime_error("Failed to load aiScene.");
         }
@@ -88,18 +86,16 @@ namespace Lab
 
     CMesh CModel::ProcessMesh(aiMesh *t_pMesh, const aiScene *ct_pScene)
     {
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                "Processing mesh...",
-                "\nMesh:", t_pMesh->mName.C_Str());
+        LAB_WARN_LOG("Processing mesh...",
+                     "\nMesh:", t_pMesh->mName.C_Str());
 
         std::vector<Vertex_s> vertices{};
         std::vector<uint32_t> indices{};
         std::vector<Texture_s> textures{};
 
         // Process positions
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                "Processing mesh vertex positions...",
-                "\nMesh:", t_pMesh->mName.C_Str());
+        LAB_INFO_LOG("Processing mesh vertex positions...",
+                     "\nMesh:", t_pMesh->mName.C_Str());
         for (size_t i = 0; i < t_pMesh->mNumVertices; ++i)
         {
             Vertex_s vertex{};
@@ -134,9 +130,8 @@ namespace Lab
         }
 
         // Process indices
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                "Processing mesh indices...",
-                "\nMesh:", t_pMesh->mName.C_Str());
+        LAB_INFO_LOG("Processing mesh indices...",
+                     "\nMesh:", t_pMesh->mName.C_Str());
         for (size_t i = 0; i < t_pMesh->mNumFaces; ++i)
         {
             aiFace face = t_pMesh->mFaces[i];
@@ -148,9 +143,8 @@ namespace Lab
         }
 
         // Process textures(materials)
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                "Processing mesh textures...",
-                "\nMesh:", t_pMesh->mName.C_Str());
+        LAB_INFO_LOG("Processing mesh textures...",
+                     "\nMesh:", t_pMesh->mName.C_Str());
 
         aiMaterial *pMaterial = ct_pScene->mMaterials[t_pMesh->mMaterialIndex];
 
@@ -164,9 +158,8 @@ namespace Lab
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
         textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 
-        LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                "Mesh processed.",
-                "\nMesh:", t_pMesh->mName.C_Str());
+        LAB_WARN_LOG("Mesh processed.",
+                     "\nMesh:", t_pMesh->mName.C_Str());
 
         return CMesh(vertices, indices, textures, t_pMesh->mName.C_Str());
     }
@@ -182,9 +175,8 @@ namespace Lab
             aiString texturePath{};
             ct_pMaterial->GetTexture(ct_TextureType, i, &texturePath);
 
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_SOFT,
-                    "Loading texture",
-                    "\nTexture:", texturePath.C_Str());
+            LAB_INFO_LOG("Loading texture",
+                         "\nTexture:", texturePath.C_Str());
 
             bool skipTextureLoading = false;
             for (const Texture_s &loadedTexture : m_LoadedTextures)
@@ -229,9 +221,8 @@ namespace Lab
         if (!pImageData)
         {
             stbi_image_free(pImageData);
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                    "Failed to load texture pImageData.",
-                    "\nTexture: ", fileName);
+            LAB_ERROR_LOG("Failed to load texture pImageData.",
+                          "\nTexture: ", fileName);
             LAB_ASSERT(0);
             throw std::runtime_error("Failed to load texture pImageData.");
         }
@@ -256,8 +247,7 @@ namespace Lab
             }
             default:
             {
-                LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                        "Unsupported texture format.");
+                LAB_ERROR_LOG("Unsupported texture format.");
                 LAB_ASSERT(0);
             }
         }

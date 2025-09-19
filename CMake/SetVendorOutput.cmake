@@ -1,6 +1,6 @@
 function(set_vendor_output target)
 
-    set(output_directory "${PROJECT_SOURCE_DIR}/lab/vendor/${target}/bin/${CMAKE_SYSTEM_NAME}-${CMAKE_HOST_SYSTEM_PROCESSOR}/${target}/${CMAKE_BUILD_TYPE}")
+    set(output_directory "${PROJECT_SOURCE_DIR}/lab/vendor/${target}/bin/${CMAKE_SYSTEM_NAME}_${CMAKE_HOST_SYSTEM_PROCESSOR}/${target}/${CMAKE_BUILD_TYPE}")
 
     foreach(BUILD_TYPE Debug Release RelWithDebInfo MinSizeRel)
 

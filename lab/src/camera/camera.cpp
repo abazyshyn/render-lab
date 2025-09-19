@@ -33,32 +33,28 @@ namespace Lab
         if (glfwGetKey(t_pWindow, GLFW_KEY_W) == GLFW_PRESS)
         {
             m_CameraPositionVector += glm::normalize(m_CameraFrontVector) * fCameraSpeed;
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                    "\nW keys pressed.",
-                    "\nX: ", m_CameraPositionVector.x,
-                    "\nY: ", m_CameraPositionVector.y,
-                    "\nZ: ", m_CameraPositionVector.z);
+            LAB_INFO_LOG("\nW keys pressed.",
+                         "\nX: ", m_CameraPositionVector.x,
+                         "\nY: ", m_CameraPositionVector.y,
+                         "\nZ: ", m_CameraPositionVector.z);
         }
         if (glfwGetKey(t_pWindow, GLFW_KEY_S) == GLFW_PRESS)
         {
             m_CameraPositionVector -= glm::normalize(m_CameraFrontVector) * fCameraSpeed;
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                    "\nS keys pressed.",
-                    "\nX: ", m_CameraPositionVector.x,
-                    "\nY: ", m_CameraPositionVector.y,
-                    "\nZ: ", m_CameraPositionVector.z);
+            LAB_INFO_LOG("\nS keys pressed.",
+                         "\nX: ", m_CameraPositionVector.x,
+                         "\nY: ", m_CameraPositionVector.y,
+                         "\nZ: ", m_CameraPositionVector.z);
         }
         if (glfwGetKey(t_pWindow, GLFW_KEY_A) == GLFW_PRESS)
         {
             m_CameraPositionVector -= m_CameraRightVector * fCameraSpeed;
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                    "\nA keys pressed.");
+            LAB_INFO_LOG("\nA keys pressed.");
         }
         if (glfwGetKey(t_pWindow, GLFW_KEY_D) == GLFW_PRESS)
         {
             m_CameraPositionVector += m_CameraRightVector * fCameraSpeed;
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_WARNING,
-                    "\nD keys pressed.");
+            LAB_INFO_LOG("\nD keys pressed.");
         }
     }
 

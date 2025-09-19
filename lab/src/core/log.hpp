@@ -83,10 +83,10 @@ namespace Lab
 /**
  * @brief Macros for logging
  */
-#define LAB_TRACE_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_TRACE, __VA_ARGS__)
-#define LAB_INFO_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_INFO, __VA_ARGS__)
-#define LAB_WARN_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_WARN, __VA_ARGS__)
-#define LAB_ERROR_LOG(...) ::Lab::Log(LAB_LOG_MESSAGE_SEVERITY_ERROR, __VA_ARGS__)
+#define LAB_TRACE_LOG(...) ::Lab::Log(Lab::LAB_LOG_MESSAGE_SEVERITY_TRACE, __VA_ARGS__)
+#define LAB_INFO_LOG(...) ::Lab::Log(Lab::LAB_LOG_MESSAGE_SEVERITY_INFO, __VA_ARGS__)
+#define LAB_WARN_LOG(...) ::Lab::Log(Lab::LAB_LOG_MESSAGE_SEVERITY_WARN, __VA_ARGS__)
+#define LAB_ERROR_LOG(...) ::Lab::Log(Lab::LAB_LOG_MESSAGE_SEVERITY_ERROR, __VA_ARGS__)
 
 #else // defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 

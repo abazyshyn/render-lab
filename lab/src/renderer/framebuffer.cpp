@@ -57,7 +57,7 @@ namespace Lab
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
         {
-            LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR, "Framebuffer is not complete.");
+            LAB_ERROR_LOG("Framebuffer is not complete.");
             LAB_ASSERT(0);
         }
 

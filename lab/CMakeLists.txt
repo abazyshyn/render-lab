@@ -43,7 +43,7 @@ target_link_libraries("${RENDER_LAB}" PUBLIC
 
 if(WINDOWS)
     include(CopyVendorOutput)
-    copy_vendor_output("assimp;*.dll")
-    copy_vendor_output("glfw;*.dll")
-    copy_vendor_output("glad;*.lib")
+    copy_vendor_output("assimp;assimp-vc143-mtd.dll")
+    copy_vendor_output("glfw;glfw3d.dll")
+    copy_vendor_output("glad;gladd.lib")
 endif()

@@ -46,9 +46,8 @@ namespace Lab
             if (!pImageData)
             {
                 stbi_image_free(pImageData);
-                LAB_LOG(LAB_LOG_MESSAGE_SEVERITY_ERROR,
-                        "Failed to load texture pImageData.",
-                        "\nTexture: ", ct_CubemapPaths[i].string());
+                LAB_ERROR_LOG("Failed to load texture pImageData.",
+                              "\nTexture: ", ct_CubemapPaths[i].string());
                 LAB_ASSERT(0);
                 throw std::runtime_error("Failed to load texture pImageData.");
             }
