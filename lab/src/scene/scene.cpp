@@ -6,7 +6,7 @@
 #include "scene/entities/skybox/skybox.hpp"
 #include "scene/entities/sponza/sponza.hpp"
 #include "scene/entities/lights/lighting_sphere.hpp"
-#include "renderer/model.hpp"
+// #include "renderer/model.hpp"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -89,13 +89,17 @@ namespace Lab
     {
         m_BasicShader.Bind();
 
-        glm::vec3 lightPosition = glm::vec3(glm::sin(glfwGetTime()) * 2.0f, 0.3f, 0.0f);
+        const float time = (float)glfwGetTime() * 0.05;
+        glm::vec3 lightPosition;
+        lightPosition.x = glm::sin(time) * 100.0f;
+        lightPosition.y = 0.3f;
+        lightPosition.z = glm::cos(time) * 100.0f;
 
         for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_BasicLightingOpaqueSceneEntities)
         {
             glm::mat4 modelMatrix(1.0f);
             modelMatrix = glm::translate(modelMatrix, lightPosition);
-            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.05f));
+            modelMatrix = glm::scale(modelMatrix, glm::vec3(1.5f));
 
             m_BasicShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
@@ -108,28 +112,28 @@ namespace Lab
             // sceneEntity->Draw(m_DebugNormalShader);
         }
 
-        m_BasicLightingShader.Bind();
+        // m_BasicLightingShader.Bind();
 
-        for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
-        {
-            glm::mat4 modelMatrix(1.0f);
-            modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
+        // for (const std::shared_ptr<CSceneEntity> &sceneEntity : m_CommonOpaqueSceneEntities)
+        // {
+        //     glm::mat4 modelMatrix(1.0f);
+        //     modelMatrix = glm::scale(modelMatrix, glm::vec3(0.002f));
 
-            glm::mat3 normalMatrix = glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix));
+        //     glm::mat3 normalMatrix = glm::transpose(glm::inverse(ct_ViewMatrix * modelMatrix));
 
-            m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(glm::vec4(lightPosition, 1.0f) * ct_ViewMatrix));
+        //     m_BasicLightingShader.SetUniform3fv("u_DirectionalLight.m_Position", glm::vec3(glm::vec4(lightPosition, 1.0f) * ct_ViewMatrix));
 
-            m_BasicLightingShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
-            m_BasicLightingShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+        //     m_BasicLightingShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
+        //     m_BasicLightingShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
 
-            sceneEntity->Draw(m_BasicLightingShader);
+        //     sceneEntity->Draw(m_BasicLightingShader);
 
-            // m_DebugNormalShader.Bind();
-            // m_DebugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
-            // m_DebugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", ct_ViewMatrix);
-            // m_DebugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", m_Camera.CalculatePerspectiveProjectionMatrix(m_Window));
-            // sceneEntity->Draw(m_DebugNormalShader);
-        }
+        //     // m_DebugNormalShader.Bind();
+        //     // m_DebugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+        //     // m_DebugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", ct_ViewMatrix);
+        //     // m_DebugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", m_Camera.CalculatePerspectiveProjectionMatrix(m_Window));
+        //     // sceneEntity->Draw(m_DebugNormalShader);
+        // }
     }
 
 } // namespace Lab
