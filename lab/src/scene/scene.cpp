@@ -52,12 +52,12 @@ namespace Lab
           m_CommonOpaqueSceneEntities({std::make_shared<CSponza>()}),
           m_BasicLightingOpaqueSceneEntities({std::make_shared<CLightingSphere>()})
     {
-        m_Skybox.CreateCubemap({Utils::LAB_BASE_MODELS_PATH + "skybox/textures/right.png",
-                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/left.png",
-                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/top.png",
-                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/bottom.png",
-                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/front.png",
-                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/back.png"});
+        m_Skybox.CreateCubemap({Utils::LAB_BASE_MODELS_PATH + "skybox/textures/galaxy+X.tga",
+                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/galaxy-X.tga",
+                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/galaxy+Y.tga",
+                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/galaxy-Y.tga",
+                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/galaxy-Z.tga",
+                                Utils::LAB_BASE_MODELS_PATH + "skybox/textures/galaxy+Z.tga"});
 
         m_Camera.SetLastPosX(static_cast<float>(m_Window.GetWidth()) / 2.0f);
         m_Camera.SetLastPosY(static_cast<float>(m_Window.GetHeight()) / 2.0f);
