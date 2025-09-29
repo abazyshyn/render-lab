@@ -24,12 +24,10 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 
-#include "core/utils.hpp"
-
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
-#include "core/log.hpp"
-#include "core/assert.hpp"
+// #include "log.hpp"
+// #include "assert.hpp"
 
 // #include <gtest/gtest.h>
 

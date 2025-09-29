@@ -7,13 +7,12 @@
 
 #include "pch.hpp"
 
-#include "core/application.hpp"
-
-using namespace Lab;
-
 int main(int argc, char **argv)
 {
-    CApplication::GetInstance().Run();
+    for (;;)
+    {
+        std::cout << "Render lab is running!" << std::endl;
+    }
 
     return 0;
 }
