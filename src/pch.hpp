@@ -26,8 +26,8 @@
 
 #if defined(LAB_DEBUG) || defined(LAB_DEVELOPMENT)
 
-// #include "log.hpp"
-// #include "assert.hpp"
+#include "log.hpp"
+#include "assert.hpp"
 
 // #include <gtest/gtest.h>
 
