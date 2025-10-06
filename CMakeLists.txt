@@ -31,7 +31,7 @@ add_git_submodule(vendor/glm)
 add_git_submodule(vendor/spdlog)
 #add_git_submodule(vendor/googletest)
 
-add_subdirectory(lab/vendor/glad)
+add_subdirectory(vendor/glad)
 
 file(GLOB_RECURSE
      LAB_FILES
