@@ -48,6 +48,8 @@ file(
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_opengl3.h"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_opengl3.cpp"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_opengl3_loader.h"
+    "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_glfw.h"
+    "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_glfw.cpp"
 )
 
 list(APPEND SOURCE_FILES ${LAB_FILES} ${IMGUI_FILES})
