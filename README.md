@@ -15,7 +15,7 @@ This project is a showcase of my skills in C++, OpenGL, GLSL.
 3. If the script fails, you may need to install some dependencies using your package manager (e.g., `pacman`).
 4. Run the program - `./bin/your_os_and_architechture/RenderLab/your_desired_build/RenderLab`.
 
-# Some screenshots
-<img width="1919" height="1002" alt="Screenshot 2025-10-07 163124" src="https://github.com/user-attachments/assets/0f96e11b-87c1-49b5-aa71-f6b54e995fc5" />
+# Development process
+![demo-grid](https://github.com/user-attachments/assets/74ce3c59-9e38-4efc-9873-68f2be778b9d)
 <img width="1920" height="1032" alt="スクリーンショット 2025-08-26 112159" src="https://github.com/user-attachments/assets/1ef7b2ea-a7f0-4265-9efe-b423fa5da1bc" />
 <img width="1920" height="1032" alt="スクリーンショット 2025-08-09 202823" src="https://github.com/user-attachments/assets/9df96853-01c1-4def-b6a4-8e01175df5c6" />
