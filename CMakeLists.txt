@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16...3.28 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.16)
 project(RenderLab VERSION 1.0 LANGUAGES C CXX)
 cmake_policy(SET CMP0072 NEW)
 
@@ -93,11 +93,10 @@ target_link_libraries("${RENDER_LAB}" PUBLIC
     glfw
     #assimp
     glad
-    OpenGL::GL)
+    OpenGL::GL
+    spdlog::spdlog)
 
 if(WINDOWS)
   include(CopyVendorOutput)
-  copy_vendor_output("assimp;assimp-vc143-mtd.dll")
-  copy_vendor_output("glfw;glfw3d.dll")
-  copy_vendor_output("glad;gladd.lib")
+  #copy_vendor_output("assimp;assimp-vc143-mtd.dll")
 endif()

@@ -65,7 +65,7 @@ int main(int argc, char **argv)
         if (ImGui::CollapsingHeader("Basic lighting scene"))
         {
             static bool isRender = false;
-            if (ImGui::Button("Start scene"))
+            if (ImGui::Button("Render scene"))
             {
                 isRender = !isRender;
             }
@@ -74,11 +74,14 @@ int main(int argc, char **argv)
             {
                 glClear(GL_COLOR_BUFFER_BIT);
                 glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
                 camera.CameraKeyboardInput(window.GetWindowPointer(), deltaTime);
                 camera.CameraMouseMovementInput(window.GetWindowPointer());
 
                 gridShader.Bind();
+                gridShader.SetUniform3fv("u_CameraWorldPos", camera.GetCameraPos());
                 gridShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
                 gridShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
 
