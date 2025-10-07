@@ -39,6 +39,16 @@ namespace Lab
          */
         GLFWwindow *GetWindowPointer() const { return m_WindowData.m_pWindow; }
 
+        /**
+         * @brief Returns pair of window width and height
+         *
+         * @return Pair of window width and height
+         */
+        std::pair<float, float> GetWindowSizes() const
+        {
+            return {static_cast<float>(m_WindowData.m_WindowWidth), static_cast<float>(m_WindowData.m_WindowHeight)};
+        }
+
     private:
         struct WindowData_s
         {

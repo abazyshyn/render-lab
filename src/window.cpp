@@ -85,21 +85,21 @@ namespace Lab
 
 #pragma region Callbacks
 
-    void CWindow::WindowCloseCallback(GLFWwindow *t_pWindow)
+    void CWindow::WindowCloseCallback(GLFWwindow *pWindow)
     {
-        WindowData_s &glfwData = *static_cast<WindowData_s *>(glfwGetWindowUserPointer(t_pWindow));
+        WindowData_s &glfwData = *static_cast<WindowData_s *>(glfwGetWindowUserPointer(pWindow));
 
         glfwData.m_IsRunning = false;
     }
 
-    void CWindow::KeyCallback(GLFWwindow *t_pWindow, int t_Key, int t_Scancode, int t_Action, int t_Mods)
+    void CWindow::KeyCallback(GLFWwindow *pWindow, int key, int scancode, int action, int mods)
     {
-        WindowData_s &glfwData = *static_cast<WindowData_s *>(glfwGetWindowUserPointer(t_pWindow));
+        WindowData_s &glfwData = *static_cast<WindowData_s *>(glfwGetWindowUserPointer(pWindow));
 
         // Close window
-        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
-            glfwGetKey(t_pWindow, GLFW_KEY_ESCAPE))
+        if ((glfwGetKey(pWindow, GLFW_KEY_LEFT_SHIFT) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
+            glfwGetKey(pWindow, GLFW_KEY_ESCAPE))
         {
             LAB_TRACE_LOG("SHIFT + ESCAPE keys pressed.");
             glfwData.m_IsRunning = false;
@@ -107,33 +107,33 @@ namespace Lab
         }
 
         // Hide cursor
-        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_CONTROL) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
-            (glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
-            glfwGetKey(t_pWindow, GLFW_KEY_C))
+        if ((glfwGetKey(pWindow, GLFW_KEY_LEFT_CONTROL) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
+            (glfwGetKey(pWindow, GLFW_KEY_LEFT_SHIFT) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
+            glfwGetKey(pWindow, GLFW_KEY_C))
         {
             LAB_TRACE_LOG("CONTROL + SHIFT + C keys pressed.");
-            glfwSetInputMode(t_pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
             return;
         }
 
         // Show cursor
-        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_CONTROL) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
-            (glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
-            glfwGetKey(t_pWindow, GLFW_KEY_X))
+        if ((glfwGetKey(pWindow, GLFW_KEY_LEFT_CONTROL) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
+            (glfwGetKey(pWindow, GLFW_KEY_LEFT_SHIFT) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
+            glfwGetKey(pWindow, GLFW_KEY_X))
         {
             LAB_TRACE_LOG("CONTROL + SHIFT + X keys pressed.");
-            glfwSetInputMode(t_pWindow, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
+            glfwSetInputMode(pWindow, GLFW_CURSOR, GLFW_CURSOR_CAPTURED);
             return;
         }
 
         // Turn on wireframe mode
-        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_SHIFT) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
-            glfwGetKey(t_pWindow, GLFW_KEY_Q))
+        if ((glfwGetKey(pWindow, GLFW_KEY_LEFT_SHIFT) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_SHIFT)) &&
+            glfwGetKey(pWindow, GLFW_KEY_Q))
         {
             LAB_TRACE_LOG("SHIFT + Q keys pressed.");
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -141,9 +141,9 @@ namespace Lab
         }
 
         // Turn off wireframe mode
-        if ((glfwGetKey(t_pWindow, GLFW_KEY_LEFT_CONTROL) ||
-             glfwGetKey(t_pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
-            glfwGetKey(t_pWindow, GLFW_KEY_Q))
+        if ((glfwGetKey(pWindow, GLFW_KEY_LEFT_CONTROL) ||
+             glfwGetKey(pWindow, GLFW_KEY_RIGHT_CONTROL)) &&
+            glfwGetKey(pWindow, GLFW_KEY_Q))
         {
             LAB_TRACE_LOG("CONTROL + Q keys pressed.");
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -151,19 +151,19 @@ namespace Lab
         }
     }
 
-    void CWindow::FramebufferSizeCallback(GLFWwindow *t_pWindow, int t_Width, int t_Height)
+    void CWindow::FramebufferSizeCallback(GLFWwindow *pWindow, int width, int height)
     {
-        WindowData_s &glfwData = *static_cast<WindowData_s *>(glfwGetWindowUserPointer(t_pWindow));
+        WindowData_s &glfwData = *static_cast<WindowData_s *>(glfwGetWindowUserPointer(pWindow));
 
-        if (t_Width == 0 && t_Height == 0)
+        if (width == 0 && height == 0)
         {
             glfwData.m_WindowWidth = 1;
             glfwData.m_WindowHeight = 1;
         }
         else
         {
-            glfwData.m_WindowWidth = t_Width;
-            glfwData.m_WindowHeight = t_Height;
+            glfwData.m_WindowWidth = width;
+            glfwData.m_WindowHeight = height;
         }
 
         glViewport(0, 0, glfwData.m_WindowWidth, glfwData.m_WindowHeight);

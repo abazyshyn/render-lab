@@ -9,6 +9,7 @@ namespace Lab
      * @brief Creates ImGUI context
      */
     void SetupImGuiContext(GLFWwindow *const pWindow);
+
     /**
      * @brief Destroys ImGUI context
      */
