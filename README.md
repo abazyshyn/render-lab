@@ -11,7 +11,7 @@ This project is a showcase of my skills in C++, OpenGL, GLSL.
 
 ## Linux
 1. Make the build script executable - `chmod +x scripts/build/your_desired_build.sh`.
-2. Run script - `./scripts/build/your_desired_build.sh`.
+2. Run the script - `./scripts/build/your_desired_build.sh`.
 3. If the script fails, you may need to install some dependencies using your package manager (e.g., `pacman`).
 4. Run the program - `./bin/your_os_and_architechture/RenderLab/your_desired_build/RenderLab`.
 
