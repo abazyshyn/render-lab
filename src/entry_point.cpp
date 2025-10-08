@@ -115,16 +115,16 @@ int main(int argc, char **argv)
             oceanShader.Bind();
 
             modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 1.0f, 0.0f));
-            glm::vec3 dirLightPosition = glm::vec3(glm::vec4(10.0f, 10.0f, 10.0f, 1.0f) * viewMatrix);
+            glm::vec3 lightDirWorld = glm::normalize(glm::vec3(-1.0f, -1.0f, -1.0f)); // toward the surface
+            glm::vec3 lightDirView = glm::mat3(viewMatrix) * lightDirWorld;
 
             oceanShader.SetUniform1f("u_Time", static_cast<float>(glfwGetTime()));
-            oceanShader.SetUniform3fv("u_DirLightPosition", dirLightPosition);
+            oceanShader.SetUniform3fv("u_DirLightPosition", lightDirView); // Rename it
             oceanShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
             oceanShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
             oceanShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
             oceanShader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
 
-            glDisable(GL_DEPTH_TEST);
             oceanModel.Draw(oceanShader);
 
             // debugNormalShader.Bind();
