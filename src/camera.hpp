@@ -23,6 +23,7 @@ namespace Lab
         [[nodiscard]] glm::vec3 GetCameraFront() const { return m_CameraFrontVector; }
         [[nodiscard]] glm::vec3 GetCameraUp() const { return m_CameraUpVector; }
 
+        void SetCameraPosition(const glm::vec3 &cameraPosition) { m_CameraPositionVector = cameraPosition; }
         void SetFOV(const float ct_FOV) { m_FOV = ct_FOV; }
         void SetPosX(const float ct_CursorPositionX) { m_CursorPositionX = ct_CursorPositionX; }
         void SetPosY(const float ct_CursorPositionY) { m_CursorPositionY = ct_CursorPositionY; }

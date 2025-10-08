@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shader/shader.hpp"
+#include "shader.hpp"
 
 namespace Lab
 {
@@ -42,8 +42,8 @@ namespace Lab
     class CMesh
     {
     public:
-        explicit CMesh(const std::vector<Vertex_s> &ct_Vertices, const std::vector<uint32_t> &ct_Indices,
-                       const std::vector<Texture_s> &ct_Textures, const std::string &ct_Name);
+        explicit CMesh(const std::vector<Vertex_s> &vertices, const std::vector<uint32_t> &indices,
+                       const std::vector<Texture_s> &textures, const std::string &name);
 
         CMesh(const CMesh &source) = delete;
         CMesh &operator=(const CMesh &source) = delete;
@@ -51,12 +51,14 @@ namespace Lab
         CMesh(CMesh &&source) noexcept;
         CMesh &operator=(CMesh &&source) noexcept;
 
+        ~CMesh();
+
         /**
          * @brief Draws a mesh
          *
-         * @param[in] ct_Shader Shader program
+         * @param[in] shader Shader program
          */
-        void Draw(const CShader &ct_Shader) const;
+        void Draw(CShader &shader) const;
 
         /**
          * @brief Returns mesh name

@@ -7,12 +7,12 @@
 namespace Lab
 {
 
-    CMesh::CMesh(const std::vector<Vertex_s> &ct_Vertices, const std::vector<uint32_t> &ct_Indices,
-                 const std::vector<Texture_s> &ct_Textures, const std::string &ct_Name)
-        : m_Vertices(ct_Vertices),
-          m_Indices(ct_Indices),
-          m_Textures(ct_Textures),
-          m_Name(ct_Name),
+    CMesh::CMesh(const std::vector<Vertex_s> &vertices, const std::vector<uint32_t> &indices,
+                 const std::vector<Texture_s> &textures, const std::string &name)
+        : m_Vertices(vertices),
+          m_Indices(indices),
+          m_Textures(textures),
+          m_Name(name),
           m_VAO(0),
           m_VBO(0),
           m_IBO(0)
@@ -20,7 +20,7 @@ namespace Lab
         SetupMesh();
     }
 
-    CMesh::CMesh(CMesh &&source)
+    CMesh::CMesh(CMesh &&source) noexcept
     {
         m_Vertices = std::move(source.m_Vertices);
         m_Indices = std::move(source.m_Indices);
@@ -31,9 +31,11 @@ namespace Lab
         m_IBO = source.m_IBO;
 
         m_VAO = m_VBO = m_IBO = 0;
+
+        SetupMesh();
     }
 
-    CMesh &CMesh::operator=(CMesh &&source)
+    CMesh &CMesh::operator=(CMesh &&source) noexcept
     {
         if (this != &source)
         {
@@ -50,6 +52,8 @@ namespace Lab
             m_VAO = m_VBO = m_IBO = 0;
         }
 
+        SetupMesh();
+
         return *this;
     }
 
@@ -58,7 +62,7 @@ namespace Lab
         OpenGL::DeleteObjects(1, &m_VAO, 1, &m_VBO, 1, &m_IBO);
     }
 
-    void CMesh::Draw(const CShader &ct_Shader) const
+    void CMesh::Draw(CShader &shader) const
     {
         uint32_t diffuseNumber = 0;
         uint32_t specularNumber = 0;
@@ -82,19 +86,33 @@ namespace Lab
                 }
             }
 
-            if (m_Textures[i].m_TextureType == LAB_TEXTURE_TYPE_DIFFUSE)
+            switch (m_Textures[i].m_TextureType)
             {
-                std::string uniformTextureName = "u_DiffuseTexture";
-                uniformTextureName += std::to_string(i);
+                case LAB_TEXTURE_TYPE_DIFFUSE:
+                {
+                    std::string uniformTextureName = "u_Material.m_DiffuseTexture";
+                    uniformTextureName += std::to_string(i);
 
-                glUniform1i(glGetUniformLocation(ct_Shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
-                glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
+                    glUniform1i(glGetUniformLocation(shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
+                    glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
+
+                    break;
+                }
+                case LAB_TEXTURE_TYPE_SPECULAR:
+                {
+                    std::string uniformTextureName = "u_Material.m_SpecularTexture";
+                    uniformTextureName += std::to_string(i);
+
+                    glUniform1i(glGetUniformLocation(shader.GetProgramId(), uniformTextureName.c_str()), static_cast<int32_t>(i));
+                    glBindTexture(GL_TEXTURE_2D, m_Textures[i].m_TextureId);
+
+                    break;
+                }
             }
         }
 
         glBindVertexArray(m_VAO);
         glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_Indices.size()), GL_UNSIGNED_INT, nullptr);
-
         glBindVertexArray(0);
         glActiveTexture(GL_TEXTURE0);
     }

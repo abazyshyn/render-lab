@@ -15,6 +15,7 @@
 #include "camera.hpp"
 #include "shader.hpp"
 #include "utils.hpp"
+#include "model.hpp"
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
@@ -29,14 +30,18 @@ int main(int argc, char **argv)
     auto [width, height] = window.GetWindowSizes();
     camera.SetLastPosX(width / 2.0f);
     camera.SetLastPosY(height / 2.0f);
+    camera.SetCameraPosition(glm::vec3(0.0f, 1.0f, 0.0f));
 
+    OpenGL::EnableDebug();
     Lab::SetupImGuiContext(window.GetWindowPointer());
 
-#pragma region Shaders
+#pragma region Ocean scene setup
 
     Lab::CShader gridShader({Utils::LAB_BASE_SHADERS_PATH + "gl_grid.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_grid.frag"});
+    Lab::CShader oceanShader({Utils::LAB_BASE_SHADERS_PATH + "gl_ocean.vert", Utils::LAB_BASE_SHADERS_PATH + "gl_ocean.frag"});
+    Lab::CModel oceanModel(Utils::LAB_BASE_MODELS_PATH + "ocean_scene/ocean.glb");
 
-#pragma endregion Shaders
+#pragma endregion Ocean scene setup
 
     for (; window.IsRunning();) // Main loop
     {
@@ -57,8 +62,6 @@ int main(int argc, char **argv)
         ImGui::Begin("Control menu", 0, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove);
         ImGui::SetWindowSize(ImVec2(300.0f, window.GetWindowSizes().second));
         ImGui::SetWindowPos("Control menu", ImVec2(0.0f, 0.0f));
-
-        OpenGL::EnableDebug();
 
 #pragma region Ocean scene
 
@@ -95,6 +98,17 @@ int main(int argc, char **argv)
             gridShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
 
             glDrawArrays(GL_TRIANGLES, 0, 6);
+
+            oceanShader.Bind();
+
+            glm::mat4 modelMatrix(1.0f);
+
+            oceanShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            oceanShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
+            oceanShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
+
+            glDisable(GL_DEPTH_TEST);
+            oceanModel.Draw(oceanShader);
         }
         else
         {

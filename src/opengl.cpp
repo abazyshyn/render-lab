@@ -141,7 +141,7 @@ namespace OpenGL
                 strSeverity = "MEDIUM";
                 LAB_ERROR_LOG("OpenGL Debug Message:\nSource: {0}\nType: {1}\nID: {2}\nSeverity: {3}\nMessage: {4}",
                               strSource, strType, id, strSeverity, pMessage);
-                LAB_ASSERT(0);
+                // LAB_ASSERT(0);
                 break;
             }
             case GL_DEBUG_SEVERITY_LOW:

@@ -25,7 +25,7 @@ set(RENDER_LAB_OUTPUT_DIR
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/CMake/")
 
 include(AddGitSubmodule)
-#add_git_submodule(vendor/assimp)
+add_git_submodule(vendor/assimp)
 add_git_submodule(vendor/glfw)
 add_git_submodule(vendor/glm)
 add_git_submodule(vendor/spdlog)
@@ -85,18 +85,23 @@ include(SetVendorOutput)
 set_vendor_output("glad")
 set_vendor_output("glfw")
 set_vendor_output("spdlog")
-#set_vendor_output("assimp")
+set_vendor_output("assimp")
 
 target_precompile_headers("${RENDER_LAB}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src/pch.hpp")
 
 target_link_libraries("${RENDER_LAB}" PUBLIC
     glfw
-    #assimp
+    assimp
     glad
     OpenGL::GL
     spdlog::spdlog)
 
 if(WINDOWS)
   include(CopyVendorOutput)
-  #copy_vendor_output("assimp;assimp-vc143-mtd.dll")
+  copy_vendor_output("assimp;assimp-vc143-mtd.dll")
+  copy_vendor_output("assimp;assimp-vc143-mtd.pdb")
+  copy_vendor_output("glfw;glfw3d.dll")
+  copy_vendor_output("glfw;glfw3d.pdb")
+  copy_vendor_output("spdlog;spdlogd.dll")
+  copy_vendor_output("spdlog;spdlogd.pdb")
 endif()
