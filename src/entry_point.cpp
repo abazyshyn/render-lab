@@ -32,7 +32,15 @@ int main(int argc, char **argv)
     camera.SetLastPosY(height / 2.0f);
     camera.SetCameraPosition(glm::vec3(0.0f, 1.0f, 0.0f));
 
+#pragma region Debug
+
     OpenGL::EnableDebug();
+    Lab::CShader debugNormalShader({Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.vert",
+                                    Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.frag",
+                                    Utils::LAB_BASE_SHADERS_PATH + "gl_debug_normal.geom"});
+
+#pragma endregion Debug
+
     Lab::SetupImGuiContext(window.GetWindowPointer());
 
 #pragma region Ocean scene setup
@@ -92,23 +100,40 @@ int main(int argc, char **argv)
             camera.CameraKeyboardInput(window.GetWindowPointer(), deltaTime);
             camera.CameraMouseMovementInput(window.GetWindowPointer());
 
+            glm::mat4 modelMatrix(1.0f);
+            glm::mat4 viewMatrix = camera.CalculateViewMatrix();
+            glm::mat3 normalMatrix = glm::transpose(glm::inverse(viewMatrix * modelMatrix));
+            glm::mat4 projectionMatrix = camera.CalculatePerspectiveProjectionMatrix(window);
+
             gridShader.Bind();
             gridShader.SetUniform3fv("u_CameraWorldPos", camera.GetCameraPos());
-            gridShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
-            gridShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
+            gridShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
+            gridShader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
 
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             oceanShader.Bind();
 
-            glm::mat4 modelMatrix(1.0f);
+            modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0f, 1.0f, 0.0f));
+            glm::vec3 dirLightPosition = glm::vec3(glm::vec4(10.0f, 10.0f, 10.0f, 1.0f) * viewMatrix);
 
+            oceanShader.SetUniform1f("u_Time", static_cast<float>(glfwGetTime()));
+            oceanShader.SetUniform3fv("u_DirLightPosition", dirLightPosition);
+            oceanShader.SetUniformMatrix3fv("u_NormalMatrix", normalMatrix);
             oceanShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
-            oceanShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
-            oceanShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
+            oceanShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
+            oceanShader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
 
             glDisable(GL_DEPTH_TEST);
             oceanModel.Draw(oceanShader);
+
+            // debugNormalShader.Bind();
+
+            // debugNormalShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            // debugNormalShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
+            // debugNormalShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
+
+            // oceanModel.Draw(debugNormalShader);
         }
         else
         {
