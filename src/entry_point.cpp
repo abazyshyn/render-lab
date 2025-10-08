@@ -60,37 +60,14 @@ int main(int argc, char **argv)
 
         OpenGL::EnableDebug();
 
-#pragma region Basic lighting scene
+#pragma region Ocean scene
 
-        if (ImGui::CollapsingHeader("Basic lighting scene"))
+        static bool isOceanSceneRendering = false;
+        if (ImGui::CollapsingHeader("Ocean scene"))
         {
-            static bool isRender = false;
-            if (ImGui::Button("Render scene"))
+            if (ImGui::Button(!isOceanSceneRendering ? "Start rendering scene" : "Stop rendering scene"))
             {
-                isRender = !isRender;
-            }
-
-            if (isRender)
-            {
-                glClear(GL_COLOR_BUFFER_BIT);
-                glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
-                glEnable(GL_BLEND);
-                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-                camera.CameraKeyboardInput(window.GetWindowPointer(), deltaTime);
-                camera.CameraMouseMovementInput(window.GetWindowPointer());
-
-                gridShader.Bind();
-                gridShader.SetUniform3fv("u_CameraWorldPos", camera.GetCameraPos());
-                gridShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
-                gridShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
-
-                glDrawArrays(GL_TRIANGLES, 0, 6);
-            }
-            else
-            {
-                glClear(GL_COLOR_BUFFER_BIT);
-                glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+                isOceanSceneRendering = !isOceanSceneRendering;
             }
         }
         else
@@ -99,7 +76,33 @@ int main(int argc, char **argv)
             glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
         }
 
-#pragma endregion Basic lighting scene
+        if (isOceanSceneRendering)
+        {
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+            glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_DEPTH_CLAMP);
+            glDepthFunc(GL_LESS);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+            camera.CameraKeyboardInput(window.GetWindowPointer(), deltaTime);
+            camera.CameraMouseMovementInput(window.GetWindowPointer());
+
+            gridShader.Bind();
+            gridShader.SetUniform3fv("u_CameraWorldPos", camera.GetCameraPos());
+            gridShader.SetUniformMatrix4fv("u_ViewMatrix", camera.CalculateViewMatrix());
+            gridShader.SetUniformMatrix4fv("u_ProjectionMatrix", camera.CalculatePerspectiveProjectionMatrix(window));
+
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+        }
+        else
+        {
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+        }
+
+#pragma endregion Ocean scene
 
         ImGui::End();
 
