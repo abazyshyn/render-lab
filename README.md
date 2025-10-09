@@ -10,7 +10,7 @@ This project is a showcase of my skills in C++, OpenGL, GLSL.
 1. Build and run the project using [Visual Studio](https://visualstudio.microsoft.com/vs/) (for that everything configured in CMakeSettings.json).
 
 ### Linux:
-1. Make the build script executable - `chmod +x scripts/build/your_desired_build.sh`.
+1. Make the build script executable - `chmod +x scripts/build/linux/your_desired_build.sh`.
 2. Run some of the build scripts:
 - Debug - `./scripts/build/linux/debug.sh`.
 - RelWithDebInfo - `./scripts/build/linux/rel_with_deb_info.sh`
