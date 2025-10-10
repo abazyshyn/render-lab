@@ -10,14 +10,36 @@ This project is a showcase of my skills in C++, OpenGL, GLSL.
 1. Build and run the project using [Visual Studio](https://visualstudio.microsoft.com/vs/) (for that everything configured in CMakeSettings.json).
 
 ### Linux:
-1. Make the build script executable - `chmod +x scripts/build/linux/your_desired_build.sh`.
-2. Run some of the build scripts:
-- Debug - `./scripts/build/linux/debug.sh`.
-- RelWithDebInfo - `./scripts/build/linux/rel_with_deb_info.sh`
-- Release - `./scripts/build/linux/release.sh`
-- MinSizeRel - `./scripts/build/linux/min_size_rel.sh`
-4. If the script fails, you may need to install some dependencies using your package manager (e.g., `pacman`).
-5. Run the program - `./bin/your_os_and_architechture/RenderLab/your_desired_build/RenderLab`.
+1. Make the desired build script executable:
+```bash
+# Debug
+$ chmod +x scripts/build/linux/debug.sh
+
+# RelWithDebInfo
+$ chmod +x scripts/build/linux/rel_with_deb_info.sh
+
+# Release
+$ chmod +x scripts/build/linux/release.sh
+
+# MinSizeRel
+$ chmod +x scripts/build/linux/min_size_rel.sh
+```
+2. Run the desired build script:
+```bash
+# Debug
+$ ./scripts/build/linux/debug.sh
+
+# RelWithDebInfo
+$ ./scripts/build/linux/rel_with_deb_info.sh
+
+# Release
+$ ./scripts/build/linux/release.sh
+
+# MinSizeRel
+$ ./scripts/build/linux/min_size_rel.sh
+```
+3. If the script fails, you may need to install some dependencies using your package manager (e.g., `pacman`).
+4. Run the program - `./bin/your_os_and_architechture/RenderLab/your_desired_build/RenderLab`.
 
 ## Controls 🕹
 - WSAD - movement
