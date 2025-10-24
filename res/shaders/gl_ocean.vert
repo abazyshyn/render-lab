@@ -3,7 +3,7 @@
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec3 a_Normal;
 
-uniform mat3  u_NormalMatrix;
+// uniform mat3  u_NormalMatrix;
 uniform mat4  u_ModelMatrix;
 uniform mat4  u_ViewMatrix;
 uniform mat4  u_ProjectionMatrix;
@@ -33,7 +33,7 @@ void main()
 {
     // Calculate different waves and apply "Sum of sines"
 	float partialDvx0, partialDvx1, partialDvx2, partialDvx3;
-	float sin0 = wave(0.1, 0.5, 0.5, vec3(0.0, 0.0, 1.0), partialDvx0);
+	float sin0 = wave(0.1, 0.5, 1.0, vec3(0.0, 0.0, 1.0), partialDvx0);
     float sin1 = wave(0.1, 0.3, 0.1, vec3(0.0, 0.0, -1.0), partialDvx1);
 	float sin2 = wave(0.05, 0.4, 0.2, vec3(1.0, 0.0, 0.0), partialDvx2);
     float sin3 = wave(0.1, 0.6, 0.2, vec3(0.0, 0.0, -1.0), partialDvx3);
@@ -45,6 +45,9 @@ void main()
 
     vec3 binormalVector = vec3(1.0, 0.0, partialDvxSum);
 	vec3 tangentVector = vec3(0.0, 1.0, partialDvxSum);
-	vsOut.vs_Normal = cross(binormalVector, tangentVector) * u_NormalMatrix;
-	vsOut.vs_FragmentPosition = vec3(vertexPosition * u_ModelMatrix * u_ViewMatrix);
+
+	vec3 normal = normalize(cross(binormalVector, tangentVector));
+	vsOut.vs_Normal = mat3(transpose(inverse(u_ModelMatrix))) * normal;
+
+	vsOut.vs_FragmentPosition = vec3(u_ModelMatrix * vertexPosition);
 }
