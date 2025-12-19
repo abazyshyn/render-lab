@@ -15,39 +15,41 @@ out VSOut
 	vec3 vs_FragmentPosition;
 } vsOut;
 
-float wave(float amplitude, float waveLength, float waveSpeed, vec3 moveTo, out float partialDvx)
+float wave(vec3 moveTo, float amplitude, float waveLength, float waveSpeed, out float dHeight_dx, out float dHeight_dz)
 {
-	const float frequency = 2 / waveLength;
-	const float phase = waveSpeed * frequency; // Keep speed as a phase constant
+    const float frequency = 2.0 / waveLength;
+    const float phase = waveSpeed * frequency;
 
-	vec3 directionVector = moveTo - vec3(a_Position.x, 0.0, a_Position.z);
-	float arg = dot(directionVector, vec3(a_Position.x, 0.0, a_Position.z) * frequency) + u_Time * phase;
-	float height = sin(arg) * amplitude * waveLength; // Calculate wave on the xz plane
+    vec3 dir = moveTo - vec3(a_Position.x, 0.0, a_Position.z);
+    float arg = dot(dir, vec3(a_Position.x, 0.0, a_Position.z) * frequency) + u_Time * phase;
 
-	partialDvx = frequency * directionVector.x * amplitude * cos(arg);
+    dHeight_dx = amplitude * frequency * dir.x * cos(arg);
+    dHeight_dz = amplitude * frequency * dir.z * cos(arg);
 
-	return height;
+    return sin(arg) * amplitude * waveLength;
 }
 
 void main()
 {
-    // Calculate different waves and apply "Sum of sines"
-	float partialDvx0, partialDvx1, partialDvx2, partialDvx3;
-	float sin0 = wave(0.1, 0.5, 1.0, vec3(0.0, 0.0, 1.0), partialDvx0);
-    float sin1 = wave(0.1, 0.3, 0.1, vec3(0.0, 0.0, -1.0), partialDvx1);
-	float sin2 = wave(0.05, 0.4, 0.2, vec3(1.0, 0.0, 0.0), partialDvx2);
-    float sin3 = wave(0.1, 0.6, 0.2, vec3(0.0, 0.0, -1.0), partialDvx3);
-	float sinSum = sin0 + sin1 + sin2 + sin3;
-	float partialDvxSum = partialDvx0 + partialDvx1 + partialDvx2 + partialDvx3;
+    float dHeight_dx0, dHeight_dz0;
+    float dHeight_dx1, dHeight_dz1;
+    float dHeight_dx2, dHeight_dz2;
+    float dHeight_dx3, dHeight_dz3;
+    
+    float h0 = wave(vec3(0.0, 0.0, 1.0), 0.1, 0.5, 1.0, dHeight_dx0, dHeight_dz0);
+    float h1 = wave(vec3(0.0, 0.0, -1.0), 0.1, 0.3, 0.1, dHeight_dx1, dHeight_dz1);
+    float h2 = wave(vec3(1.0, 0.0, 0.0), 0.05, 0.4, 0.2, dHeight_dx2, dHeight_dz2);
+    float h3 = wave(vec3(0.0, 0.0, -1.0), 0.1, 0.6, 0.2, dHeight_dx3, dHeight_dz3);
+    
+    float heightSum = h0 + h1 + h2 + h3;
+    float dHeight_dxSum = dHeight_dx0 + dHeight_dx1 + dHeight_dx2 + dHeight_dx3;
+    float dHeight_dzSum = dHeight_dz0 + dHeight_dz1 + dHeight_dz2 + dHeight_dz3;
 
-	vec4 vertexPosition = vec4(a_Position.x, sinSum, a_Position.z, 1.0);
+	vec4 vertexPosition = vec4(a_Position.x, heightSum, a_Position.z, 1.0);
 	gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * vertexPosition;
 
-    vec3 binormalVector = vec3(1.0, 0.0, partialDvxSum);
-	vec3 tangentVector = vec3(0.0, 1.0, partialDvxSum);
-
-	vec3 normal = normalize(cross(binormalVector, tangentVector));
-	vsOut.vs_Normal = mat3(transpose(inverse(u_ModelMatrix))) * normal;
+    vec3 normal = normalize(vec3(-dHeight_dxSum, 1.0, -dHeight_dzSum));
+    vsOut.vs_Normal = mat3(transpose(inverse(u_ModelMatrix))) * normal;
 
 	vsOut.vs_FragmentPosition = vec3(u_ModelMatrix * vertexPosition);
 }

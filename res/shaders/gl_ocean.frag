@@ -22,10 +22,10 @@ struct DirectionalLight_s
 };
 
 uniform Material_s waterMaterial = Material_s(
-    vec3(0.03, 0.3, 0.4),
-    vec3(0.15, 0.8, 0.9),
-    vec3(0.7, 0.9, 1.0),
-    256.0              
+    vec3(0.196, 0.247, 0.271),
+    vec3(0.247, 0.306, 0.345),
+    vec3(0.322, 0.333, 0.341),
+    128.0              
 );
 
 uniform DirectionalLight_s dirLight = DirectionalLight_s(
