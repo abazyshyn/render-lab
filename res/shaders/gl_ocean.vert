@@ -36,10 +36,10 @@ void main()
     float dHeight_dx2, dHeight_dz2;
     float dHeight_dx3, dHeight_dz3;
     
-    float h0 = wave(vec3(0.0, 0.0, 1.0), 0.1, 0.5, 1.0, dHeight_dx0, dHeight_dz0);
-    float h1 = wave(vec3(0.0, 0.0, -1.0), 0.1, 0.3, 0.1, dHeight_dx1, dHeight_dz1);
-    float h2 = wave(vec3(1.0, 0.0, 0.0), 0.05, 0.4, 0.2, dHeight_dx2, dHeight_dz2);
-    float h3 = wave(vec3(0.0, 0.0, -1.0), 0.1, 0.6, 0.2, dHeight_dx3, dHeight_dz3);
+    float h0 = wave(vec3(1.0, 0.0, 0.0), 0.1, 0.1, 0.1, dHeight_dx0, dHeight_dz0);
+    float h1 = wave(vec3(0.0, -1.0, 0.0), 0.1, 0.1, 0.1, dHeight_dx1, dHeight_dz1);
+    float h2 = wave(vec3(0.0, 0.0, -1.0), 0.05, 0.1, 0.1, dHeight_dx2, dHeight_dz2);
+    float h3 = wave(vec3(-1.0, 0.0, 0.0), 0.1, 0.1, 0.1, dHeight_dx3, dHeight_dz3);
     
     float heightSum = h0 + h1 + h2 + h3;
     float dHeight_dxSum = dHeight_dx0 + dHeight_dx1 + dHeight_dx2 + dHeight_dx3;

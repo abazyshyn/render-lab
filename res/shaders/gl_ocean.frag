@@ -25,7 +25,7 @@ uniform Material_s waterMaterial = Material_s(
     vec3(0.196, 0.247, 0.271),
     vec3(0.247, 0.306, 0.345),
     vec3(0.322, 0.333, 0.341),
-    128.0              
+    256.0              
 );
 
 uniform DirectionalLight_s dirLight = DirectionalLight_s(
@@ -50,8 +50,8 @@ void main()
 	vec3 diffuseColor = dirLight.m_DiffuseColor * waterMaterial.m_DiffuseColor * diffuseImpact;
 
 	vec3 viewDirection = normalize(u_CameraPos - fsIn.vs_FragmentPosition);
-	vec3 reflectLightDirection = reflect(-lightDirection, normal);
-	float specularImpact = pow(max(dot(viewDirection, reflectLightDirection), 0.0), waterMaterial.m_Shininess);
+	vec3 halfDirection = normalize(lightDirection + viewDirection);
+	float specularImpact = pow(max(dot(normal, halfDirection), 0.0), waterMaterial.m_Shininess);
 	vec3 specularColor = dirLight.m_SpecularColor * waterMaterial.m_SpecularColor * specularImpact;
 
 	resultColor = vec4(ambientColor + diffuseColor + specularColor, 1.0);
