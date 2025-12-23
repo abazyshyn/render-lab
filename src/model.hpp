@@ -22,7 +22,7 @@ namespace Lab
     class CModel
     {
     public:
-        explicit CModel(const std::string &ct_ModelPath);
+        explicit CModel(const std::string &modelPath);
 
         /**
          * @brief Draws a model.

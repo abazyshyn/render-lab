@@ -50,6 +50,8 @@ file(
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_opengl3_loader.h"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_glfw.h"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_glfw.cpp"
+    "${RENDER_LAB_ROOT_DIR}/vendor/imguizmo/ImGuizmo.h"
+    "${RENDER_LAB_ROOT_DIR}/vendor/imguizmo/ImGuizmo.cpp"
 )
 
 list(APPEND SOURCE_FILES ${LAB_FILES} ${IMGUI_FILES})
@@ -77,6 +79,7 @@ target_include_directories(${RENDER_LAB} PUBLIC
     "${RENDER_LAB_ROOT_DIR}/vendor/glfw/include/"
     "${RENDER_LAB_ROOT_DIR}/vendor/glm/"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/"
+    "${RENDER_LAB_ROOT_DIR}/vendor/imguizmo/"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/"
     "${RENDER_LAB_ROOT_DIR}/vendor/spdlog/include/"
     "${RENDER_LAB_ROOT_DIR}/vendor/stb_image/")

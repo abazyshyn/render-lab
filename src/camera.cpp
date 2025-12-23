@@ -108,9 +108,9 @@ namespace Lab
                            m_CameraUpVector);
     }
 
-    glm::mat4 CCamera::CalculatePerspectiveProjectionMatrix(const CWindow &window) const
+    glm::mat4 CCamera::CalculatePerspectiveProjectionMatrix(const CWindow &pWindow) const
     {
-        const auto [width, height] = window.GetWindowSizes();
+        const auto [width, height] = pWindow.GetWindowSizes();
         const float aspectRatio = width / height;
 
         constexpr float nearPlane = 0.1f;

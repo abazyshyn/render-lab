@@ -16,7 +16,7 @@ namespace Lab
 
         void SetupScene();
 
-        void OnUpdate(float t_DeltaTime, CCamera &t_Camera, CWindow &t_Window);
+        void OnUpdate(float deltaTime, CCamera &camera, CWindow &window);
 
     private:
         CModel m_DiningRoomModel;

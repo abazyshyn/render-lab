@@ -10,7 +10,7 @@ namespace Lab
     {
     }
 
-    void CResidentEvilScene::OnUpdate(float t_DeltaTime, CCamera &t_Camera, CWindow &t_Window)
+    void CResidentEvilScene::OnUpdate(float deltaTime, CCamera &camera, CWindow &window)
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
         glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
@@ -22,13 +22,13 @@ namespace Lab
 
         m_DiningRoomShader.Bind();
 
-        t_Camera.CameraKeyboardInput(t_Window.GetWindowPointer(), t_DeltaTime);
-        t_Camera.CameraMouseMovementInput(t_Window.GetWindowPointer());
+        camera.CameraKeyboardInput(window.GetWindowPointer(), deltaTime);
+        camera.CameraMouseMovementInput(window.GetWindowPointer());
 
         glm::mat4 modelMatrix(1.0f);
-        glm::mat4 viewMatrix = t_Camera.CalculateViewMatrix();
+        glm::mat4 viewMatrix = camera.CalculateViewMatrix();
         // glm::mat3 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
-        glm::mat4 projectionMatrix = t_Camera.CalculatePerspectiveProjectionMatrix(t_Window);
+        glm::mat4 projectionMatrix = camera.CalculatePerspectiveProjectionMatrix(window);
 
         m_DiningRoomShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
         m_DiningRoomShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);

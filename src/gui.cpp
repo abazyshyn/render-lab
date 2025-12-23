@@ -18,7 +18,7 @@ namespace Lab
 
         ImGui_ImplGlfw_InitForOpenGL(pWindow, true);
         ImGui_ImplOpenGL3_Init();
-        LAB_INFO_LOG("ImGUI context created.");
+        LAB_INFO_LOG("ImGui context created.");
     }
 
     void ShutdownImGui()
@@ -26,7 +26,7 @@ namespace Lab
         ImGui_ImplOpenGL3_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
-        LAB_INFO_LOG("ImGUI context destroyed.");
+        LAB_INFO_LOG("ImGui context destroyed.");
     }
 
 } // namespace Lab
