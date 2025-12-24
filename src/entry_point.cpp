@@ -19,12 +19,12 @@
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_glfw.h>
+#include <ImGuizmo.h>
 #include <glad/glad.h>
 #include "scenes/resident_evil.hpp"
 
 int main(int argc, char **argv)
 {
-    glfwSwapInterval(1);
     Lab::CLog::Init();
     Lab::CWindow &window = Lab::CWindow::GetInstance();
     Lab::CCamera camera;
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
     auto [width, height] = window.GetWindowSizes();
     camera.SetLastPosX(width / 2.0f);
     camera.SetLastPosY(height / 2.0f);
-    camera.SetCameraPosition(glm::vec3(0.0f, 1.0f, 0.0f));
+    camera.SetCameraPosition(glm::vec3(0.0f, 0.5f, 0.0f));
 
 #pragma region Debug
 
@@ -63,19 +63,19 @@ int main(int argc, char **argv)
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImGuizmo::BeginFrame();
 
 #define IMGUI_CONTROL_MENU "Control menu"
         ImGui::Begin(IMGUI_CONTROL_MENU, 0, ImGuiWindowFlags_NoMove);
-        ImGui::SetWindowSize(ImVec2(ImGui::GetWindowSize().x ? ImGui::GetWindowSize().x : 300.0f, window.GetWindowSizes().second));
+        ImGui::SetWindowSize(ImVec2(300.0f, window.GetWindowSizes().second));
         ImGui::SetWindowPos(IMGUI_CONTROL_MENU, ImVec2(0.0f, 0.0f));
+        ImGui::End();
 
 #pragma region Resident Evil Scene
 
         residentEvilScene.OnUpdate(deltaTime, camera, window);
 
 #pragma endregion Resident Evil Scene
-
-        ImGui::End();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

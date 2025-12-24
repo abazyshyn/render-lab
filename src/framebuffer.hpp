@@ -19,6 +19,7 @@ namespace Lab
 
     private:
         uint32_t m_FBO;
+        uint32_t m_RBO;
         uint32_t m_ColorBuffer;
 
         void SetupFramebuffer(uint32_t attachmentWidth, uint32_t attachmentHeight);

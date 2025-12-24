@@ -57,6 +57,7 @@ namespace Lab
 
         glfwMakeContextCurrent(m_WindowData.m_pWindow);
         glfwSetWindowUserPointer(m_WindowData.m_pWindow, &m_WindowData);
+        glfwSwapInterval(1);
         SetWindowInputCallbacks();
 
         initializationStatus = gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));

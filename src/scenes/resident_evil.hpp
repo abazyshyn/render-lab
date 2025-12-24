@@ -22,6 +22,7 @@ namespace Lab
     private:
         CModel m_DiningRoomModel;
         CShader m_DiningRoomShader;
+        CFramebuffer m_Framebuffer;
 
         CResidentEvilScene();
     };
