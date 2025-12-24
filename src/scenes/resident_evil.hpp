@@ -5,6 +5,7 @@
 #include <shader.hpp>
 #include "camera.hpp"
 #include "window.hpp"
+#include "framebuffer.hpp"
 
 namespace Lab
 {

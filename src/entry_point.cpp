@@ -5,9 +5,9 @@
 // ██║  ██║███████╗██║ ╚████║██████╔╝███████╗██║  ██║███████╗██║  ██║██████╔╝
 // ╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝
 
-#include "opengl.hpp"
 #include "pch.hpp"
 
+#include "opengl.hpp"
 #include "spdlog/fmt/bundled/base.h"
 #include "window.hpp"
 #include "raw_data.hpp"
@@ -24,6 +24,7 @@
 
 int main(int argc, char **argv)
 {
+    glfwSwapInterval(1);
     Lab::CLog::Init();
     Lab::CWindow &window = Lab::CWindow::GetInstance();
     Lab::CCamera camera;

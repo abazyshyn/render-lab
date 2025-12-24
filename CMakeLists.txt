@@ -51,8 +51,7 @@ file(
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_glfw.h"
     "${RENDER_LAB_ROOT_DIR}/vendor/imgui/backends/imgui_impl_glfw.cpp"
     "${RENDER_LAB_ROOT_DIR}/vendor/imguizmo/ImGuizmo.h"
-    "${RENDER_LAB_ROOT_DIR}/vendor/imguizmo/ImGuizmo.cpp"
-)
+    "${RENDER_LAB_ROOT_DIR}/vendor/imguizmo/ImGuizmo.cpp")
 
 list(APPEND SOURCE_FILES ${LAB_FILES} ${IMGUI_FILES})
 
