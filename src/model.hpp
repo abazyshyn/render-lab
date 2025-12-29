@@ -38,7 +38,22 @@ namespace Lab
          */
         [[nodiscard]] const std::string &GetName() const { return m_ModelName; }
 
+        /**
+         * @brief Returns model matrix
+         *
+         * @return Model matrix
+         */
+        [[nodiscard]] const glm::mat4 &GetModelMatrix() const { return m_ModelMatrix; }
+
+        /**
+         * @brief Sets the model matrix
+         *
+         * @param[in] matrix Matrix
+         */
+        void SetModelMatrix(const glm::mat4 &matrix) { m_ModelMatrix = matrix; }
+
     private:
+        glm::mat4 m_ModelMatrix;
         std::vector<CMesh> m_Meshes;
         std::vector<Texture_s> m_LoadedTextures;
         std::string m_ModelDirectory;

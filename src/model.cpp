@@ -9,6 +9,7 @@ namespace Lab
 {
 
     CModel::CModel(const std::string &modelPath)
+        : m_ModelMatrix(1.0f)
     {
         LoadModel(modelPath);
     }
