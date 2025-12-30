@@ -22,12 +22,14 @@
 #include <ImGuizmo.h>
 #include <glad/glad.h>
 #include "scenes/resident_evil.hpp"
+#include "scene_hierarchy_panel.hpp"
 
 int main(int argc, char **argv)
 {
     Lab::CLog::Init();
     Lab::CWindow &window = Lab::CWindow::GetInstance();
     Lab::CCamera camera;
+    Lab::CSceneHierarchyPanel &panel = Lab::CSceneHierarchyPanel::GetInstance();
 
     auto [width, height] = window.GetWindowSizes();
     camera.SetLastPosX(width / 2.0f);
@@ -49,6 +51,7 @@ int main(int argc, char **argv)
 
     // Scenes
     Lab::CResidentEvilScene &residentEvilScene = Lab::CResidentEvilScene::GetInstance();
+    panel.SetSceneContext(residentEvilScene);
 
     for (; window.IsRunning();) // Main loop
     {
@@ -64,6 +67,8 @@ int main(int argc, char **argv)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         ImGuizmo::BeginFrame();
+
+        panel.OnImGuiRender();
 
 #define IMGUI_CONTROL_MENU "Control menu"
         ImGui::Begin(IMGUI_CONTROL_MENU, nullptr, ImGuiWindowFlags_NoMove);

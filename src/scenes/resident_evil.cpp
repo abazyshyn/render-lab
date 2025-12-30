@@ -17,7 +17,6 @@ namespace Lab
 
     void CResidentEvilScene::OnUpdate(float deltaTime, CCamera &camera, CWindow &window)
     {
-
         m_DiningRoomShader.Bind();
 
         camera.CameraKeyboardInput(window.GetWindowPointer(), deltaTime);
@@ -35,63 +34,89 @@ namespace Lab
             camera.SetLastPosY((float)y);
         }
 
-        glm::mat4 modelMatrix = m_DiningRoomModel.GetModelMatrix();
-        glm::mat4 viewMatrix = camera.CalculateViewMatrix();
-        // glm::mat3 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
-        glm::mat4 projectionMatrix = camera.CalculatePerspectiveProjectionMatrix(window);
+        // Iteration over the models
+        for (CModel &model : m_Models)
+        {
+            glm::mat4 modelMatrix = model.GetModelMatrix();
+            glm::mat4 viewMatrix = camera.CalculateViewMatrix();
+            // glm::mat3 normalMatrix = glm::transpose(glm::inverse(modelMatrix));
+            glm::mat4 projectionMatrix = camera.CalculatePerspectiveProjectionMatrix(window);
 
 #define WINDOW "Scene"
-        ImGui::Begin(WINDOW, nullptr, ImGuiWindowFlags_NoMove);
-        const float windowWidth = window.GetWindowSizes().first - 300.0f;
-        const float windowHeight = window.GetWindowSizes().second;
-        ImGui::SetWindowSize(ImVec2(windowWidth, windowHeight));
-        ImGui::SetWindowPos(WINDOW, ImVec2(300.0f, 0.0f));
+            ImGui::Begin(WINDOW, nullptr, ImGuiWindowFlags_NoMove);
+            const float windowWidth = window.GetWindowSizes().first - 300.0f;
+            const float windowHeight = window.GetWindowSizes().second;
+            ImGui::SetWindowSize(ImVec2(windowWidth, windowHeight));
+            ImGui::SetWindowPos(WINDOW, ImVec2(300.0f, 0.0f));
 
-        ImGui::BeginChild("SceneRender");
+            ImGui::BeginChild("SceneRender");
 
-        m_DiningRoomShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
-        m_DiningRoomShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
-        m_DiningRoomShader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
+            m_DiningRoomShader.SetUniformMatrix4fv("u_ModelMatrix", modelMatrix);
+            m_DiningRoomShader.SetUniformMatrix4fv("u_ViewMatrix", viewMatrix);
+            m_DiningRoomShader.SetUniformMatrix4fv("u_ProjectionMatrix", projectionMatrix);
 
-        m_Framebuffer.OnUpdate(static_cast<uint32_t>(windowWidth), static_cast<uint32_t>(windowHeight));
-        m_Framebuffer.Bind();
+            m_Framebuffer.OnUpdate(static_cast<uint32_t>(windowWidth), static_cast<uint32_t>(windowHeight));
+            m_Framebuffer.Bind();
 
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-        glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glEnable(GL_DEPTH_CLAMP);
-        glDepthFunc(GL_LESS);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+            glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
+            glEnable(GL_DEPTH_TEST);
+            glEnable(GL_DEPTH_CLAMP);
+            glDepthFunc(GL_LESS);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        m_DiningRoomModel.Draw(m_DiningRoomShader);
+            model.Draw(m_DiningRoomShader);
 
-        ImGui::Image((ImTextureID)m_Framebuffer.GetColorBuffer(), ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
+            ImGui::Image((ImTextureID)m_Framebuffer.GetColorBuffer(), ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
-        // Guizmo
-        ImGuizmo::SetOrthographic(false);
-        ImGuizmo::SetDrawlist();
-        ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-        ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
-                             ImGuizmo::OPERATION::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(modelMatrix));
+            // TODO: ImGuizmo operation change hack
+            if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_1))
+            {
+                m_GuizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+            }
+            else if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_2))
+            {
+                m_GuizmoOperation = ImGuizmo::OPERATION::ROTATE;
+            }
+            else if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_3))
+            {
+                m_GuizmoOperation = ImGuizmo::OPERATION::SCALE;
+            }
 
-        m_DiningRoomModel.SetModelMatrix(modelMatrix);
+            // Guizmo
+            if (m_GuizmoOperation != -1)
+            {
+                ImGuizmo::SetOrthographic(false);
+                ImGuizmo::SetDrawlist();
+                ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+                ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+                                     static_cast<ImGuizmo::OPERATION>(m_GuizmoOperation), ImGuizmo::LOCAL, glm::value_ptr(modelMatrix));
 
-        ImGui::EndChild();
+                if (ImGuizmo::IsUsing())
+                {
+                    model.SetModelMatrix(modelMatrix);
+                }
+            }
 
-        ImGui::End();
+            ImGui::EndChild();
 
-        m_Framebuffer.UnBind();
+            ImGui::End();
 
-        glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
+            m_Framebuffer.UnBind();
+
+            glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
+            glClear(GL_COLOR_BUFFER_BIT);
+        }
     }
 
     CResidentEvilScene::CResidentEvilScene()
-        : m_DiningRoomModel(Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf"),
+        : m_Models({Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf"}),
+          // m_DiningRoomModel(Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf"),
           m_DiningRoomShader({Utils::LAB_BASE_SHADERS_PATH + "gl_dining_room.vert",
                               Utils::LAB_BASE_SHADERS_PATH + "gl_dining_room.frag"}),
-          m_Framebuffer(1920, 1080)
+          m_Framebuffer(1920, 1080),
+          m_GuizmoOperation(-1)
     {
     }
 

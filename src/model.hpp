@@ -22,7 +22,13 @@ namespace Lab
     class CModel
     {
     public:
-        explicit CModel(const std::string &modelPath);
+        CModel(const std::string &modelPath);
+
+        CModel(const CModel &source) = delete;
+        CModel &operator=(const CModel &source) = delete;
+
+        CModel(CModel &&source) noexcept;
+        CModel &operator=(CModel &&source) noexcept;
 
         /**
          * @brief Draws a model.

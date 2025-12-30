@@ -14,6 +14,31 @@ namespace Lab
         LoadModel(modelPath);
     }
 
+    CModel::CModel(CModel &&source) noexcept
+    {
+        m_Meshes = std::move(source.m_Meshes);
+        m_LoadedTextures = std::move(source.m_LoadedTextures);
+        m_ModelDirectory = std::move(source.m_ModelDirectory);
+        m_ModelName = std::move(source.m_ModelName);
+        m_ModelMatrix = std::move(source.m_ModelMatrix);
+    }
+
+    CModel &CModel::operator=(CModel &&source) noexcept
+    {
+        if (this == &source)
+        {
+            return *this;
+        }
+
+        m_Meshes = std::move(source.m_Meshes);
+        m_LoadedTextures = std::move(source.m_LoadedTextures);
+        m_ModelDirectory = std::move(source.m_ModelDirectory);
+        m_ModelName = std::move(source.m_ModelName);
+        m_ModelMatrix = std::move(source.m_ModelMatrix);
+
+        return *this;
+    }
+
     void CModel::Draw(CShader &shader) const
     {
         LAB_TRACE_LOG("Drawing model...\nModel name: {0}", m_ModelName);

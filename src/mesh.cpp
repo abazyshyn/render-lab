@@ -37,20 +37,22 @@ namespace Lab
 
     CMesh &CMesh::operator=(CMesh &&source) noexcept
     {
-        if (this != &source)
+        if (this == &source)
         {
-            OpenGL::DeleteObjects(1, &m_VAO, 1, &m_VBO, 1, &m_IBO);
-
-            m_Vertices = std::move(source.m_Vertices);
-            m_Indices = std::move(source.m_Indices);
-            m_Textures = std::move(source.m_Textures);
-            m_Name = std::move(m_Name);
-            m_VAO = source.m_VAO;
-            m_VBO = source.m_VBO;
-            m_IBO = source.m_IBO;
-
-            m_VAO = m_VBO = m_IBO = 0;
+            return *this;
         }
+
+        OpenGL::DeleteObjects(1, &m_VAO, 1, &m_VBO, 1, &m_IBO);
+
+        m_Vertices = std::move(source.m_Vertices);
+        m_Indices = std::move(source.m_Indices);
+        m_Textures = std::move(source.m_Textures);
+        m_Name = std::move(m_Name);
+        m_VAO = source.m_VAO;
+        m_VBO = source.m_VBO;
+        m_IBO = source.m_IBO;
+
+        m_VAO = m_VBO = m_IBO = 0;
 
         SetupMesh();
 
