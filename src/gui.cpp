@@ -14,7 +14,7 @@ namespace Lab
         ImGui::CreateContext();
 
         ImGuiIO &io = ImGui::GetIO();
-        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable;
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_DockingEnable; // ImGuiConfigFlags_ViewportsEnable
 
         ImGui_ImplGlfw_InitForOpenGL(pWindow, true);
         ImGui_ImplOpenGL3_Init();

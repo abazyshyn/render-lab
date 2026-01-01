@@ -15,6 +15,9 @@ namespace Lab
 
     private:
         std::shared_ptr<CScene> m_Context;
+        std::string m_SelectionContext;
+
+        void DrawModelTreeNode(const CModel &model);
     };
 
 } // namespace Lab

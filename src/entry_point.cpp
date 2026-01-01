@@ -85,6 +85,14 @@ int main(int argc, char **argv)
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
+        // if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        //{
+        //     GLFWwindow *backupCurrentContext = glfwGetCurrentContext();
+        //     ImGui::UpdatePlatformWindows();
+        //     ImGui::RenderPlatformWindowsDefault();
+        //     glfwMakeContextCurrent(backupCurrentContext);
+        // }
+
         window.OnUpdate();
     }
 
