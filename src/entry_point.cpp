@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     float deltaTime = 0.0f, lastFrameTime = 0.0f;
 
     // Scenes
-    Lab::CResidentEvilScene &residentEvilScene = Lab::CResidentEvilScene::GetInstance();
+    auto residentEvilScene = std::make_shared<Lab::CResidentEvilScene>();
     panel.SetSceneContext(residentEvilScene);
 
     for (; window.IsRunning();) // Main loop
@@ -68,19 +68,19 @@ int main(int argc, char **argv)
         ImGui::NewFrame();
         ImGuizmo::BeginFrame();
 
-        panel.OnImGuiRender();
-
 #define IMGUI_CONTROL_MENU "Control menu"
-        ImGui::Begin(IMGUI_CONTROL_MENU, nullptr, ImGuiWindowFlags_NoMove);
+        ImGui::Begin(IMGUI_CONTROL_MENU);
         ImGui::SetWindowSize(ImVec2(300.0f, window.GetWindowSizes().second));
         ImGui::SetWindowPos(IMGUI_CONTROL_MENU, ImVec2(0.0f, 0.0f));
         ImGui::End();
 
 #pragma region Resident Evil Scene
 
-        residentEvilScene.OnUpdate(deltaTime, camera, window);
+        residentEvilScene->OnUpdate(deltaTime, camera, window);
 
 #pragma endregion Resident Evil Scene
+
+        panel.OnImGuiRender();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

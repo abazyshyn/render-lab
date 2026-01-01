@@ -10,15 +10,11 @@ namespace Lab
     class CScene
     {
     public:
-        friend Utils::CSingleton<CScene>;
-
         virtual ~CScene() = default;
 
-        // void SetupScene();
+        virtual void OnUpdate(float deltaTime, CCamera &camera, CWindow &window) = 0;
 
-        virtual void OnUpdate(float deltaTime, CCamera &camera, CWindow &window);
-
-        virtual const std::vector<CModel> &GetSceneModels() const;
+        virtual const std::vector<CModel> &GetSceneModels() const = 0;
     };
 
 } // namespace Lab

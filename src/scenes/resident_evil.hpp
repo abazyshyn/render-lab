@@ -1,6 +1,5 @@
 #pragma once
 
-#include "singleton.hpp"
 #include "scene.hpp"
 #include "shader.hpp"
 #include "framebuffer.hpp"
@@ -8,13 +7,16 @@
 namespace Lab
 {
 
-    class CResidentEvilScene : public CScene,
-                               public Utils::CSingleton<CResidentEvilScene>
+    class CResidentEvilScene : public CScene
     {
     public:
-        friend Utils::CSingleton<CResidentEvilScene>;
+        CResidentEvilScene();
 
-        void SetupScene();
+        CResidentEvilScene(const CResidentEvilScene &source) = delete;
+        CResidentEvilScene &operator=(const CResidentEvilScene &source) = delete;
+
+        CResidentEvilScene(CResidentEvilScene &&source) noexcept;
+        CResidentEvilScene &operator=(CResidentEvilScene &&source) noexcept;
 
         void OnUpdate(float deltaTime, CCamera &camera, CWindow &window) override;
 
@@ -22,12 +24,11 @@ namespace Lab
 
     private:
         std::vector<CModel> m_Models;
-        // CModel m_DiningRoomModel;
         CShader m_DiningRoomShader;
         CFramebuffer m_Framebuffer;
         int32_t m_GuizmoOperation;
 
-        CResidentEvilScene();
+        void SetupScene();
     };
 
 } // namespace Lab

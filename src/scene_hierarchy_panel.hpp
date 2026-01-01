@@ -9,15 +9,12 @@ namespace Lab
     public:
         friend Utils::CSingleton<CSceneHierarchyPanel>;
 
-        void SetSceneContext(const CScene &context) { m_Context = context; };
-        // write scene move constructor
-        // for m : models
-        // new arr.emplace_back(m);
+        void SetSceneContext(const std::shared_ptr<CScene> &context) { m_Context = context; };
 
         void OnImGuiRender();
 
     private:
-        CScene m_Context;
+        std::shared_ptr<CScene> m_Context;
     };
 
 } // namespace Lab

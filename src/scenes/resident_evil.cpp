@@ -11,8 +11,44 @@
 namespace Lab
 {
 
-    void CResidentEvilScene::SetupScene()
+    CResidentEvilScene::CResidentEvilScene()
+        : // m_DiningRoomModel(Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf"),
+          m_DiningRoomShader({Utils::LAB_BASE_SHADERS_PATH + "gl_dining_room.vert",
+                              Utils::LAB_BASE_SHADERS_PATH + "gl_dining_room.frag"}),
+          m_Framebuffer(1920, 1080),
+          m_GuizmoOperation(-1)
     {
+        m_Models.emplace_back(Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf");
+    }
+
+    CResidentEvilScene::CResidentEvilScene(CResidentEvilScene &&source) noexcept
+        : m_DiningRoomShader(std::move(source.m_DiningRoomShader)),
+          m_Framebuffer(std::move(source.m_Framebuffer)),
+          m_GuizmoOperation(source.m_GuizmoOperation)
+    {
+        for (CModel &model : source.m_Models)
+        {
+            m_Models.emplace_back(std::move(model));
+        }
+    }
+
+    CResidentEvilScene &CResidentEvilScene::operator=(CResidentEvilScene &&source) noexcept
+    {
+        if (this == &source)
+        {
+            return *this;
+        }
+
+        for (CModel &model : source.m_Models)
+        {
+            m_Models.emplace_back(std::move(model));
+        }
+
+        m_DiningRoomShader = std::move(source.m_DiningRoomShader);
+        m_Framebuffer = std::move(source.m_Framebuffer);
+        m_GuizmoOperation = source.m_GuizmoOperation;
+
+        return *this;
     }
 
     void CResidentEvilScene::OnUpdate(float deltaTime, CCamera &camera, CWindow &window)
@@ -110,13 +146,7 @@ namespace Lab
         }
     }
 
-    CResidentEvilScene::CResidentEvilScene()
-        : m_Models({Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf"}),
-          // m_DiningRoomModel(Utils::LAB_BASE_MODELS_PATH + "resident_evil_scene/dining_room/scene.gltf"),
-          m_DiningRoomShader({Utils::LAB_BASE_SHADERS_PATH + "gl_dining_room.vert",
-                              Utils::LAB_BASE_SHADERS_PATH + "gl_dining_room.frag"}),
-          m_Framebuffer(1920, 1080),
-          m_GuizmoOperation(-1)
+    void CResidentEvilScene::SetupScene()
     {
     }
 
