@@ -58,6 +58,8 @@ namespace Lab
          */
         void SetModelMatrix(const glm::mat4 &matrix) { m_ModelMatrix = matrix; }
 
+        void SetModelName(const std::string &modelName) { m_ModelName = modelName; }
+
     private:
         glm::mat4 m_ModelMatrix;
         std::vector<CMesh> m_Meshes;

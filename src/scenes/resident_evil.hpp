@@ -20,7 +20,7 @@ namespace Lab
 
         void OnUpdate(float deltaTime, CCamera &camera, CWindow &window) override;
 
-        const std::vector<CModel> &GetSceneModels() const override { return m_Models; }
+        std::vector<CModel> &GetSceneModels() override { return m_Models; }
 
     private:
         std::vector<CModel> m_Models;

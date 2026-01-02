@@ -13,6 +13,7 @@
 #include <map>
 #include <array>
 #include <string>
+#include <string.h>
 #include <vector>
 #include <sstream>
 #include <unordered_map>

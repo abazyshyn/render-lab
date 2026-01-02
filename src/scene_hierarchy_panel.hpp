@@ -17,7 +17,8 @@ namespace Lab
         std::shared_ptr<CScene> m_Context;
         std::string m_SelectionContext;
 
-        void DrawModelTreeNode(const CModel &model);
+        void DrawModelTreeNode(CModel &model);
+        void DrawComponents(CModel &model);
     };
 
 } // namespace Lab

@@ -14,7 +14,7 @@ namespace Lab
 
         virtual void OnUpdate(float deltaTime, CCamera &camera, CWindow &window) = 0;
 
-        virtual const std::vector<CModel> &GetSceneModels() const = 0;
+        virtual std::vector<CModel> &GetSceneModels() = 0;
     };
 
 } // namespace Lab
