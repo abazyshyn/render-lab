@@ -18,7 +18,7 @@ namespace Lab
         std::string m_SelectionContext;
 
         void DrawModelTreeNode(CModel &model);
-        void DrawComponents(CModel &model);
+        // void DrawComponents(CModel &model);
     };
 
 } // namespace Lab

@@ -69,7 +69,7 @@ int main(int argc, char **argv)
         ImGuizmo::BeginFrame();
 
 #define IMGUI_CONTROL_MENU "Control menu"
-        ImGui::Begin(IMGUI_CONTROL_MENU);
+        ImGui::Begin(IMGUI_CONTROL_MENU, nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize);
         ImGui::SetWindowSize(ImVec2(300.0f, window.GetWindowSizes().second));
         ImGui::SetWindowPos(IMGUI_CONTROL_MENU, ImVec2(0.0f, 0.0f));
         ImGui::End();

@@ -79,7 +79,7 @@ namespace Lab
             glm::mat4 projectionMatrix = camera.CalculatePerspectiveProjectionMatrix(window);
 
 #define WINDOW "Scene"
-            ImGui::Begin(WINDOW, nullptr, ImGuiWindowFlags_NoMove);
+            ImGui::Begin(WINDOW);
             const float windowWidth = window.GetWindowSizes().first - 300.0f;
             const float windowHeight = window.GetWindowSizes().second;
             ImGui::SetWindowSize(ImVec2(windowWidth, windowHeight));
@@ -106,34 +106,7 @@ namespace Lab
 
             ImGui::Image((ImTextureID)m_Framebuffer.GetColorBuffer(), ImGui::GetWindowSize(), ImVec2(0, 1), ImVec2(1, 0));
 
-            // TODO: ImGuizmo operation change hack
-            if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_1))
-            {
-                m_GuizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
-            }
-            else if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_2))
-            {
-                m_GuizmoOperation = ImGuizmo::OPERATION::ROTATE;
-            }
-            else if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_3))
-            {
-                m_GuizmoOperation = ImGuizmo::OPERATION::SCALE;
-            }
-
-            // Guizmo
-            if (m_GuizmoOperation != -1)
-            {
-                ImGuizmo::SetOrthographic(false);
-                ImGuizmo::SetDrawlist();
-                ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
-                ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
-                                     static_cast<ImGuizmo::OPERATION>(m_GuizmoOperation), ImGuizmo::LOCAL, glm::value_ptr(modelMatrix));
-
-                if (ImGuizmo::IsUsing())
-                {
-                    model.SetModelMatrix(modelMatrix);
-                }
-            }
+            DrawModelGuizmo(window, model, modelMatrix, viewMatrix, projectionMatrix);
 
             ImGui::EndChild();
 
@@ -143,6 +116,39 @@ namespace Lab
 
             glClearColor(0.2f, 1.0f, 0.2f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+        }
+    }
+
+    void CResidentEvilScene::DrawModelGuizmo(CWindow &window, CModel &model, glm::mat4 &modelMatrix, glm::mat4 &viewMatrix, glm::mat4 &projectionMatrix)
+    {
+        // TODO: ImGuizmo operation change hack
+        if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_1))
+        {
+            m_GuizmoOperation = ImGuizmo::OPERATION::TRANSLATE;
+        }
+        else if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_2))
+        {
+            m_GuizmoOperation = ImGuizmo::OPERATION::ROTATE;
+        }
+        else if (glfwGetKey(window.GetWindowPointer(), GLFW_KEY_3))
+        {
+            m_GuizmoOperation = ImGuizmo::OPERATION::SCALE;
+        }
+
+        // Guizmo
+        if (m_GuizmoOperation != -1)
+        {
+            ImGuizmo::SetOrthographic(false);
+            ImGuizmo::SetDrawlist();
+            auto [windowWidth, windowHeight] = window.GetWindowSizes();
+            ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+            ImGuizmo::Manipulate(glm::value_ptr(viewMatrix), glm::value_ptr(projectionMatrix),
+                                 static_cast<ImGuizmo::OPERATION>(m_GuizmoOperation), ImGuizmo::LOCAL, glm::value_ptr(modelMatrix));
+
+            if (ImGuizmo::IsUsing())
+            {
+                model.SetModelMatrix(modelMatrix);
+            }
         }
     }
 

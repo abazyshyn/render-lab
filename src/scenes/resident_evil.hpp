@@ -20,6 +20,8 @@ namespace Lab
 
         void OnUpdate(float deltaTime, CCamera &camera, CWindow &window) override;
 
+        void DrawModelGuizmo(CWindow &window, CModel &model, glm::mat4 &modelMatrix, glm::mat4 &viewMatrix, glm::mat4 &projectionMatrix);
+
         std::vector<CModel> &GetSceneModels() override { return m_Models; }
 
     private:
